@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- SearchOrderFragment  -->
+    <string name="search_order_keyword">关键字:</string>
+    <string name="search_order_startDate">开始日期:</string>
+    <string name="search_order_endDate">结束日期:</string>
+    <string name="search_order_searchButton">查询</string>
+
+    <!-- OrderBasicInfoFragment -->
+    <string name="order_basicInfo_timeLimit">装运期限:</string>
+    <string name="order_basicInfo_startPort">出运港口:</string>
+    <string name="order_basicInfo_destPort">目的港口:</string>
+    <string name="order_basicInfo_shouhuiType">收汇方式:</string>
+    <string name="order_basicInfo_priceRule">价格条款:</string>
+
+
+    <!-- OrderChuyunFragment -->
+    <string name="order_chuyun_detailNo">明细单编号:</string>
+    <string name="order_chuyun_date">发票日期:</string>
+    <string name="order_chuyun_amount">金额:</string>
+
+    <!-- OrderShouhuiFragment -->
+    <string name="order_shouhui_date">日期:</string>
+    <string name="order_shouhui_amount">金额:</string>
+
+
+    <string name="date_picker_title">Date of crime:</string>
+
+</resources>
