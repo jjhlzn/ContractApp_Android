@@ -1,4 +1,4 @@
-package com.example.bottombar.sample;
+package com.jinjunhang.contract.controller;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -14,7 +14,6 @@ import android.widget.ListView;
 import com.jinjunhang.contract.service.GetOrderBasicInfoResponse;
 import com.jinjunhang.contract.service.GetOrderChuyunInfoResponse;
 import com.jinjunhang.contract.service.GetOrderFukuangInfoResponse;
-import com.jinjunhang.contract.service.GetOrderShougouInfoResponse;
 import com.jinjunhang.contract.service.GetOrderShouhuiInfoResponse;
 import com.jinjunhang.contract.service.OrderService;
 

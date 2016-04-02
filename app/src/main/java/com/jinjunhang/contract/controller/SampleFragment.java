@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.example.bottombar.sample;
+package com.jinjunhang.contract.controller;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

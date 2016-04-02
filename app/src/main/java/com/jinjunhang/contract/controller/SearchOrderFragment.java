@@ -1,4 +1,4 @@
-package com.example.bottombar.sample;
+package com.jinjunhang.contract.controller;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,11 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.bottombar.sample.R;
 import com.jinjunhang.contract.model.Order;
 import com.jinjunhang.contract.service.OrderQueryObject;
-import com.jinjunhang.contract.service.QueryObject;
 import com.jinjunhang.contract.service.SearchOrderResponse;
 import com.jinjunhang.contract.service.OrderService;
+import com.jinjunhang.contract.service.ServerResponse;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -133,6 +134,12 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
             String startDate = params[1];
             String endDate = params[2];
             SearchOrderResponse resp = new OrderService().search(keyword, startDate, endDate, 0, pageSize);
+
+            if (resp.getStatus() == ServerResponse.FAIL) {
+                //TODO: 显示加载失败消息
+                return null;
+            }
+
             List<Order> orders = resp.getOrders();
             Intent i = new Intent(getActivity(), OrderListActivity.class);
             i.putExtra(EXTRA_ORDERS, (ArrayList<Order>) orders);

@@ -1,9 +1,10 @@
-package com.example.bottombar.sample;
+package com.jinjunhang.contract.controller;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.bottombar.sample.R;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarFragment;
 

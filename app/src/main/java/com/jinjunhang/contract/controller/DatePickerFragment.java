@@ -1,4 +1,4 @@
-package com.example.bottombar.sample;
+package com.jinjunhang.contract.controller;
 
 
 import android.app.AlertDialog;
@@ -12,6 +12,8 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
+
+import com.example.bottombar.sample.R;
 
 import java.util.Calendar;
 import java.util.Date;

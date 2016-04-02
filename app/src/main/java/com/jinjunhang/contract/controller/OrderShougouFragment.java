@@ -1,39 +1,43 @@
-package com.example.bottombar.sample;
+package com.jinjunhang.contract.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.bottombar.sample.R;
+import com.jinjunhang.contract.model.Order;
 import com.jinjunhang.contract.model.OrderPurchaseInfo;
 import com.jinjunhang.contract.model.OrderPurchaseItem;
+
+import java.util.List;
 
 /**
  * Created by lzn on 16/3/24.
  */
-public class OrderFukuangFragment extends android.support.v4.app.ListFragment {
+public class OrderShougouFragment extends ListFragment {
 
-    public final static String EXTRA_ORDER_FUKUANG = "orderFukuang";
+    public final static String EXTRA_SHOUGOU_INFO = "orderShougouInfo";
 
-    private OrderPurchaseInfo mFukuangInfo;
+    private OrderPurchaseInfo mShougouInfo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent i = getActivity().getIntent();
-        mFukuangInfo = (OrderPurchaseInfo)i.getSerializableExtra(EXTRA_ORDER_FUKUANG);
+        mShougouInfo = (OrderPurchaseInfo)i.getSerializableExtra(EXTRA_SHOUGOU_INFO);
 
-        FukuangAdpter adpter = new FukuangAdpter(mFukuangInfo);
-        setListAdapter(adpter);
+        ShougouAdapter shougouAdapter = new ShougouAdapter(mShougouInfo);
+        setListAdapter(shougouAdapter);
     }
 
-    private class FukuangAdpter extends ArrayAdapter<OrderPurchaseItem> {
-        public FukuangAdpter(OrderPurchaseInfo fukuangInfo) {
-            super(getActivity(), 0, fukuangInfo.getItems());
+    private class ShougouAdapter extends ArrayAdapter<OrderPurchaseItem> {
+        public ShougouAdapter(OrderPurchaseInfo shougouInfo) {
+            super(getActivity(), 0, shougouInfo.getItems());
         }
 
         @Override

@@ -1,7 +1,5 @@
-package com.example.bottombar.sample;
+package com.jinjunhang.contract.controller;
 
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 /**

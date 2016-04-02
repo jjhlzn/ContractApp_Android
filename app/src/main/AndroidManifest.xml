@@ -10,56 +10,62 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.jinjunhang.contract.controller.MainActivity"
             android:launchMode="singleInstance">
-
-        </activity>
-
-        <activity android:name=".SearchOrderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name="com.jinjunhang.contract.controller.SearchOrderActivity">
+
 
         </activity>
 
-        <activity android:name=".OrderListActivity">
+        <activity android:name="com.jinjunhang.contract.controller.OrderListActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                       android:value=".SearchOrderActivity"
+                       android:value="com.jinjunhang.contract.controller.SearchOrderActivity"
                       ></meta-data>
         </activity>
-        <activity android:name=".OrderMenuActivity">
+        <activity android:name="com.jinjunhang.contract.controller.OrderMenuActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                       android:value=".OrderListActivity"
+                       android:value="com.jinjunhang.contract.controller.OrderListActivity"
 
                 ></meta-data>
         </activity>
 
-        <activity android:name=".OrderBasicInfoActivity">
+        <activity android:name="com.jinjunhang.contract.controller.OrderBasicInfoActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                       android:value=".OrderMenuActivity"></meta-data>
+                       android:value="com.jinjunhang.contract.controller.OrderMenuActivity"></meta-data>
         </activity>
 
-        <activity android:name=".OrderShougouActivity">
+        <activity android:name="com.jinjunhang.contract.controller.OrderShougouActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                       android:value=".OrderMenuActivity"></meta-data>
+                       android:value="com.jinjunhang.contract.controller.OrderMenuActivity"></meta-data>
         </activity>
 
-        <activity android:name=".OrderChuyunActivity">
+        <activity android:name="com.jinjunhang.contract.controller.OrderChuyunActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                       android:value=".OrderMenuActivity"></meta-data>
+                       android:value="com.jinjunhang.contract.controller.OrderMenuActivity"></meta-data>
         </activity>
 
-        <activity android:name=".OrderFukuangActivity">
+        <activity android:name="com.jinjunhang.contract.controller.OrderFukuangActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                       android:value=".OrderMenuActivity"></meta-data>
+                       android:value="com.jinjunhang.contract.controller.OrderMenuActivity"></meta-data>
         </activity>
 
-        <activity android:name=".OrderShouhuiActivity">
+        <activity android:name="com.jinjunhang.contract.controller.OrderShouhuiActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                       android:value=".OrderMenuActivity"></meta-data>
+                       android:value="com.jinjunhang.contract.controller.OrderMenuActivity"></meta-data>
         </activity>
+
+        <activity android:name="com.jinjunhang.contract.controller.MyInfoActivity">
+
+        </activity>
+
+
     </application>
 
 </manifest>

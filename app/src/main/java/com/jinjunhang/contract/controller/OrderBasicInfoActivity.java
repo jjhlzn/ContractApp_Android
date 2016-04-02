@@ -1,4 +1,4 @@
-package com.example.bottombar.sample;
+package com.jinjunhang.contract.controller;
 
 import android.support.v4.app.Fragment;
 

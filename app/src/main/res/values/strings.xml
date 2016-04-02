@@ -24,6 +24,13 @@
     <string name="order_shouhui_amount">金额:</string>
 
 
+    <!-- MyInfoFragment -->
+    <string  name="myinfo_username">用户名</string>
+    <string  name="myinfo_name">姓名</string>
+    <string  name="myinfo_department">部门</string>
+    <string  name="myinfo_logoutbutton">退出登录</string>
+
+
     <string name="date_picker_title">Date of crime:</string>
     <string name="loading">加载中</string>
 

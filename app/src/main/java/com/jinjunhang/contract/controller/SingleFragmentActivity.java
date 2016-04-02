@@ -1,4 +1,4 @@
-package com.example.bottombar.sample;
+package com.jinjunhang.contract.controller;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
+
+import com.example.bottombar.sample.R;
 
 /**
  * Created by lzn on 16/3/19.
