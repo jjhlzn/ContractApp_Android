@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +27,7 @@ public class OrderService extends BasicService {
         return new SearchOrderResponse();
     }
 
-    public SearchOrderResponse search(String keyword, Date startDate, Date endDate, int pageNo, int pageSize) {
+    public SearchOrderResponse search(String keyword, String startDate, String endDate, int pageNo, int pageSize) {
         String url = makeSearchOrderUrl(keyword, startDate, endDate, pageNo, pageSize);
         return sendRequest(url, SearchOrderResponse.class, new ResponseHandler(){
             @Override
@@ -51,8 +52,10 @@ public class OrderService extends BasicService {
         });
     }
 
-    private String makeSearchOrderUrl(String keyword, Date startDate, Date endDate, int pageNo, int pageSize) {
-        return ServiceConfiguration.SeachOrderUrl;
+    private String makeSearchOrderUrl(String keyword, String startDate, String endDate, int pageNo, int pageSize) {
+        return ServiceConfiguration.SeachOrderUrl +
+                String.format("?keyword=%s&startdate=%s&enddate=%s&index=%d&pagesize=%d",
+                        keyword, startDate, endDate, pageNo, pageSize);
     }
 
     public GetOrderBasicInfoResponse getBasicInfo(String orderNo) {

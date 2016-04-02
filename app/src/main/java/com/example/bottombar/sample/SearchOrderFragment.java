@@ -12,8 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.jinjunhang.contract.model.Order;
+import com.jinjunhang.contract.service.OrderQueryObject;
+import com.jinjunhang.contract.service.QueryObject;
 import com.jinjunhang.contract.service.SearchOrderResponse;
 import com.jinjunhang.contract.service.OrderService;
 
@@ -30,33 +33,58 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
     private final static String TAG = "SearchOrderFragment";
 
     public final static String EXTRA_ORDERS = "orders";
+    public final static String EXTRA_QUERYOBJECT = "queryobject";
+
     private static final int REQUEST_START_DATE = 0;
     private static final int REQUEST_END_DATE = 1;
     public final static String DIALOG_DATE = "date";
 
+    private EditText mKeywordEditText;
     private Button mStartDateButton;
     private Button mEndDateButton;
+    private LoadingAnimation mLoading;
+    private int pageSize = 15;
+
+    private OrderQueryObject mQueryObject;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_search_order, container, false);
+        mKeywordEditText = (EditText)v.findViewById(R.id.search_order_keyword);
+
         Button searchButton = (Button)v.findViewById(R.id.search_order_searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SearchOrderTask().execute();
-
+                mLoading.show("");
+                new SearchOrderTask().execute(mKeywordEditText.getText().toString(), mStartDateButton.getText().toString(),
+                        mEndDateButton.getText().toString());
             }
         });
 
-
         Calendar cal = Calendar.getInstance();
-        final Date today = cal.getTime();
-        cal.add(Calendar.MONTH, -1);
-        final Date oneMonthAgo = cal.getTime();
-
+        final Date today;
+        final Date oneMonthAgo;
         SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
+
+        if (mQueryObject != null) {
+            mKeywordEditText.setText(mQueryObject.getKeyword());
+            try {
+                today = dt.parse(mQueryObject.getEndDate());
+                oneMonthAgo = dt.parse(mQueryObject.getStartDate());
+            }
+            catch (Exception ex){
+                //NOT RETURN HERE
+                Log.e(TAG, "NOT RETURN HERE: ", ex);
+                return v;
+            }
+        } else {
+
+            today = cal.getTime();
+            cal.add(Calendar.MONTH, -80);
+            oneMonthAgo = cal.getTime();
+        }
 
         mStartDateButton = (Button)v.findViewById(R.id.search_order_startDate);
         mStartDateButton.setText(dt.format(oneMonthAgo));
@@ -93,18 +121,30 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        mLoading = new LoadingAnimation(getActivity());
+        Intent i = getActivity().getIntent();
+        mQueryObject = (OrderQueryObject)i.getSerializableExtra(EXTRA_QUERYOBJECT);
     }
 
-    private class SearchOrderTask extends AsyncTask<Void, Void, Void> {
+    private class SearchOrderTask extends AsyncTask<String, Void, Void> {
         @Override
-        protected Void doInBackground(Void... params) {
-            SearchOrderResponse resp = new OrderService().search("", null, null, 0, 10);
+        protected Void doInBackground(String... params) {
+            String keyword = params[0];
+            String startDate = params[1];
+            String endDate = params[2];
+            SearchOrderResponse resp = new OrderService().search(keyword, startDate, endDate, 0, pageSize);
             List<Order> orders = resp.getOrders();
             Intent i = new Intent(getActivity(), OrderListActivity.class);
             i.putExtra(EXTRA_ORDERS, (ArrayList<Order>) orders);
+            OrderQueryObject queryObject = new OrderQueryObject();
+            queryObject.setKeyword(keyword);
+            queryObject.setStartDate(startDate);
+            queryObject.setEndDate(endDate);
+            queryObject.setIndex(0);
+            queryObject.setPageSize(pageSize);
+            i.putExtra(EXTRA_QUERYOBJECT, queryObject);
             startActivity(i);
+            mLoading.dismiss();
             return null;
         }
     }

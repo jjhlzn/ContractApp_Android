@@ -25,5 +25,6 @@
 
 
     <string name="date_picker_title">Date of crime:</string>
+    <string name="loading">加载中</string>
 
 </resources>

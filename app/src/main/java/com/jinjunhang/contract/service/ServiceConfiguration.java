@@ -10,7 +10,7 @@ public class ServiceConfiguration {
         public final static int port = 80;
         public final static String serverName2 = "www.jinjunhang.com";
         public final static int port2 = 3000;
-        public final static String SeachOrderUrl = "http://"+ serverName2 + ":" + port2 +"/order/search.json";
+        public final static String SeachOrderUrl = "http://"+ serverName + ":" + port +"/order/search.json";
         public final static String GetOrderPurcaseInfoUrl = "http://"+ serverName2 + ":" + port2 +"/order/getPurchaseInfo.json";
         public final static String GetBasicInfoUrl = "http://"+ serverName2 + ":" + port2 +"/order/getBasicInfo.json";
         public final static String GetOrderChuyunInfoUrl = "http://"+ serverName2 + ":" + port2 +"/order/getChuyunInfo.json";
