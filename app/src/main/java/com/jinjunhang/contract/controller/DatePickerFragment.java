@@ -13,7 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 
-import com.example.bottombar.sample.R;
+import com.jinjunhang.contract.R;
 
 import java.util.Calendar;
 import java.util.Date;

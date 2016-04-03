@@ -14,8 +14,10 @@ import android.widget.ListView;
 import com.jinjunhang.contract.service.GetOrderBasicInfoResponse;
 import com.jinjunhang.contract.service.GetOrderChuyunInfoResponse;
 import com.jinjunhang.contract.service.GetOrderFukuangInfoResponse;
+import com.jinjunhang.contract.service.GetOrderShougouInfoResponse;
 import com.jinjunhang.contract.service.GetOrderShouhuiInfoResponse;
 import com.jinjunhang.contract.service.OrderService;
+import com.jinjunhang.contract.service.ServerResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,7 @@ public class OrderMenuFragment extends android.support.v4.app.ListFragment {
     private List<String> mItems;
 
     private String mOrderNo;
+    private LoadingAnimation mLoading;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,15 +50,13 @@ public class OrderMenuFragment extends android.support.v4.app.ListFragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, mItems);
         setListAdapter(adapter);
 
+        mLoading = new LoadingAnimation(getActivity());
+
         if (NavUtils.getParentActivityName(getActivity()) != null) {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
@@ -79,27 +80,57 @@ public class OrderMenuFragment extends android.support.v4.app.ListFragment {
     }
 
 
-    private class GetBasicInfoTask extends AsyncTask<Void, Void, Void> {
+    private class GetBasicInfoTask extends AsyncTask<Void, Void, GetOrderBasicInfoResponse> {
         @Override
-        protected Void doInBackground(Void... params) {
-            GetOrderBasicInfoResponse resp = new OrderService().getBasicInfo(mOrderNo);
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mLoading.show("");
+        }
+
+        @Override
+        protected GetOrderBasicInfoResponse doInBackground(Void... params) {
+            return new OrderService().getBasicInfo(mOrderNo);
+        }
+
+        @Override
+        protected void onPostExecute(GetOrderBasicInfoResponse resp) {
+            super.onPostExecute(resp);
+            mLoading.dismiss();
+            if (resp.getStatus() == ServerResponse.FAIL) {
+                Utils.showServerErrorDialog(getActivity());
+                return;
+            }
             Intent i = new Intent(getActivity(), OrderBasicInfoActivity.class);
             i.putExtra(OrderBasicInfoFragment.EXTRA_ORDER_BASIC_INFO, resp.getBasicInfo());
-
             startActivity(i);
-            return null;
+
         }
     }
 
-    private class GetShougouInfoTask extends AsyncTask<Void, Void, Void> {
+    private class GetShougouInfoTask extends AsyncTask<Void, Void, GetOrderShougouInfoResponse> {
         @Override
-        protected Void doInBackground(Void... params) {
-            /*
-            GetOrderShougouInfoResponse resp = new OrderService().getShougouInfo(mOrderNo);
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mLoading.show("");
+        }
+
+        @Override
+        protected GetOrderShougouInfoResponse doInBackground(Void... params) {
+            return new OrderService().getShougouInfo(mOrderNo);
+        }
+
+        @Override
+        protected void onPostExecute(GetOrderShougouInfoResponse resp) {
+            super.onPostExecute(resp);
+            mLoading.dismiss();
+            if (resp.getStatus() == ServerResponse.FAIL) {
+                Utils.showServerErrorDialog(getActivity());
+                return;
+            }
             Intent i = new Intent(getActivity(), OrderShougouActivity.class);
             i.putExtra(OrderShougouFragment.EXTRA_SHOUGOU_INFO, resp.getShougouInfo());
-            startActivity(i); */
-            return null;
+            startActivity(i);
+
         }
     }
 

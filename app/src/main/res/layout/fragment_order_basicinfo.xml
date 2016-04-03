@@ -2,13 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical"
-    >
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="55dp"
+        android:layout_marginLeft="20dp"
+        android:gravity="center_vertical"
+        >
         <TextView
+            style="@style/basicInfoRow.name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/order_basicInfo_timeLimit"/>
@@ -19,9 +22,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        style="@style/basicInfoRow"
+        >
         <TextView
+            style="@style/basicInfoRow.name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/order_basicInfo_startPort"/>
@@ -33,9 +37,10 @@
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        style="@style/basicInfoRow"
+        >
         <TextView
+            style="@style/basicInfoRow.name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/order_basicInfo_destPort"/>
@@ -46,9 +51,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        style="@style/basicInfoRow"
+        >
         <TextView
+            style="@style/basicInfoRow.name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/order_basicInfo_shouhuiType"/>
@@ -59,9 +65,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        style="@style/basicInfoRow"
+        >
         <TextView
+            style="@style/basicInfoRow.name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/order_basicInfo_priceRule"/>

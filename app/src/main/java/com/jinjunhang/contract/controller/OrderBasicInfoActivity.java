@@ -11,4 +11,9 @@ public class OrderBasicInfoActivity extends SingleFragmentActivity  {
     protected Fragment createFragment() {
         return new OrderBasicInfoFragment();
     }
+
+    @Override
+    protected String getActivityTitle() {
+        return "合同基本信息";
+    }
 }

@@ -83,7 +83,7 @@ public class OrderService extends BasicService {
         return ServiceConfiguration.GetBasicInfoUrl + "?orderId=" + orderNo;
     }
 
-   /*
+
     public GetOrderShougouInfoResponse getShougouInfo(String orderNo) {
         String url = makeGetOrderShougouInfoUrl(orderNo);
         return sendRequest(url, GetOrderShougouInfoResponse.class, new ResponseHandler() {
@@ -109,9 +109,9 @@ public class OrderService extends BasicService {
         });
     }
 
-    private String makeGetOrderShoug    ouInfoUrl(String orderNo) {
+    private String makeGetOrderShougouInfoUrl(String orderNo) {
         return ServiceConfiguration.GetOrderPurcaseInfoUrl + "?orderId=" + orderNo;
-    } */
+    }
 
     public GetOrderChuyunInfoResponse getChuyunInfo(String orderNo) {
         String url = makeGetOrderChuyunInfoUrl(orderNo);

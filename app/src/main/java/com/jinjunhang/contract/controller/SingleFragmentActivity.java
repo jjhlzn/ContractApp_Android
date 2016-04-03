@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
-import com.example.bottombar.sample.R;
+import com.jinjunhang.contract.R;
 
 /**
  * Created by lzn on 16/3/19.

@@ -3,11 +3,11 @@ package com.jinjunhang.contract.controller;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.bottombar.sample.R;
+import com.jinjunhang.contract.R;
 import com.jinjunhang.contract.model.Order;
 import com.jinjunhang.contract.service.OrderQueryObject;
 import com.jinjunhang.contract.service.OrderService;
@@ -35,21 +35,24 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
 
 
     //用于load more
-    private final int AUTOLOAD_THRESHOLD = 2;
     private OrderAdapter mOrderAdapter;
     private View mFooterView;
     private boolean mIsLoading = false;
     private boolean mMoreDataAvailable = true;
-    private Handler mHandler;
+
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         Intent i = getActivity().getIntent();
         mOrders = (List<Order>) i.getSerializableExtra(SearchOrderFragment.EXTRA_ORDERS);
 
         mQueryObject = (OrderQueryObject)i.getSerializableExtra(SearchOrderFragment.EXTRA_QUERYOBJECT);
+
+        if (NavUtils.getParentActivityName(getActivity()) != null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         mOrderAdapter = new OrderAdapter(mOrders);
         setListAdapter(mOrderAdapter);
@@ -57,88 +60,85 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
             mMoreDataAvailable = false;
         }
 
-        mHandler = new Handler();
-
         ((SingleFragmentActivity) getActivity()).setOnBackPressedListener(this);
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = super.onCreateView(inflater, container, savedInstanceState);
-
-        if (NavUtils.getParentActivityName(getActivity()) != null) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-        return v;
-
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mHandler = new Handler();
 
         mFooterView = LayoutInflater.from(getActivity()).inflate(R.layout.loading_view, null);
+
+        if (mOrders.size() == 0) {
+            mFooterView.findViewById(R.id.loading_progressbar).setVisibility(View.GONE);
+            TextView textView = ((TextView)mFooterView.findViewById(R.id.loading_message));
+            textView.setText("没有找到任何订单");
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+            textView.offsetTopAndBottom(30);
+        }
         getListView().addFooterView(mFooterView, null, false);
         getListView().setOnScrollListener(this);
     }
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        Order order = ((OrderAdapter) getListAdapter()).getItem(position);
 
-        Intent i = new Intent(getActivity(), OrderMenuActivity.class);
-        i.putExtra(OrderMenuFragment.EXTRA_ORDER_NO, order.getContractNo());
-        startActivity(i);
-    }
-
-
-    @Override
-    public void doBack() {
-        Intent i = new Intent(getActivity(), MainActivity2.class);
-        i.putExtra(SearchOrderFragment.EXTRA_QUERYOBJECT, mQueryObject);
-        startActivity(i);
-    }
-
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-    }
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
                          int visibleItemCount, int totalItemCount) {
-        if (!mIsLoading && mMoreDataAvailable) {
-            if (totalItemCount - AUTOLOAD_THRESHOLD <= firstVisibleItem + visibleItemCount) {
-                mIsLoading = true;
-                //Log.d(TAG, "loading more");
+        if (mOrders.size() == 0)
+            return;
 
-                mHandler.post(mAddItemsRunnable);
+        int lastInScreen = firstVisibleItem + visibleItemCount;
+
+        if (!mIsLoading && mMoreDataAvailable) {
+            if (lastInScreen == totalItemCount) {
+                Log.d(TAG, "start loading more");
+                new SearchOrderTask().execute();
             }
         }
 
         if (!mMoreDataAvailable) {
-            //Log.d(TAG, "no more data");
             mFooterView.findViewById(R.id.loading_progressbar).setVisibility(View.GONE);
             ((TextView)mFooterView.findViewById(R.id.loading_message)).setText("已加载全部数据");
 
         }
     }
 
-    private Runnable mAddItemsRunnable = new Runnable() {
+    private class SearchOrderTask extends AsyncTask<Void, Void, SearchOrderResponse> {
         @Override
-        public void run() {
-            mOrderAdapter.LoadMoreOrders();
-            mOrderAdapter.notifyDataSetChanged();
-            mIsLoading = false;
-            //Log.d(TAG, "loading complete");
+        protected SearchOrderResponse doInBackground(Void... params) {
+            mQueryObject.setIndex( mQueryObject.getIndex() + 1);
+
+            return new OrderService().search(mQueryObject.getKeyword(), mQueryObject.getStartDate(),
+                    mQueryObject.getEndDate(), mQueryObject.getIndex(), mQueryObject.getPageSize());
         }
-    };
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mIsLoading = true;
 
+        }
+
+        @Override
+        protected void onPostExecute(SearchOrderResponse resp) {
+            super.onPostExecute(resp);
+
+            if (resp.getStatus() == ServerResponse.FAIL) {
+                mIsLoading = false;
+                Utils.showMessage(getActivity(), "服务器返回出错！");
+                return;
+            }
+
+            List<Order> orders = resp.getOrders();
+            mOrderAdapter.mOrders.addAll(orders);
+
+            if (resp.getTotalNumber() <= mOrderAdapter.getCount()) {
+                mMoreDataAvailable = false;
+            }
+
+            mIsLoading = false;
+            Log.d(TAG, "loading complete");
+
+            mOrderAdapter.addMoreOrders();
+        }
+    }
 
     private class OrderAdapter extends ArrayAdapter<Order> {
         private List<Order> mOrders;
@@ -148,8 +148,8 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
             mOrders = orders;
         }
 
-        public void LoadMoreOrders() {
-            new SearchOrderTask().execute();
+        public void addMoreOrders() {
+            mOrderAdapter.notifyDataSetChanged();
         }
 
         @Override
@@ -188,29 +188,32 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
         }
     }
 
-    private class SearchOrderTask extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... params) {
-            mQueryObject.setIndex( mQueryObject.getIndex() + 1);
-
-            SearchOrderResponse resp = new OrderService().search(mQueryObject.getKeyword(), mQueryObject.getStartDate(), mQueryObject.getEndDate(), mQueryObject.getIndex(), mQueryObject.getPageSize());
-            if (resp.getStatus() == ServerResponse.FAIL) {
-                //TODO: 显示加载失败消息
-                return null;
-            }
-
-            List<Order> orders = resp.getOrders();
-            mOrderAdapter.mOrders.addAll(orders);
-            //Log.d(TAG, "get response from server");
 
 
-            if (resp.getTotalNumber() <= mOrderAdapter.getCount()) {
-                mMoreDataAvailable = false;
-            }
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
 
-            return null;
-        }
     }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Order order = ((OrderAdapter) getListAdapter()).getItem(position);
+
+        Intent i = new Intent(getActivity(), OrderMenuActivity.class);
+        i.putExtra(OrderMenuFragment.EXTRA_ORDER_NO, order.getContractNo());
+        startActivity(i);
+    }
+
+
+    @Override
+    public void doBack() {
+        Intent i = new Intent(getActivity(), MainActivity2.class);
+        i.putExtra(SearchOrderFragment.EXTRA_QUERYOBJECT, mQueryObject);
+        startActivity(i);
+    }
+
+
+
 
 
 }

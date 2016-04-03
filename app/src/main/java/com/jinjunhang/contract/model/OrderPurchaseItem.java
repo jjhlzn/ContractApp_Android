@@ -1,9 +1,11 @@
 package com.jinjunhang.contract.model;
 
+import java.io.Serializable;
+
 /**
  * Created by lzn on 16/3/24.
  */
-public class OrderPurchaseItem {
+public class OrderPurchaseItem implements Serializable{
     private String mContract;
     private String mDate;
     private String mFactory;

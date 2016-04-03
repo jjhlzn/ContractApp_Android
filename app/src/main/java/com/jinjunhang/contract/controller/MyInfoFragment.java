@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.bottombar.sample.R;
+import com.jinjunhang.contract.R;
 
 /**
  * Created by lzn on 16/4/3.

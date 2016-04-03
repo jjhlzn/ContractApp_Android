@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.bottombar.sample.R;
+import com.jinjunhang.contract.R;
 import com.jinjunhang.contract.model.OrderShouhuiInfo;
 
 /**

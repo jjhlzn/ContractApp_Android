@@ -11,4 +11,9 @@ public class OrderShougouActivity extends SingleFragmentActivity {
     protected Fragment createFragment() {
         return new OrderShougouFragment();
     }
+
+    @Override
+    protected String getActivityTitle() {
+        return "合同收购信息";
+    }
 }

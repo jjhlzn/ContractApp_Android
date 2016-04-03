@@ -1,49 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="45dp">
+              android:layout_height="50dp"
+              android:orientation="vertical"
+    >
 
-    <TextView
-        android:id="@+id/order_shougouInfo_contractNo"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_weight="1"
-        android:textSize="10sp"
-        android:gravity="center_vertical"
-        android:textAlignment="center"
-        android:text="contractNo"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp">
+        <TextView
+            android:id="@+id/order_shougouInfo_contractNo"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:gravity="center_vertical|left"
+            android:text="contractNo"/>
 
-
-    <TextView
-        android:id="@+id/order_shougouInfo_date"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_weight="1"
-        android:textSize="10sp"
-        android:gravity="center_vertical"
-        android:textAlignment="center"
-        android:text="date"/>
-
-    <TextView
-        android:id="@+id/order_shougouInfo_factory"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_weight="1"
-        android:textSize="10sp"
-        android:gravity="center_vertical"
-        android:textAlignment="center"
-        android:text="factory"/>
+        <TextView
+            android:id="@+id/order_shougouInfo_amount"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:gravity="center_vertical"
+            android:textAlignment="center"
+            android:text="amount"/>
 
 
-    <TextView
-        android:id="@+id/order_shougouInfo_amount"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_weight="1"
-        android:textSize="10sp"
-        android:gravity="center_vertical"
-        android:textAlignment="center"
-        android:text="amount"/>
+        <TextView
+            android:id="@+id/order_shougouInfo_date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:gravity="center_vertical|right"
+            android:text="date"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp">
+        <TextView
+            android:id="@+id/order_shougouInfo_factory"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:gravity="center_vertical|left"
+            android:text="factory"/>
+    </LinearLayout>
+
+
+
+
+
+
 
 
 

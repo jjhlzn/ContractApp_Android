@@ -31,7 +31,7 @@
     <string  name="myinfo_logoutbutton">退出登录</string>
 
 
-    <string name="date_picker_title">Date of crime:</string>
+    <string name="date_picker_title">选择日期</string>
     <string name="loading">加载中</string>
 
 </resources>

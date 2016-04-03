@@ -3,12 +3,14 @@ package com.jinjunhang.contract.controller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.bottombar.sample.R;
+import com.jinjunhang.contract.R;
 import com.jinjunhang.contract.model.Order;
 import com.jinjunhang.contract.model.OrderPurchaseInfo;
 import com.jinjunhang.contract.model.OrderPurchaseItem;
@@ -33,6 +35,10 @@ public class OrderShougouFragment extends ListFragment {
 
         ShougouAdapter shougouAdapter = new ShougouAdapter(mShougouInfo);
         setListAdapter(shougouAdapter);
+
+        if (NavUtils.getParentActivityName(getActivity()) != null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private class ShougouAdapter extends ArrayAdapter<OrderPurchaseItem> {

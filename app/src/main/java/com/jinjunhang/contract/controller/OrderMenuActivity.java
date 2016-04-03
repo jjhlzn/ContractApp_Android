@@ -11,4 +11,9 @@ public class OrderMenuActivity extends SingleFragmentActivity {
     protected Fragment createFragment() {
         return new OrderMenuFragment();
     }
+
+    @Override
+    protected String getActivityTitle() {
+        return "订单详情";
+    }
 }

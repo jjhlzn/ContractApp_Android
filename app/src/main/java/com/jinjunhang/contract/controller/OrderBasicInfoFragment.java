@@ -3,12 +3,14 @@ package com.jinjunhang.contract.controller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.bottombar.sample.R;
+import com.jinjunhang.contract.R;
 import com.jinjunhang.contract.model.OrderBasicInfo;
 
 /**
@@ -25,6 +27,10 @@ public class OrderBasicInfoFragment extends android.support.v4.app.Fragment {
         super.onCreate(savedInstanceState);
         Intent i = getActivity().getIntent();
         mBasicInfo = (OrderBasicInfo)i.getSerializableExtra(EXTRA_ORDER_BASIC_INFO);
+
+        if (NavUtils.getParentActivityName(getActivity()) != null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Nullable

@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.bottombar.sample.R;
+import com.jinjunhang.contract.R;
 import com.jinjunhang.contract.model.Order;
 import com.jinjunhang.contract.service.OrderQueryObject;
 import com.jinjunhang.contract.service.SearchOrderResponse;
@@ -127,32 +127,46 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
         mQueryObject = (OrderQueryObject)i.getSerializableExtra(EXTRA_QUERYOBJECT);
     }
 
-    private class SearchOrderTask extends AsyncTask<String, Void, Void> {
-        @Override
-        protected Void doInBackground(String... params) {
-            String keyword = params[0];
-            String startDate = params[1];
-            String endDate = params[2];
-            SearchOrderResponse resp = new OrderService().search(keyword, startDate, endDate, 0, pageSize);
+    private class SearchOrderTask extends AsyncTask<String, Void, SearchOrderResponse> {
 
+        private String mKeyword;
+        private String mStartDate;
+        private String mEndDate;
+
+        @Override
+        protected SearchOrderResponse doInBackground(String... params) {
+            mKeyword = params[0];
+            mStartDate = params[1];
+            mEndDate = params[2];
+            SearchOrderResponse resp = new OrderService().search(mKeyword, mStartDate, mEndDate, 0, pageSize);
+
+
+            return resp;
+        }
+
+        @Override
+        protected void onPostExecute(SearchOrderResponse resp) {
+            super.onPostExecute(resp);
+
+            mLoading.dismiss();
             if (resp.getStatus() == ServerResponse.FAIL) {
-                //TODO: 显示加载失败消息
-                return null;
+                Utils.showMessage(getActivity(), "服务器返回出错！");
+                return;
             }
 
             List<Order> orders = resp.getOrders();
             Intent i = new Intent(getActivity(), OrderListActivity.class);
             i.putExtra(EXTRA_ORDERS, (ArrayList<Order>) orders);
             OrderQueryObject queryObject = new OrderQueryObject();
-            queryObject.setKeyword(keyword);
-            queryObject.setStartDate(startDate);
-            queryObject.setEndDate(endDate);
+            queryObject.setKeyword(mKeyword);
+            queryObject.setStartDate(mStartDate);
+            queryObject.setEndDate(mEndDate);
             queryObject.setIndex(0);
             queryObject.setPageSize(pageSize);
             i.putExtra(EXTRA_QUERYOBJECT, queryObject);
             startActivity(i);
-            mLoading.dismiss();
-            return null;
+
+
         }
     }
 
