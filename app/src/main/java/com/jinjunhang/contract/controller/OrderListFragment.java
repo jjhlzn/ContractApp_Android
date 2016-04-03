@@ -98,7 +98,7 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
 
     @Override
     public void doBack() {
-        Intent i = new Intent(getActivity(), SearchOrderActivity.class);
+        Intent i = new Intent(getActivity(), MainActivity2.class);
         i.putExtra(SearchOrderFragment.EXTRA_QUERYOBJECT, mQueryObject);
         startActivity(i);
     }

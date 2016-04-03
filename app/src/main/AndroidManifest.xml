@@ -12,6 +12,10 @@
         <activity
             android:name="com.jinjunhang.contract.controller.MainActivity"
             android:launchMode="singleInstance">
+
+        </activity>
+
+        <activity android:name="com.jinjunhang.contract.controller.MainActivity2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,7 +30,7 @@
 
         <activity android:name="com.jinjunhang.contract.controller.OrderListActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                       android:value="com.jinjunhang.contract.controller.SearchOrderActivity"
+                       android:value="com.jinjunhang.contract.controller.MainActivity2"
                       ></meta-data>
         </activity>
         <activity android:name="com.jinjunhang.contract.controller.OrderMenuActivity">
