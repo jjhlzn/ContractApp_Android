@@ -6,6 +6,14 @@
     <string name="search_order_endDate">结束日期:</string>
     <string name="search_order_searchButton">查询</string>
 
+    <!-- SearchApprovalFragment  -->
+    <string name="search_approval_keyword">关键字:</string>
+    <string name="search_approval_startDate">开始日期:</string>
+    <string name="search_approval_endDate">结束日期:</string>
+    <string name="search_approval_approved">已审批:</string>
+    <string name="search_approval_unapproved">未审批:</string>
+    <string name="search_approval_searchButton">查询</string>
+
     <!-- OrderBasicInfoFragment -->
     <string name="order_basicInfo_timeLimit">装运期限:</string>
     <string name="order_basicInfo_startPort">出运港口:</string>

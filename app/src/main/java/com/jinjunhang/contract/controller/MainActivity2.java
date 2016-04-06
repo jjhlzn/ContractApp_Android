@@ -26,7 +26,7 @@ public class MainActivity2 extends AppCompatActivity {
         mBottomBar = BottomBar.attach(this, savedInstanceState);
         mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
                 new BottomBarFragment(new SearchOrderFragment(), R.drawable.order, "订单"),
-                new BottomBarFragment(new SearchOrderFragment(), R.drawable.shenpi, "审批"),
+                new BottomBarFragment(new ApprovalSearchFragment(), R.drawable.shenpi, "审批"),
                 new BottomBarFragment(new MyInfoFragment(), R.drawable.me, "我")
         );
 
