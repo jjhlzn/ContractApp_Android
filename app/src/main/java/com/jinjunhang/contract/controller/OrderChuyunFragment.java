@@ -3,6 +3,8 @@ package com.jinjunhang.contract.controller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,10 @@ public class OrderChuyunFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (NavUtils.getParentActivityName(getActivity()) != null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         Intent i = getActivity().getIntent();
         mChuyunInfo = (OrderChuyunInfo)i.getSerializableExtra(EXTRA_ORDER_CHUYUN);

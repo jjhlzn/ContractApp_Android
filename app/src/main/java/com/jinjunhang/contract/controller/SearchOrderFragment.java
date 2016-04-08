@@ -34,7 +34,7 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
     private final static String TAG = "SearchOrderFragment";
 
     public final static String EXTRA_ORDERS = "orders";
-    public final static String EXTRA_QUERYOBJECT = "queryobject";
+    public final static String EXTRA_QUERYOBJECT = "orderqueryobject";
 
     private static final int REQUEST_START_DATE = 0;
     private static final int REQUEST_END_DATE = 1;
@@ -59,7 +59,8 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 mLoading.show("");
-                new SearchOrderTask().execute(mKeywordEditText.getText().toString(), mStartDateButton.getText().toString(),
+                new SearchOrderTask().execute(mKeywordEditText.getText().toString(),
+                        mStartDateButton.getText().toString(),
                         mEndDateButton.getText().toString());
             }
         });

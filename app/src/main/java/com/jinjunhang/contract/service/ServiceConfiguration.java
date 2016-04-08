@@ -13,14 +13,14 @@ public class ServiceConfiguration {
         public final static String SeachOrderUrl = "http://"+ serverName + ":" + port +"/order/search.json";
         public final static String GetOrderPurcaseInfoUrl = "http://"+ serverName + ":" + port +"/order/getPurchaseInfo.json";
         public final static String GetBasicInfoUrl = "http://"+ serverName + ":" + port +"/order/getBasicInfo.json";
-        public final static String GetOrderChuyunInfoUrl = "http://"+ serverName2 + ":" + port2 +"/order/getChuyunInfo.json";
-        public final static String GetOrderFukuangInfoUrl = "http://"+ serverName2 + ":" + port2 +"/order/getFukuangInfo.json";
+        public final static String GetOrderChuyunInfoUrl = "http://"+ serverName + ":" + port +"/order/getChuyunInfo.json";
+        public final static String GetOrderFukuangInfoUrl = "http://"+ serverName + ":" + port +"/order/getFukuangInfo.json";
         public final static String GetOrderShouhuiInfoUrl = "http://"+ serverName2 + ":" + port2 +"/order/getShouhuiInfo.json";
 
-        public final static String SeachApprovalUrl = "http://"+serverName+":" + port+"/approval/search.json";
-        public final static String AuditApprovalUrl = "http://"+serverName+":"+port+"/approval/audit.json";
+        public final static String SearchApprovalUrl = "http://"+serverName2+":" + port2+"/approval/search.json";
+        public final static String AuditApprovalUrl = "http://"+serverName2+":"+port2+"/approval/audit.json";
 
-        public final static String LoginUrl = "http://"+serverName+":"+port+"/login/login.json";
+        public final static String LoginUrl = "http://"+serverName2+":"+port2+"/login/login.json";
 }
 
 

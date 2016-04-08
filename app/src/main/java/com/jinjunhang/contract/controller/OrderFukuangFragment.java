@@ -2,6 +2,9 @@ package com.jinjunhang.contract.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +28,33 @@ public class OrderFukuangFragment extends android.support.v4.app.ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (NavUtils.getParentActivityName(getActivity()) != null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         Intent i = getActivity().getIntent();
         mFukuangInfo = (OrderPurchaseInfo)i.getSerializableExtra(EXTRA_ORDER_FUKUANG);
 
         FukuangAdpter adpter = new FukuangAdpter(mFukuangInfo);
         setListAdapter(adpter);
+    }
+
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        View footerView = LayoutInflater.from(getActivity()).inflate(R.layout.loading_view, null);
+
+        if (mFukuangInfo.getItems().size() == 0) {
+            footerView.findViewById(R.id.loading_progressbar).setVisibility(View.GONE);
+            TextView textView = ((TextView)footerView.findViewById(R.id.loading_message));
+            textView.setText("没有找到任何付款信息");
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+            textView.offsetTopAndBottom(30);
+        }
+        getListView().addFooterView(footerView, null, false);
     }
 
     private class FukuangAdpter extends ArrayAdapter<OrderPurchaseItem> {
@@ -55,7 +80,7 @@ public class OrderFukuangFragment extends android.support.v4.app.ListFragment {
             factoryTextView.setText(item.getFactory());
 
             TextView amountTextView = (TextView)convertView.findViewById(R.id.order_shougouInfo_amount);
-            amountTextView.setText(item.getAmount() + "");
+            amountTextView.setText("¥" + String.format("%.2f", item.getAmount()));
 
             return convertView;
         }

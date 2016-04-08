@@ -149,7 +149,7 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
         }
 
         public void addMoreOrders() {
-            mOrderAdapter.notifyDataSetChanged();
+            notifyDataSetChanged();
         }
 
         @Override
@@ -179,7 +179,7 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
             orderNoTextView.setText(order.getOrderNo());
 
             TextView amountTextView = (TextView) convertView.findViewById(R.id.order_list_item_amountTextView);
-            amountTextView.setText(order.getAmount() + "");
+            amountTextView.setText("¥" + String.format("%.2f", order.getAmount()));
 
             TextView guestNameTextView = (TextView) convertView.findViewById(R.id.order_list_item_guestNameTextView);
             guestNameTextView.setText(order.getGuestName());

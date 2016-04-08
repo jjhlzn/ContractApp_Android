@@ -16,6 +16,9 @@ public class OrderPurchaseInfo implements Serializable {
         return mItems;
     }
 
+    public OrderPurchaseInfo() {
+        mItems = new ArrayList<OrderPurchaseItem>();
+    }
 
     public void setItems(List<OrderPurchaseItem> items) {
         mItems = items;

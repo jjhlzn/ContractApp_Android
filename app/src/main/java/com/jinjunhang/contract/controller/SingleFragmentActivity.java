@@ -52,17 +52,29 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
     }
 
     protected OnBackPressedListener onBackPressedListener;
+    protected PreOnBackPressedListiner mPreOnBackPressedListiner;
 
     public interface OnBackPressedListener {
         void doBack();
+    }
+
+    public interface PreOnBackPressedListiner {
+        void handle();
     }
 
     public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
         this.onBackPressedListener = onBackPressedListener;
     }
 
+    public void setPreOnBackPressedListiner(PreOnBackPressedListiner preOnBackPressedListiner) {
+        this.mPreOnBackPressedListiner = preOnBackPressedListiner;
+    }
+
     @Override
     public void onBackPressed() {
+        if (mPreOnBackPressedListiner != null ) {
+            mPreOnBackPressedListiner.handle();
+        }
         if (onBackPressedListener != null)
             onBackPressedListener.doBack();
         else

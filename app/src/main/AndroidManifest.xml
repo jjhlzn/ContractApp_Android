@@ -16,11 +16,7 @@
         </activity>
 
         <activity android:name="com.jinjunhang.contract.controller.MainActivity2">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity android:name="com.jinjunhang.contract.controller.SearchOrderActivity">
@@ -69,6 +65,28 @@
 
         </activity>
 
+        <activity android:name="com.jinjunhang.contract.controller.ApprovalListActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value="com.jinjunhang.contract.controller.MainActivity2"></meta-data>
+        </activity>
+
+        <activity android:name="com.jinjunhang.contract.controller.ApprovalDetailActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value="com.jinjunhang.contract.controller.ApprovalListActivity"></meta-data>
+        </activity>
+
+        <activity android:name="com.jinjunhang.contract.controller.LoginActivity">
+
+        </activity>
+
+
+        <activity android:name="com.jinjunhang.contract.controller.StartActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
     </application>
 

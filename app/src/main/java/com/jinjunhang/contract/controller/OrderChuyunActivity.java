@@ -8,6 +8,11 @@ import android.support.v4.app.Fragment;
 public class OrderChuyunActivity extends SingleFragmentActivity {
 
     @Override
+    protected String getActivityTitle() {
+        return "出运信息";
+    }
+
+    @Override
     protected Fragment createFragment() {
         return new OrderChuyunFragment();
     }

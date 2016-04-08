@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -41,6 +43,22 @@ public class OrderShougouFragment extends ListFragment {
         }
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        View footerView = LayoutInflater.from(getActivity()).inflate(R.layout.loading_view, null);
+
+        if (mShougouInfo.getItems().size() == 0) {
+            footerView.findViewById(R.id.loading_progressbar).setVisibility(View.GONE);
+            TextView textView = ((TextView)footerView.findViewById(R.id.loading_message));
+            textView.setText("没有找到任何收购合同信息");
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+            textView.offsetTopAndBottom(30);
+        }
+        getListView().addFooterView(footerView, null, false);
+    }
+
     private class ShougouAdapter extends ArrayAdapter<OrderPurchaseItem> {
         public ShougouAdapter(OrderPurchaseInfo shougouInfo) {
             super(getActivity(), 0, shougouInfo.getItems());
@@ -64,7 +82,7 @@ public class OrderShougouFragment extends ListFragment {
             factoryTextView.setText(item.getFactory());
 
             TextView amountTextView = (TextView)convertView.findViewById(R.id.order_shougouInfo_amount);
-            amountTextView.setText(item.getAmount() + "");
+            amountTextView.setText("¥" + String.format("%.2f", item.getAmount()));
 
             return convertView;
         }

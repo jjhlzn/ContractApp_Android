@@ -21,7 +21,7 @@ public abstract class BasicService {
 
     private final static String TAG = "BasicService";
 
-    protected abstract ServerResponse createResponse();
+    //protected abstract ServerResponse createResponse();
 
 
     protected <T extends ServerResponse> T sendRequest(String url, Class<T> c, ResponseHandler handler) {
@@ -37,6 +37,7 @@ public abstract class BasicService {
                 resp.setErrorMessage("Server return fail response");
                 return resp;
             }
+            resp.setStatus(ServerResponse.SUCCESS);
 
             return (T)handler.handle(resp, json);
 

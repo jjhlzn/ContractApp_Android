@@ -1,5 +1,6 @@
 package com.jinjunhang.contract.controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -16,6 +17,7 @@ import com.roughike.bottombar.OnTabSelectedListener;
  */
 public class MainActivity2 extends AppCompatActivity {
 
+    public final static String EXTRA_TAB = "selecttab";
     private BottomBar mBottomBar;
 
     @Override
@@ -24,9 +26,12 @@ public class MainActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mBottomBar = BottomBar.attach(this, savedInstanceState);
+        SearchOrderFragment orderFragment = new SearchOrderFragment();
+        ApprovalSearchFragment approvalFragment = new ApprovalSearchFragment();
         mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
-                new BottomBarFragment(new SearchOrderFragment(), R.drawable.order, "订单"),
-                new BottomBarFragment(new ApprovalSearchFragment(), R.drawable.shenpi, "审批"),
+                new BottomBarFragment(orderFragment, R.drawable.order, "订单"),
+                new BottomBarFragment(approvalFragment, R.drawable.shenpi, "审批"),
+                new BottomBarFragment(approvalFragment, R.drawable.ic_friends, "商品"),
                 new BottomBarFragment(new MyInfoFragment(), R.drawable.me, "我")
         );
 
@@ -55,9 +60,30 @@ public class MainActivity2 extends AppCompatActivity {
                         title = "我";
                         break;
                 }
-                ((TextView)getSupportActionBar().getCustomView().findViewById(R.id.actionbar_text)).setText(title);
+                ((TextView) getSupportActionBar().getCustomView().findViewById(R.id.actionbar_text)).setText(title);
+
             }
         });
+
+
+
+        int selectTab = getIntent().getIntExtra(EXTRA_TAB, 0);
+        switch (selectTab) {
+            case 0:
+                if (getIntent().getSerializableExtra(SearchOrderFragment.EXTRA_QUERYOBJECT) != null) {
+                     //orderFragment.set
+
+                }
+                break;
+            case 1:
+                //getIntent().putExtra(ApprovalSearchFragment.EXTRA_QUERYOBJECT, getIntent().getSerializableExtra(App))
+                break;
+        }
+
+
+        mBottomBar.selectTabAtPosition(selectTab, true);
+
+
 
     }
 

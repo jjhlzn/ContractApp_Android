@@ -13,11 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ToggleButton;
 
 import com.jinjunhang.contract.R;
+import com.jinjunhang.contract.model.Approval;
 import com.jinjunhang.contract.model.Order;
+import com.jinjunhang.contract.service.ApprovalQueryObject;
+import com.jinjunhang.contract.service.ApprovalService;
 import com.jinjunhang.contract.service.OrderQueryObject;
 import com.jinjunhang.contract.service.OrderService;
+import com.jinjunhang.contract.service.SearchApprovalResponse;
 import com.jinjunhang.contract.service.SearchOrderResponse;
 import com.jinjunhang.contract.service.ServerResponse;
 
@@ -35,8 +40,9 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment {
 
     private final static String TAG = "ApprovalSearchFragment";
 
-    public final static String EXTRA_APPROVALS = "orders";
-    public final static String EXTRA_QUERYOBJECT = "queryobject";
+    public final static String EXTRA_APPROVALS = "approvals";
+    public final static String EXTRA_QUERYOBJECT = "approvalqueryobject";
+
 
     private static final int REQUEST_START_DATE = 0;
     private static final int REQUEST_END_DATE = 1;
@@ -45,10 +51,12 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment {
     private EditText mKeywordEditText;
     private Button mStartDateButton;
     private Button mEndDateButton;
+    private ToggleButton mContainApproved;
+    private ToggleButton mContainUnapproved;
     private LoadingAnimation mLoading;
     private int pageSize = 15;
 
-    private OrderQueryObject mQueryObject;
+    private ApprovalQueryObject mQueryObject;
 
     @Nullable
     @Override
@@ -61,10 +69,18 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 mLoading.show("");
-                new SearchOrderTask().execute(mKeywordEditText.getText().toString(), mStartDateButton.getText().toString(),
+                //TDOO: userId hardcode
+                new SearchApprovalTask().execute("0001",
+                        mKeywordEditText.getText().toString(),
+                        mContainApproved.isChecked() + "",
+                        mContainUnapproved.isChecked() + "",
+                        mStartDateButton.getText().toString(),
                         mEndDateButton.getText().toString());
             }
         });
+
+        mContainApproved = (ToggleButton)v.findViewById(R.id.search_approval_approved);
+        mContainUnapproved = (ToggleButton)v.findViewById(R.id.search_approval_unapproved);
 
         Calendar cal = Calendar.getInstance();
         final Date today;
@@ -82,6 +98,8 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment {
                 Log.e(TAG, "NOT RETURN HERE: ", ex);
                 return v;
             }
+            mContainApproved.setChecked(mQueryObject.isContainApproved());
+            mContainUnapproved.setChecked(mQueryObject.isContainUnapproved());
         } else {
 
             today = cal.getTime();
@@ -89,7 +107,7 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment {
             oneMonthAgo = cal.getTime();
         }
 
-        mStartDateButton = (Button)v.findViewById(R.id.search_order_startDate);
+        mStartDateButton = (Button)v.findViewById(R.id.search_approval_startDate);
         mStartDateButton.setText(dt.format(oneMonthAgo));
         mStartDateButton.setGravity(Gravity.CENTER);
         mStartDateButton.setOnClickListener(new View.OnClickListener() {
@@ -103,10 +121,10 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment {
             }
         });
 
-        mEndDateButton = (Button)v.findViewById(R.id.search_order_endDate);
+        mEndDateButton = (Button)v.findViewById(R.id.search_approval_endDate);
         mEndDateButton.setText(dt.format(today));
         mEndDateButton.setGravity(Gravity.CENTER);
-        mEndDateButton.setOnClickListener(new View.OnClickListener(){
+        mEndDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "start date button clicked");
@@ -117,6 +135,8 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment {
             }
         });
 
+
+
         return v;
 
     }
@@ -126,28 +146,35 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment {
         super.onCreate(savedInstanceState);
         mLoading = new LoadingAnimation(getActivity());
         Intent i = getActivity().getIntent();
-        mQueryObject = (OrderQueryObject)i.getSerializableExtra(EXTRA_QUERYOBJECT);
+        mQueryObject = (ApprovalQueryObject)i.getSerializableExtra(EXTRA_QUERYOBJECT);
+        Log.d(TAG, String.format("mQueryObject == null --> %s",mQueryObject == null));
     }
 
     private class SearchApprovalTask extends AsyncTask<String, Void, SearchApprovalResponse> {
 
+        private String mUserId;
         private String mKeyword;
         private String mStartDate;
         private String mEndDate;
+        private boolean mContainApproved;
+        private boolean mContainUnapproved;
 
         @Override
-        protected SearchOrderResponse doInBackground(String... params) {
-            mKeyword = params[0];
-            mStartDate = params[1];
-            mEndDate = params[2];
-            SearchOrderResponse resp = new OrderService().search(mKeyword, mStartDate, mEndDate, 0, pageSize);
+        protected SearchApprovalResponse doInBackground(String... params) {
+            mUserId = params[0];
+            mKeyword = params[1];
+            mContainApproved = Boolean.parseBoolean(params[2]);
+            mContainUnapproved = Boolean.parseBoolean(params[3]);
+            mStartDate = params[4];
+            mEndDate = params[5];
 
-
+            SearchApprovalResponse resp = new ApprovalService().search(mUserId, mKeyword, mContainApproved, mContainUnapproved,
+                    mStartDate, mEndDate, 0, pageSize);
             return resp;
         }
 
         @Override
-        protected void onPostExecute(SearchOrderResponse resp) {
+        protected void onPostExecute(SearchApprovalResponse resp) {
             super.onPostExecute(resp);
 
             mLoading.dismiss();
@@ -156,10 +183,12 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment {
                 return;
             }
 
-            List<Order> orders = resp.getOrders();
-            Intent i = new Intent(getActivity(), OrderListActivity.class);
-            i.putExtra(EXTRA_ORDERS, (ArrayList<Order>) orders);
-            OrderQueryObject queryObject = new OrderQueryObject();
+            List<Approval> approvals = resp.getApprovals();
+            Intent i = new Intent(getActivity(), ApprovalListActivity.class);
+            i.putExtra(EXTRA_APPROVALS, (ArrayList<Approval>) approvals);
+            ApprovalQueryObject queryObject = new ApprovalQueryObject();
+            queryObject.setContainApproved(mContainApproved);
+            queryObject.setContainUnapproved(mContainUnapproved);
             queryObject.setKeyword(mKeyword);
             queryObject.setStartDate(mStartDate);
             queryObject.setEndDate(mEndDate);

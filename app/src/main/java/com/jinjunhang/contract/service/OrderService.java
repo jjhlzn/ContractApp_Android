@@ -22,10 +22,7 @@ import java.util.ServiceConfigurationError;
  */
 public class OrderService extends BasicService {
 
-    @Override
-    protected ServerResponse createResponse() {
-        return new SearchOrderResponse();
-    }
+
 
     public SearchOrderResponse search(String keyword, String startDate, String endDate, int pageNo, int pageSize) {
         String url = makeSearchOrderUrl(keyword, startDate, endDate, pageNo, pageSize);
@@ -139,7 +136,7 @@ public class OrderService extends BasicService {
         return sendRequest(url, GetOrderFukuangInfoResponse.class, new ResponseHandler() {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
-                GetOrderShougouInfoResponse resp = (GetOrderShougouInfoResponse)response;
+                GetOrderFukuangInfoResponse resp = (GetOrderFukuangInfoResponse)response;
                 OrderPurchaseInfo shougouInfo = new OrderPurchaseInfo();
                 List<OrderPurchaseItem> items = new ArrayList<OrderPurchaseItem>();
                 shougouInfo.setItems(items);
@@ -153,7 +150,7 @@ public class OrderService extends BasicService {
                     item.setFactory(jsonItem.getString("factory"));
                     items.add(item);
                 }
-                resp.setShougouInfo(shougouInfo);
+                resp.setFukuangInfo(shougouInfo);
                 return resp;
             }
         });

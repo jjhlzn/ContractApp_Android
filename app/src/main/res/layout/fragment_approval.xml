@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/approvalDetailRow"
+        >
+        <TextView
+            style="@style/approvalDetailRow.name"
+            android:text="@string/approval_object"/>
+        <TextView
+            android:id="@+id/approval_detail_object"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/approvalDetailRow"
+        >
+        <TextView
+            style="@style/approvalDetailRow.name"
+            android:text="@string/approval_keyword"/>
+        <TextView
+            android:id="@+id/approval_detail_keyword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/approvalDetailRow"
+        >
+        <TextView
+            style="@style/approvalDetailRow.name"
+            android:text="@string/approval_amount"/>
+        <TextView
+            android:id="@+id/approval_detail_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/approvalDetailRow"
+        >
+        <TextView
+            style="@style/approvalDetailRow.name"
+            android:text="@string/approval_reporter"/>
+        <TextView
+            android:id="@+id/approval_detail_repoter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/approvalDetailRow"
+        >
+        <TextView
+            style="@style/approvalDetailRow.name"
+            android:text="@string/approval_reportDate"/>
+        <TextView
+            android:id="@+id/approval_detail_reportDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/approvalDetailRow"
+        >
+        <TextView
+            style="@style/approvalDetailRow.name"
+            android:text="@string/approval_status"/>
+        <TextView
+            android:id="@+id/approval_detail_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/approvalDetailRow"
+        >
+        <TextView
+            style="@style/approvalDetailRow.name"
+            android:text="@string/approval_result"/>
+        <TextView
+            android:id="@+id/approval_detail_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/approvalDetailRowButton"
+        >
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            >
+        <Button style="@style/button"
+            android:text="@string/approval_pass_button"
+                android:layout_marginLeft="15dp"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/approval_detail_passButton"/>
+
+        <Button style="@style/button"
+                android:text="@string/approval_unpass_button"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:id="@+id/approval_detail_unpassButton"
+            />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

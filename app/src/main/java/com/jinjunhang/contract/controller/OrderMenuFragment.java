@@ -134,36 +134,70 @@ public class OrderMenuFragment extends android.support.v4.app.ListFragment {
         }
     }
 
-    private class GetChuyunInfoTask extends AsyncTask<Void, Void, Void> {
+    private class GetChuyunInfoTask extends AsyncTask<Void, Void, GetOrderChuyunInfoResponse> {
         @Override
-        protected Void doInBackground(Void... params) {
-            GetOrderChuyunInfoResponse resp = new OrderService().getChuyunInfo(mOrderNo);
+        protected GetOrderChuyunInfoResponse doInBackground(Void... params) {
+            return new OrderService().getChuyunInfo(mOrderNo);
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mLoading.show("");
+        }
+
+        @Override
+        protected void onPostExecute(GetOrderChuyunInfoResponse resp) {
+            super.onPostExecute(resp);
+            mLoading.dismiss();
             Intent i = new Intent(getActivity(), OrderChuyunActivity.class);
             i.putExtra(OrderChuyunFragment.EXTRA_ORDER_CHUYUN, resp.getChuyunInfo());
             startActivity(i);
-            return null;
         }
     }
 
-    private class GetFukuangInfoTask extends AsyncTask<Void, Void, Void> {
+    private class GetFukuangInfoTask extends AsyncTask<Void, Void, GetOrderFukuangInfoResponse> {
         @Override
-        protected Void doInBackground(Void... params) {
-            GetOrderFukuangInfoResponse resp = new OrderService().getFukuangInfo(mOrderNo);
+        protected GetOrderFukuangInfoResponse doInBackground(Void... params) {
+            return new OrderService().getFukuangInfo(mOrderNo);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mLoading.show("");
+        }
+
+        @Override
+        protected void onPostExecute(GetOrderFukuangInfoResponse resp) {
+            super.onPostExecute(resp);
+            mLoading.dismiss();
             Intent i = new Intent(getActivity(), OrderFukuangActivity.class);
             i.putExtra(OrderFukuangFragment.EXTRA_ORDER_FUKUANG, resp.getFukuangInfo());
             startActivity(i);
-            return null;
         }
     }
 
-    private class GetShouhuiInfoTask extends AsyncTask<Void, Void, Void> {
+    private class GetShouhuiInfoTask extends AsyncTask<Void, Void, GetOrderShouhuiInfoResponse> {
         @Override
-        protected Void doInBackground(Void... params) {
-            GetOrderShouhuiInfoResponse resp = new OrderService().getShouhuiInfo(mOrderNo);
+        protected GetOrderShouhuiInfoResponse doInBackground(Void... params) {
+            return new OrderService().getShouhuiInfo(mOrderNo);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mLoading.show("");
+        }
+
+        @Override
+        protected void onPostExecute(GetOrderShouhuiInfoResponse resp) {
+            super.onPostExecute(resp);
+            mLoading.dismiss();
             Intent i = new Intent(getActivity(), OrderShouhuiActivity.class);
             i.putExtra(OrderShouhuiFragment.EXTRA_ORDER_SHOUHUI, resp.getShouhuiInfo());
             startActivity(i);
-            return null;
         }
     }
  }

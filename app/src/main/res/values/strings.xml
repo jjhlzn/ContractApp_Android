@@ -33,10 +33,34 @@
 
 
     <!-- MyInfoFragment -->
-    <string  name="myinfo_username">用户名</string>
-    <string  name="myinfo_name">姓名</string>
-    <string  name="myinfo_department">部门</string>
+    <string  name="myinfo_username">用户名:</string>
+    <string  name="myinfo_name">姓名:</string>
+    <string  name="myinfo_department">部门:</string>
     <string  name="myinfo_logoutbutton">退出登录</string>
+
+
+    <!-- ApprovalFragment -->
+    <string name="approval_object">审批对象:</string>
+    <string name="approval_keyword">关键字:</string>
+    <string name="approval_amount">金  额:</string>
+    <string name="approval_reporter">报审人员:</string>
+    <string name="approval_reportDate">报审时间:</string>
+    <string name="approval_status">状  态:</string>
+    <string name="approval_result">审批结果:</string>
+    <string name="approval_pass_button">批准</string>
+    <string name="approval_unpass_button">不批准</string>
+
+
+    <!-- LoginFragment -->
+    <string name="login_loginButton">登    录</string>
+    <string name="login_userName">用户名</string>
+    <string name="login_password">密码</string>
+
+    <!-- StartFragment -->
+    <string name="start_appName">华元ERP</string>
+    <string name="start_forAndroid">For Android</string>
+    <string name="start_copyright">copyright@杭州华元 版权所有</string>
+
 
 
     <string name="date_picker_title">选择日期</string>

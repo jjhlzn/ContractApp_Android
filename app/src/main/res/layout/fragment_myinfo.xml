@@ -5,72 +5,42 @@
               android:orientation="vertical"
     >
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="40dp"
-        android:weightSum="1"
-        android:gravity="center_vertical">
+        style="@style/myInfoRow">
         <TextView
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|right"
+            style="@style/myInfoRow.name"
             android:text="@string/myinfo_username"/>
 
         <TextView
             android:id="@+id/myinfo_username"
-            android:gravity="center_vertical|left"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.89"/>
+            style="@style/myInfoRow.value"/>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="40dp"
-        android:weightSum="1"
-        android:gravity="center_vertical">
+        style="@style/myInfoRow">
 
         <TextView
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|right"
+            style="@style/myInfoRow.name"
             android:text="@string/myinfo_name"
             />
 
         <TextView
             android:id="@+id/myinfo_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical|center"
-            android:layout_weight="0.44"/>
+            style="@style/myInfoRow.value"/>
     </LinearLayout>
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="40dp"
-        android:weightSum="1"
-        android:gravity="center_vertical">
+        style="@style/myInfoRow">
 
         <TextView
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
+            style="@style/myInfoRow.name"
             android:text="@string/myinfo_department"
             />
 
         <TextView
             android:id="@+id/myinfo_department"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical|center"
-            android:layout_weight="0.44"/>
+            style="@style/myInfoRow.value"/>
     </LinearLayout>
 
     <LinearLayout
