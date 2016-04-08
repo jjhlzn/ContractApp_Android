@@ -31,7 +31,7 @@ public class MainActivity2 extends AppCompatActivity {
         mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
                 new BottomBarFragment(orderFragment, R.drawable.order, "订单"),
                 new BottomBarFragment(approvalFragment, R.drawable.shenpi, "审批"),
-                new BottomBarFragment(approvalFragment, R.drawable.ic_friends, "商品"),
+                new BottomBarFragment(approvalFragment, R.drawable.search, "商品"),
                 new BottomBarFragment(new MyInfoFragment(), R.drawable.me, "我")
         );
 
