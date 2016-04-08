@@ -28,9 +28,7 @@ public class OrderFukuangFragment extends android.support.v4.app.ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (NavUtils.getParentActivityName(getActivity()) != null) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+
 
         Intent i = getActivity().getIntent();
         mFukuangInfo = (OrderPurchaseInfo)i.getSerializableExtra(EXTRA_ORDER_FUKUANG);

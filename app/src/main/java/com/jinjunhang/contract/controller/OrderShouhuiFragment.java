@@ -26,9 +26,7 @@ public class OrderShouhuiFragment extends android.support.v4.app.Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (NavUtils.getParentActivityName(getActivity()) != null) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+
 
         Intent i = getActivity().getIntent();
         mShouhuiInfo = (OrderShouhuiInfo)i.getSerializableExtra(EXTRA_ORDER_SHOUHUI);

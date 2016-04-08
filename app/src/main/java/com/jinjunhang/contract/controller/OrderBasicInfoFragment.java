@@ -28,9 +28,6 @@ public class OrderBasicInfoFragment extends android.support.v4.app.Fragment {
         Intent i = getActivity().getIntent();
         mBasicInfo = (OrderBasicInfo)i.getSerializableExtra(EXTRA_ORDER_BASIC_INFO);
 
-        if (NavUtils.getParentActivityName(getActivity()) != null) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
     }
 
     @Nullable

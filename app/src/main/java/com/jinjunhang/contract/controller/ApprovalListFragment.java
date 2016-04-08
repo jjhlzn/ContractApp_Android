@@ -54,9 +54,6 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
 
         mQueryObject = (ApprovalQueryObject)i.getSerializableExtra(ApprovalSearchFragment.EXTRA_QUERYOBJECT);
 
-        if (NavUtils.getParentActivityName(getActivity()) != null) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
 
         mApprovalAdapter = new ApprovalAdapter(mApprovals);
         setListAdapter(mApprovalAdapter);
@@ -111,8 +108,7 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
         protected SearchApprovalResponse doInBackground(Void... params) {
             mQueryObject.setIndex(mQueryObject.getIndex() + 1);
 
-            //TODO: UserId hardcode
-            return new ApprovalService().search("0001", mQueryObject.getKeyword(), mQueryObject.isContainApproved(),
+            return new ApprovalService().search(PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_LOGIN_USERNAME_KEY, ""), mQueryObject.getKeyword(), mQueryObject.isContainApproved(),
                     mQueryObject.isContainUnapproved(), mQueryObject.getStartDate(),
                     mQueryObject.getEndDate(), mQueryObject.getIndex(), mQueryObject.getPageSize());
         }

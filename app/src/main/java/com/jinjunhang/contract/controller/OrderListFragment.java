@@ -50,9 +50,7 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
 
         mQueryObject = (OrderQueryObject)i.getSerializableExtra(SearchOrderFragment.EXTRA_QUERYOBJECT);
 
-        if (NavUtils.getParentActivityName(getActivity()) != null) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+
 
         mOrderAdapter = new OrderAdapter(mOrders);
         setListAdapter(mOrderAdapter);

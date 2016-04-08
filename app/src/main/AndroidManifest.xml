@@ -88,6 +88,16 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="com.jinjunhang.contract.controller.ProductSearchActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value="com.jinjunhang.contract.controller.MainActivity2"></meta-data>
+        </activity>
+
+        <activity android:name="com.jinjunhang.contract.controller.ProductDetailActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value="com.jinjunhang.contract.controller.MainActivity2"></meta-data>
+        </activity>
+
     </application>
 
 </manifest>

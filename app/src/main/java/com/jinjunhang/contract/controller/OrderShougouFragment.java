@@ -38,9 +38,7 @@ public class OrderShougouFragment extends ListFragment {
         ShougouAdapter shougouAdapter = new ShougouAdapter(mShougouInfo);
         setListAdapter(shougouAdapter);
 
-        if (NavUtils.getParentActivityName(getActivity()) != null) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+
     }
 
     @Override

@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/lzn/Downloads/zxing-android-embedded-master/zxing-android-embedded/build/intermediates/res/merged/release/layout/zxing_barcode_scanner.xml",
+        "source": "/Users/lzn/Downloads/zxing-android-embedded-master/zxing-android-embedded/res/layout/zxing_barcode_scanner.xml"
+    },
+    {
+        "merged": "/Users/lzn/Downloads/zxing-android-embedded-master/zxing-android-embedded/build/intermediates/res/merged/release/layout/zxing_capture.xml",
+        "source": "/Users/lzn/Downloads/zxing-android-embedded-master/zxing-android-embedded/res/layout/zxing_capture.xml"
+    }
+]

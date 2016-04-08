@@ -52,9 +52,7 @@ public class OrderMenuFragment extends android.support.v4.app.ListFragment {
 
         mLoading = new LoadingAnimation(getActivity());
 
-        if (NavUtils.getParentActivityName(getActivity()) != null) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+
     }
 
 

@@ -61,6 +61,16 @@
     <string name="start_forAndroid">For Android</string>
     <string name="start_copyright">copyright@杭州华元 版权所有</string>
 
+    <!-- ProductDetailFragment -->
+    <string name="product_chineseName">中文名称:</string>
+    <string name="product_englishName">英文名称:</string>
+    <string name="product_huohao">货号:</string>
+    <string name="product_xinghao">规格型号:</string>
+    <string name="product_chineseDesc">中文描述:</string>
+    <string name="product_englishDesc">英文描述:</string>
+    <string name="product_chengbenPrice">标准成本价:</string>
+    <string name="product_sellPrice">标准销售价:</string>
+
 
 
     <string name="date_picker_title">选择日期</string>

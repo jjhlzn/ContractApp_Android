@@ -3,11 +3,14 @@ package com.jinjunhang.contract.controller;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.jinjunhang.contract.R;
@@ -28,10 +31,6 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        //setSupportActionBar(toolbar);
-        //setActionBar(toolbar);
 
         setContentView(R.layout.activity_fragment);
 
@@ -45,9 +44,23 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
                     .commit();
         }
 
+
+
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
         ((TextView)getSupportActionBar().getCustomView().findViewById(R.id.actionbar_text)).setText(getActivityTitle());
+        ((ImageButton)getSupportActionBar().getCustomView().findViewById(R.id.actionbar_searchButton)).setVisibility(View.INVISIBLE);
+        if (NavUtils.getParentActivityName(this) == null) {
+            getSupportActionBar().getCustomView().findViewById(R.id.actionbar_back_button).setVisibility(View.INVISIBLE);
+        } else {
+            ImageButton backButton = (ImageButton)getSupportActionBar().getCustomView().findViewById(R.id.actionbar_back_button);
+            backButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+        }
 
     }
 
@@ -66,15 +79,10 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
         this.onBackPressedListener = onBackPressedListener;
     }
 
-    public void setPreOnBackPressedListiner(PreOnBackPressedListiner preOnBackPressedListiner) {
-        this.mPreOnBackPressedListiner = preOnBackPressedListiner;
-    }
 
     @Override
     public void onBackPressed() {
-        if (mPreOnBackPressedListiner != null ) {
-            mPreOnBackPressedListiner.handle();
-        }
+
         if (onBackPressedListener != null)
             onBackPressedListener.doBack();
         else
