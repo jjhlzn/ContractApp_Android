@@ -5,8 +5,7 @@ package com.jinjunhang.contract.service;
  */
 public class ServiceConfiguration {
         //public final static String serverName = "localhost"
-        public final static String serverName = "jjhtest.hengdianworld" +
-                "Ø.com";
+        public final static String serverName = "jjhtest.hengdianworld.com";
 
         public final static int port = 80;
         public final static String serverName2 = "www.jinjunhang.com";
@@ -23,7 +22,7 @@ public class ServiceConfiguration {
 
         public final static String LoginUrl = "http://"+serverName2+":"+port2+"/login/login.json";
 
-        public final static String GetProductUrl = "http://" + serverName2 + ":" + port2 + "/product/search.json";
+        public final static String GetProductUrl = "http://" + serverName + ":" + port + "/product/search.json";
 
 }
 

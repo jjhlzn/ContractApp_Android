@@ -51,8 +51,8 @@ public class ProductDetailFragment extends android.support.v4.app.Fragment imple
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mLoading = new LoadingAnimation(getActivity());
-        //new GetProductTask().execute();
-        new DownloadImageTask().execute();
+        new GetProductTask().execute();
+        //new DownloadImageTask().execute();
     }
 
     class GetProductTask extends AsyncTask<Void, Void, GetProductResponse> {
@@ -85,11 +85,12 @@ public class ProductDetailFragment extends android.support.v4.app.Fragment imple
             ((TextView)getActivity().findViewById(R.id.product_sellPrice)).setText("¥" + String.format("%.2f", product.getSellPrice()));
             ((TextView)getActivity().findViewById(R.id.product_chineseDesc)).setText(product.getChineseDesc());
             ((TextView)getActivity().findViewById(R.id.product_englishDesc)).setText(product.getEnglishDesc());
+
         }
 
         @Override
         protected GetProductResponse doInBackground(Void... params) {
-            return new ProductService().GetProductById(mProductId);
+            return new ProductService().GetProductById("");
         }
     }
 

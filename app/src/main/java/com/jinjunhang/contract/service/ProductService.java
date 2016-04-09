@@ -28,6 +28,10 @@ public class ProductService extends BasicService {
                     product.setEnglishDesc(productJson.getString("englishDesc"));
                     product.setChengbenPrice(productJson.getDouble("chengbenPrice"));
                     product.setSellPrice(productJson.getDouble("sellPrice"));
+                    boolean isImageExist = productJson.getBoolean("hasImage");
+                    if (isImageExist) {
+                        //productJson.get
+                    }
                     resp.setProduct(product);
                 }
                 return resp;

@@ -11,76 +11,91 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.jinjunhang.contract.controller.MainActivity"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name="com.jinjunhang.contract.controller.MainActivity2">
+        <activity android:name="com.jinjunhang.contract.controller.MainActivity2"
+                  android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name="com.jinjunhang.contract.controller.SearchOrderActivity">
+        <activity android:name="com.jinjunhang.contract.controller.SearchOrderActivity"
+                  android:screenOrientation="portrait">
 
 
         </activity>
 
-        <activity android:name="com.jinjunhang.contract.controller.OrderListActivity">
+        <activity android:name="com.jinjunhang.contract.controller.OrderListActivity"
+                  android:screenOrientation="portrait">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value="com.jinjunhang.contract.controller.MainActivity2"
                       ></meta-data>
         </activity>
-        <activity android:name="com.jinjunhang.contract.controller.OrderMenuActivity">
+        <activity android:name="com.jinjunhang.contract.controller.OrderMenuActivity"
+                  android:screenOrientation="portrait">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value="com.jinjunhang.contract.controller.OrderListActivity"
 
                 ></meta-data>
         </activity>
 
-        <activity android:name="com.jinjunhang.contract.controller.OrderBasicInfoActivity">
+        <activity android:name="com.jinjunhang.contract.controller.OrderBasicInfoActivity"
+                  android:screenOrientation="portrait">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value="com.jinjunhang.contract.controller.OrderMenuActivity"></meta-data>
         </activity>
 
-        <activity android:name="com.jinjunhang.contract.controller.OrderShougouActivity">
+        <activity android:name="com.jinjunhang.contract.controller.OrderShougouActivity"
+                  android:screenOrientation="portrait">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value="com.jinjunhang.contract.controller.OrderMenuActivity"></meta-data>
         </activity>
 
-        <activity android:name="com.jinjunhang.contract.controller.OrderChuyunActivity">
+        <activity android:name="com.jinjunhang.contract.controller.OrderChuyunActivity"
+                  android:screenOrientation="portrait">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value="com.jinjunhang.contract.controller.OrderMenuActivity"></meta-data>
         </activity>
 
-        <activity android:name="com.jinjunhang.contract.controller.OrderFukuangActivity">
+        <activity android:name="com.jinjunhang.contract.controller.OrderFukuangActivity"
+                  android:screenOrientation="portrait">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value="com.jinjunhang.contract.controller.OrderMenuActivity"></meta-data>
         </activity>
 
-        <activity android:name="com.jinjunhang.contract.controller.OrderShouhuiActivity">
+        <activity android:name="com.jinjunhang.contract.controller.OrderShouhuiActivity"
+                  android:screenOrientation="portrait">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value="com.jinjunhang.contract.controller.OrderMenuActivity"></meta-data>
         </activity>
 
-        <activity android:name="com.jinjunhang.contract.controller.MyInfoActivity">
+        <activity android:name="com.jinjunhang.contract.controller.MyInfoActivity"
+                  android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name="com.jinjunhang.contract.controller.ApprovalListActivity">
+        <activity android:name="com.jinjunhang.contract.controller.ApprovalListActivity"
+                  android:screenOrientation="portrait">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value="com.jinjunhang.contract.controller.MainActivity2"></meta-data>
         </activity>
 
-        <activity android:name="com.jinjunhang.contract.controller.ApprovalDetailActivity">
+        <activity android:name="com.jinjunhang.contract.controller.ApprovalDetailActivity"
+                  android:screenOrientation="portrait">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value="com.jinjunhang.contract.controller.ApprovalListActivity"></meta-data>
         </activity>
 
-        <activity android:name="com.jinjunhang.contract.controller.LoginActivity">
+        <activity android:name="com.jinjunhang.contract.controller.LoginActivity"
+                  android:screenOrientation="portrait">
 
         </activity>
 
 
-        <activity android:name="com.jinjunhang.contract.controller.StartActivity">
+        <activity android:name="com.jinjunhang.contract.controller.StartActivity"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -88,12 +103,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.jinjunhang.contract.controller.ProductSearchActivity">
+        <activity android:name="com.jinjunhang.contract.controller.ProductSearchActivity"
+                  android:screenOrientation="portrait">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value="com.jinjunhang.contract.controller.MainActivity2"></meta-data>
         </activity>
 
-        <activity android:name="com.jinjunhang.contract.controller.ProductDetailActivity">
+        <activity android:name="com.jinjunhang.contract.controller.ProductDetailActivity"
+                  android:screenOrientation="portrait">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value="com.jinjunhang.contract.controller.MainActivity2"></meta-data>
         </activity>
