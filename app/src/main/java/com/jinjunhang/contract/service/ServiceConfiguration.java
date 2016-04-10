@@ -17,8 +17,8 @@ public class ServiceConfiguration {
         public final static String GetOrderFukuangInfoUrl = "http://"+ serverName + ":" + port +"/order/getFukuangInfo.json";
         public final static String GetOrderShouhuiInfoUrl = "http://"+ serverName2 + ":" + port2 +"/order/getShouhuiInfo.json";
 
-        public final static String SearchApprovalUrl = "http://"+serverName2+":" + port2+"/approval/search.json";
-        public final static String AuditApprovalUrl = "http://"+serverName2+":"+port2+"/approval/audit.json";
+        public final static String SearchApprovalUrl = "http://"+serverName+":" + port+"/approval/search.json";
+        public final static String AuditApprovalUrl = "http://"+serverName+":"+port+"/approval/audit.json";
 
         public final static String LoginUrl = "http://"+serverName2+":"+port2+"/login/login.json";
 

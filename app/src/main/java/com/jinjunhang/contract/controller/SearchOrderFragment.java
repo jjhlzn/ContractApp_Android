@@ -44,7 +44,6 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
     private Button mStartDateButton;
     private Button mEndDateButton;
     private LoadingAnimation mLoading;
-    private int pageSize = 15;
 
     private OrderQueryObject mQueryObject;
 
@@ -139,7 +138,7 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
             mKeyword = params[0];
             mStartDate = params[1];
             mEndDate = params[2];
-            SearchOrderResponse resp = new OrderService().search(mKeyword, mStartDate, mEndDate, 0, pageSize);
+            SearchOrderResponse resp = new OrderService().search(mKeyword, mStartDate, mEndDate, 0, Utils.PAGESIZE_ORDER);
 
 
             return resp;
@@ -163,7 +162,7 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
             queryObject.setStartDate(mStartDate);
             queryObject.setEndDate(mEndDate);
             queryObject.setIndex(0);
-            queryObject.setPageSize(pageSize);
+            queryObject.setPageSize(Utils.PAGESIZE_ORDER);
             i.putExtra(EXTRA_QUERYOBJECT, queryObject);
             startActivity(i);
 

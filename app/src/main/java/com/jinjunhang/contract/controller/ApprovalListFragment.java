@@ -26,6 +26,11 @@ import com.jinjunhang.contract.service.SearchApprovalResponse;
 import com.jinjunhang.contract.service.SearchOrderResponse;
 import com.jinjunhang.contract.service.ServerResponse;
 
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,6 +38,8 @@ import java.util.List;
  */
 public class ApprovalListFragment extends android.support.v4.app.ListFragment implements SingleFragmentActivity.OnBackPressedListener, AbsListView.OnScrollListener {
     private static final String TAG = "ApprovalListFragment";
+
+    public static final String EXTRA_FROMSEARCH = "extra_fromsearch";
     private List<Approval> mApprovals;
     private ApprovalQueryObject mQueryObject;
 
@@ -40,67 +47,114 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
     //用于load more
     private ApprovalAdapter mApprovalAdapter;
     private View mFooterView;
-    private boolean mIsLoading = false;
-    private boolean mMoreDataAvailable = true;
+    private boolean mIsLoading;
+    private boolean mMoreDataAvailable;
 
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d(TAG, "onActivityCreated");
+        Log.d(TAG, "onActivityCreated called");
 
-        Intent i = getActivity().getIntent();
-        mApprovals = (List<Approval>) i.getSerializableExtra(ApprovalSearchFragment.EXTRA_APPROVALS);
+        //Log.d(TAG, "mApprovals = " + mApprovals);
 
-        mQueryObject = (ApprovalQueryObject)i.getSerializableExtra(ApprovalSearchFragment.EXTRA_QUERYOBJECT);
+        if (mQueryObject == null) {
+            Intent i = getActivity().getIntent();
+            //mApprovals = (List<Approval>) i.getSerializableExtra(ApprovalSearchFragment.EXTRA_APPROVALS);
+            mQueryObject = (ApprovalQueryObject) i.getSerializableExtra(ApprovalSearchFragment.EXTRA_QUERYOBJECT);
+            if (i.getBooleanExtra(EXTRA_FROMSEARCH, false)) {
+                    mMoreDataAvailable = true;
+            }
+        }
 
+        Log.d(TAG, "mApprovals = " + mApprovals);
+
+        if (mQueryObject == null) {
+            createQueryObject();
+        }
+
+        Log.d(TAG, "mMoreDataAvailable = " + mMoreDataAvailable);
+        initLoadApprovals();
+
+    }
+
+    private void createQueryObject() {
+        mQueryObject = new ApprovalQueryObject();
+
+        Calendar cal = Calendar.getInstance();
+        final Date today;
+        final Date oneMonthAgo;
+        SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
+        today = cal.getTime();
+        //TODO: 修改一个月之前的时间
+        cal.add(Calendar.MONTH, -80);
+        oneMonthAgo = cal.getTime();
+
+        mQueryObject.setKeyword("");
+        mQueryObject.setStartDate(dt.format(oneMonthAgo));
+        mQueryObject.setEndDate(dt.format(today));
+
+
+        mQueryObject.setPageSize(Utils.PAGESIZE_APPROVAL);
+        mQueryObject.setContainApproved(false);
+        mQueryObject.setContainUnapproved(true);
+
+        mMoreDataAvailable = true;
+    }
+
+    private void initLoadApprovals() {
+        Log.d(TAG, "initLoadApprovals called");
+
+        if (mApprovals == null)
+            mApprovals = new ArrayList<>();
 
         mApprovalAdapter = new ApprovalAdapter(mApprovals);
         setListAdapter(mApprovalAdapter);
-        if (mApprovals.size() == 0) {
-            mMoreDataAvailable = false;
-        }
-
-        ((SingleFragmentActivity) getActivity()).setOnBackPressedListener(this);
 
 
+        setFootView();
+
+    }
+
+    private void setFootView() {
         mFooterView = LayoutInflater.from(getActivity()).inflate(R.layout.loading_view, null);
 
-        if (mApprovals.size() == 0) {
-            mFooterView.findViewById(R.id.loading_progressbar).setVisibility(View.GONE);
-            TextView textView = ((TextView)mFooterView.findViewById(R.id.loading_message));
-            textView.setText("没有找到任何审批");
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-            textView.offsetTopAndBottom(30);
-        }
+        resetFootView();
         getListView().addFooterView(mFooterView, null, false);
         getListView().setOnScrollListener(this);
     }
 
-
+    private void resetFootView() {
+        if (!mMoreDataAvailable) {
+            mFooterView.findViewById(R.id.loading_progressbar).setVisibility(View.GONE);
+            if (mApprovals.size() > 0)
+                ((TextView)mFooterView.findViewById(R.id.loading_message)).setText("已加载全部数据");
+            else {
+                ((TextView) mFooterView.findViewById(R.id.loading_message)).setText("没有找到任何审批");
+                ((TextView) mFooterView.findViewById(R.id.loading_message)).setTextSize(15);
+            }
+        }
+    }
 
 
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
                          int visibleItemCount, int totalItemCount) {
-        if (mApprovals.size() == 0)
+
+        if (!mMoreDataAvailable)
             return;
 
         int lastInScreen = firstVisibleItem + visibleItemCount;
 
-        if (!mIsLoading && mMoreDataAvailable) {
+        if (!mIsLoading) {
             if (lastInScreen == totalItemCount) {
                 Log.d(TAG, "start loading more");
                 new SearchApprovalTask().execute();
             }
         }
 
-        if (!mMoreDataAvailable) {
-            mFooterView.findViewById(R.id.loading_progressbar).setVisibility(View.GONE);
-            ((TextView)mFooterView.findViewById(R.id.loading_message)).setText("已加载全部数据");
 
-        }
     }
 
     private class SearchApprovalTask extends AsyncTask<Void, Void, SearchApprovalResponse> {
@@ -141,6 +195,8 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
             Log.d(TAG, "loading complete");
 
             mApprovalAdapter.addMoreOrders();
+
+            resetFootView();
         }
     }
 
@@ -204,8 +260,6 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
 
 
 
-
-
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
 
@@ -263,4 +317,7 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
         i.putExtra(MainActivity2.EXTRA_TAB, 1);
         startActivity(i);
     }
+
+
+
 }

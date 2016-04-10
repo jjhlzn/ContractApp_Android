@@ -53,8 +53,8 @@ public class OrderShougouFragment extends ListFragment {
             textView.setText("没有找到任何收购合同信息");
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
             textView.offsetTopAndBottom(30);
+            getListView().addFooterView(footerView, null, false);
         }
-        getListView().addFooterView(footerView, null, false);
     }
 
     private class ShougouAdapter extends ArrayAdapter<OrderPurchaseItem> {

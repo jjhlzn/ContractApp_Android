@@ -51,8 +51,9 @@ public class OrderFukuangFragment extends android.support.v4.app.ListFragment {
             textView.setText("没有找到任何付款信息");
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
             textView.offsetTopAndBottom(30);
+            getListView().addFooterView(footerView, null, false);
         }
-        getListView().addFooterView(footerView, null, false);
+
     }
 
     private class FukuangAdpter extends ArrayAdapter<OrderPurchaseItem> {

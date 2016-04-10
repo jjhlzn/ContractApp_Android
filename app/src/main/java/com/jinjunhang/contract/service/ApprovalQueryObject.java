@@ -10,7 +10,7 @@ public class ApprovalQueryObject extends QueryObject {
     private String mKeyword;
     private String mStartDate;
     private String mEndDate;
-    private int index;
+    private int index = -1;
     private int pageSize;
 
     public String getKeyword() {

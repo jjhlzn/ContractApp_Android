@@ -27,6 +27,14 @@
 
         </activity>
 
+        <activity android:name="com.jinjunhang.contract.controller.ApprovalSearchActivity"
+                  android:screenOrientation="portrait">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value="com.jinjunhang.contract.controller.MainActivity2"
+                ></meta-data>
+
+        </activity>
+
         <activity android:name="com.jinjunhang.contract.controller.OrderListActivity"
                   android:screenOrientation="portrait">
             <meta-data android:name="android.support.PARENT_ACTIVITY"

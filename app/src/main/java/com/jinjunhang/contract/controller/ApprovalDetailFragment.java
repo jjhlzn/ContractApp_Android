@@ -41,9 +41,7 @@ public class ApprovalDetailFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_approval, container, false);
 
-        if (NavUtils.getParentActivityName(getActivity()) != null) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+
         mLoading = new LoadingAnimation(getActivity());
 
         ((ApprovalDetailActivity)getActivity()).setOnBackPressedListener(new ApprovalDetailOnBackPressedListener());
