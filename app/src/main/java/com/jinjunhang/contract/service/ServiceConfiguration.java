@@ -23,6 +23,7 @@ public class ServiceConfiguration {
         public final static String LoginUrl = "http://"+serverName2+":"+port2+"/login/login.json";
 
         public final static String GetProductUrl = "http://" + serverName + ":" + port + "/product/search.json";
+        public final static String GetProductImageUrl = "http://" + serverName + ":" + port + "/product/getImage.json";
 
 }
 

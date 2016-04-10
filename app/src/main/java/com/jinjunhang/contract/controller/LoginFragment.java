@@ -38,6 +38,9 @@ public class LoginFragment extends android.support.v4.app.Fragment {
 
         mUserNameEditText.setRawInputType(Configuration.KEYBOARD_QWERTY);
 
+        //mUserNameEditText.setHintTextColor(0x7d7c7c);
+        //mPasswordEditText.setHintTextColor(0x7d7c7c);
+
         Button loginButton = (Button)v.findViewById(R.id.loign_loginButton);
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override

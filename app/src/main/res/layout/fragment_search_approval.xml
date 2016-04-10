@@ -12,14 +12,19 @@
             android:gravity="center_vertical|right"
             android:text="@string/search_approval_keyword"/>
 
+
         <EditText
             android:id="@+id/search_approval_keyword"
-            android:gravity="center_vertical|left"
             android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical|left"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.89"
-            android:lines="1"/>
+            android:padding="5dip"
+            android:background="@drawable/rounded_edittext"
+            android:textCursorDrawable="@null"
+            android:lines="1"
+            android:inputType="text"/>
 
     </LinearLayout>
 
@@ -39,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical|center"
-            android:layout_weight="0.44"/>
+            android:layout_weight="0.20"/>
     </LinearLayout>
 
 
@@ -59,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical|center"
-            android:layout_weight="0.44"/>
+            android:layout_weight="0.20"/>
     </LinearLayout>
 
     <LinearLayout
@@ -71,16 +76,12 @@
             android:text="@string/search_approval_unapproved"
             />
 
-        <ToggleButton
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="New ToggleButton"
+        <com.kyleduo.switchbutton.SwitchButton
             android:id="@+id/search_approval_unapproved"
-            android:checked="true"
-            android:buttonTint="#0e42ee"
-            />
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
@@ -95,12 +96,12 @@
             android:text="@string/search_approval_approved"
             />
 
-        <ToggleButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/search_approval_approved"
             android:layout_marginLeft="10dp"
-            android:text="New ToggleButton"
-            android:id="@+id/search_approval_approved"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <LinearLayout

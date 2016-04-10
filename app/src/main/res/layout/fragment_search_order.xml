@@ -18,12 +18,16 @@
 
         <EditText
             android:id="@+id/search_order_keyword"
-            android:gravity="center_vertical|left"
             android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical|left"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.89"
-            android:lines="1"/>
+            android:padding="5dip"
+            android:background="@drawable/rounded_edittext"
+            android:textCursorDrawable="@null"
+            android:lines="1"
+            android:inputType="text"/>
 
     </LinearLayout>
 
@@ -47,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical|center"
-            android:layout_weight="0.44"/>
+            android:layout_weight="0.2"/>
     </LinearLayout>
 
 
@@ -71,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical|center"
-            android:layout_weight="0.44"/>
+            android:layout_weight="0.2"/>
     </LinearLayout>
 
     <LinearLayout

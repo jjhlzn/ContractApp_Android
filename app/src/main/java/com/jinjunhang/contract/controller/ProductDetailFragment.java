@@ -18,6 +18,7 @@ import com.jinjunhang.contract.model.Product;
 import com.jinjunhang.contract.service.GetProductResponse;
 import com.jinjunhang.contract.service.ProductService;
 import com.jinjunhang.contract.service.ServerResponse;
+import com.jinjunhang.contract.service.ServiceConfiguration;
 
 import java.io.InputStream;
 
@@ -52,7 +53,7 @@ public class ProductDetailFragment extends android.support.v4.app.Fragment imple
         super.onActivityCreated(savedInstanceState);
         mLoading = new LoadingAnimation(getActivity());
         new GetProductTask().execute();
-        //new DownloadImageTask().execute();
+        new GetImageTask().execute();
     }
 
     class GetProductTask extends AsyncTask<Void, Void, GetProductResponse> {
@@ -94,16 +95,17 @@ public class ProductDetailFragment extends android.support.v4.app.Fragment imple
         }
     }
 
-     class DownloadImageTask extends AsyncTask<Void, Void, Bitmap> {
+     class GetImageTask extends AsyncTask<Void, Void, Bitmap> {
 
          @Override
          protected void onPreExecute() {
              super.onPreExecute();
-             mLoading.show("");
          }
 
          protected Bitmap doInBackground(Void... params) {
-            String urldisplay = "http://www.cnpps.org/attachement/jpg/site15/20140922/bc305bae4037158a06ea62.jpg";
+
+            String productId = "2502001089";
+            String urldisplay = ServiceConfiguration.GetProductImageUrl + "?productid=" + productId;
             Bitmap mIcon11 = null;
             try {
                 InputStream in = new java.net.URL(urldisplay).openStream();
@@ -117,7 +119,6 @@ public class ProductDetailFragment extends android.support.v4.app.Fragment imple
 
         protected void onPostExecute(Bitmap result) {
             super.onPostExecute(result);
-            mLoading.dismiss();
             ImageView imageView = ((ImageView) getActivity().findViewById(R.id.product_image));
             imageView.setImageBitmap(result);
 

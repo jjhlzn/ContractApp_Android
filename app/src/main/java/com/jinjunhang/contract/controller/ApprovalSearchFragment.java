@@ -25,6 +25,7 @@ import com.jinjunhang.contract.service.OrderService;
 import com.jinjunhang.contract.service.SearchApprovalResponse;
 import com.jinjunhang.contract.service.SearchOrderResponse;
 import com.jinjunhang.contract.service.ServerResponse;
+import com.kyleduo.switchbutton.SwitchButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,8 +52,8 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment {
     private EditText mKeywordEditText;
     private Button mStartDateButton;
     private Button mEndDateButton;
-    private ToggleButton mContainApproved;
-    private ToggleButton mContainUnapproved;
+    private SwitchButton mContainApproved;
+    private SwitchButton mContainUnapproved;
     private LoadingAnimation mLoading;
     private int pageSize = 15;
 
@@ -79,8 +80,8 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment {
             }
         });
 
-        mContainApproved = (ToggleButton)v.findViewById(R.id.search_approval_approved);
-        mContainUnapproved = (ToggleButton)v.findViewById(R.id.search_approval_unapproved);
+        mContainApproved = (SwitchButton)v.findViewById(R.id.search_approval_approved);
+        mContainUnapproved = (SwitchButton)v.findViewById(R.id.search_approval_unapproved);
 
         Calendar cal = Calendar.getInstance();
         final Date today;
