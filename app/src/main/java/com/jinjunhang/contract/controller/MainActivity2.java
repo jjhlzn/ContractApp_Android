@@ -45,6 +45,7 @@ public class MainActivity2 extends AppCompatActivity {
         mBottomBar.noTopOffset();
         mBottomBar.hideShadow();
 
+        mBottomBar.setMinimumHeight(20);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         View customView = getLayoutInflater().inflate(R.layout.actionbar_main, null);
