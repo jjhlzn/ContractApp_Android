@@ -47,7 +47,11 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
 
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar);
+        View customView = getLayoutInflater().inflate(R.layout.actionbar, null);
+        getSupportActionBar().setCustomView(customView);
+        Toolbar parent =(Toolbar) customView.getParent();
+        parent.setContentInsetsAbsolute(0, 0);
+
         ((TextView)getSupportActionBar().getCustomView().findViewById(R.id.actionbar_text)).setText(getActivityTitle());
         ((ImageButton)getSupportActionBar().getCustomView().findViewById(R.id.actionbar_searchButton)).setVisibility(View.INVISIBLE);
         if (NavUtils.getParentActivityName(this) == null) {
