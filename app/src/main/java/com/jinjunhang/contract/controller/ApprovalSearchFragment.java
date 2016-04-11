@@ -66,6 +66,12 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (Utils.compareDate(mStartDateButton.getText().toString(), mEndDateButton.getText().toString())  > 0) {
+                    Utils.showMessage(getActivity(), "开始日期不能晚于结束日期");
+                    return;
+                }
+
+
                 Intent i = new Intent(getActivity(), ApprovalListActivity.class);
                 ApprovalQueryObject queryObject = new ApprovalQueryObject();
                 queryObject.setContainApproved(mContainApproved.isChecked());
@@ -87,7 +93,7 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
         Calendar cal = Calendar.getInstance();
         final Date today;
         final Date oneMonthAgo;
-        SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
+        final SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
 
         if (mQueryObject != null) {
             mKeywordEditText.setText(mQueryObject.getKeyword());
@@ -115,9 +121,13 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
         mStartDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "start date button clicked");
                 final FragmentManager fm = getActivity().getSupportFragmentManager();
-                DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(oneMonthAgo);
+                DatePickerFragment datePickerFragment = null;
+                try {
+                    datePickerFragment = DatePickerFragment.newInstance(dt.parse(mStartDateButton.getText().toString()));
+                }catch (Exception ex){
+                    Log.e(TAG, ex.toString());
+                }
                 datePickerFragment.setTargetFragment(ApprovalSearchFragment.this, REQUEST_START_DATE);
                 datePickerFragment.show(fm, DIALOG_DATE);
             }
@@ -131,7 +141,12 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
             public void onClick(View v) {
                 Log.d(TAG, "start date button clicked");
                 final FragmentManager fm = getActivity().getSupportFragmentManager();
-                DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(today);
+                DatePickerFragment datePickerFragment = null;
+                try {
+                    datePickerFragment = DatePickerFragment.newInstance(dt.parse(mEndDateButton.getText().toString()));
+                }catch (Exception ex){
+                    Log.e(TAG, ex.toString());
+                }
                 datePickerFragment.setTargetFragment(ApprovalSearchFragment.this, REQUEST_END_DATE);
                 datePickerFragment.show(fm, DIALOG_DATE);
             }
@@ -172,5 +187,6 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
         i.putExtra(MainActivity2.EXTRA_TAB, 1);
         startActivity(i);
     }
+
 
 }

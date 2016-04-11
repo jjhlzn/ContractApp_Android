@@ -57,7 +57,11 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mLoading.show("");
+                if (Utils.compareDate(mStartDateButton.getText().toString(), mEndDateButton.getText().toString())  > 0) {
+                    Utils.showMessage(getActivity(), "开始日期不能晚于结束日期");
+                    return;
+                }
+
                 new SearchOrderTask().execute(mKeywordEditText.getText().toString(),
                         mStartDateButton.getText().toString(),
                         mEndDateButton.getText().toString());
@@ -67,7 +71,7 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
         Calendar cal = Calendar.getInstance();
         final Date today;
         final Date oneMonthAgo;
-        SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
+        final SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
 
         if (mQueryObject != null) {
             mKeywordEditText.setText(mQueryObject.getKeyword());
@@ -95,7 +99,13 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
             public void onClick(View v) {
                 Log.d(TAG, "start date button clicked");
                 final FragmentManager fm = getActivity().getSupportFragmentManager();
-                DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(oneMonthAgo);
+
+                DatePickerFragment datePickerFragment = null;
+                try {
+                    datePickerFragment = DatePickerFragment.newInstance(dt.parse(mStartDateButton.getText().toString()));
+                }catch (Exception ex){
+                    Log.e(TAG, ex.toString());
+                }
                 datePickerFragment.setTargetFragment(SearchOrderFragment.this, REQUEST_START_DATE);
                 datePickerFragment.show(fm, DIALOG_DATE);
             }
@@ -107,9 +117,14 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
         mEndDateButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "start date button clicked");
+
                 final FragmentManager fm = getActivity().getSupportFragmentManager();
-                DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(today);
+                DatePickerFragment datePickerFragment = null;
+                try {
+                    datePickerFragment = DatePickerFragment.newInstance(dt.parse(mEndDateButton.getText().toString()));
+                }catch (Exception ex){
+                    Log.e(TAG, ex.toString());
+                }
                 datePickerFragment.setTargetFragment(SearchOrderFragment.this, REQUEST_END_DATE);
                 datePickerFragment.show(fm, DIALOG_DATE);
             }
@@ -132,6 +147,12 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
         private String mKeyword;
         private String mStartDate;
         private String mEndDate;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mLoading.show("");
+        }
 
         @Override
         protected SearchOrderResponse doInBackground(String... params) {

@@ -1,6 +1,7 @@
 package com.jinjunhang.contract.controller;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -169,6 +170,8 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
             Order order = getItem(position);
             TextView businessTextView = (TextView) convertView.findViewById(R.id.order_list_item_businessPersonTextView);
             businessTextView.setText(order.getBusinessPerson());
+
+
 
             TextView contractNoTextView = (TextView) convertView.findViewById(R.id.order_list_item_contractNoTextView);
             contractNoTextView.setText(order.getContractNo());
