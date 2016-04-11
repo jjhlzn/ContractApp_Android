@@ -6,23 +6,17 @@
     >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="40dp"
-        android:weightSum="1"
-        android:gravity="center_vertical">
+        style="@style/searchFormRow">
         <TextView
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|right"
+            style="@style/searchFormRow.name"
             android:text="@string/search_order_keyword"/>
 
         <EditText
             android:id="@+id/search_order_keyword"
-            android:layout_marginLeft="10dp"
+            style="@style/searchFormRow.value"
             android:layout_marginRight="10dp"
+            android:layout_marginLeft="8dp"
             android:gravity="center_vertical|left"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dip"
             android:background="@drawable/rounded_edittext"
@@ -33,50 +27,41 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="40dp"
-        android:weightSum="1"
-        android:gravity="center_vertical">
+        style="@style/searchFormRow">
 
         <TextView
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|right"
-            android:text="@string/search_order_startDate"
-            />
+            style="@style/searchFormRow.name"
+            android:text="@string/search_order_startDate"/>
 
-        <Button
-            android:id="@+id/search_order_startDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical|center"
-            android:layout_weight="0.2"/>
+        <RelativeLayout
+            style="@style/searchFormRow.value"
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/search_order_startDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center"/>
+        </RelativeLayout>
     </LinearLayout>
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="40dp"
-        android:weightSum="1"
-        android:gravity="center_vertical">
+        style="@style/searchFormRow">
 
         <TextView
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
+            style="@style/searchFormRow.name"
             android:text="@string/search_order_endDate"
             />
 
-        <Button
-            android:id="@+id/search_order_endDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical|center"
-            android:layout_weight="0.2"/>
+        <RelativeLayout
+            style="@style/searchFormRow.value"
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/search_order_endDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center"/>
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout

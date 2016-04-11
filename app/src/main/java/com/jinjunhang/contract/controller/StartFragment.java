@@ -17,7 +17,7 @@ import com.jinjunhang.contract.R;
 public class StartFragment extends android.support.v4.app.Fragment {
     private final static String TAG = "StartFragment";
 
-    private final int SPLASH_DELAY_MILLIS = 1000;
+    private final int SPLASH_DELAY_MILLIS = 2000;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

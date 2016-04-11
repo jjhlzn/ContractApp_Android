@@ -55,9 +55,6 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "onActivityCreated called");
-
-        //Log.d(TAG, "mApprovals = " + mApprovals);
-
         if (mQueryObject == null) {
             Intent i = getActivity().getIntent();
             //mApprovals = (List<Approval>) i.getSerializableExtra(ApprovalSearchFragment.EXTRA_APPROVALS);
@@ -67,7 +64,7 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
             }
         }
 
-        Log.d(TAG, "mApprovals = " + mApprovals);
+        //Log.d(TAG, "mApprovals = " + mApprovals);
 
         if (mQueryObject == null) {
             createQueryObject();

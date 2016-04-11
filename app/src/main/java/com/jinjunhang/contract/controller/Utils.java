@@ -16,7 +16,6 @@ public class Utils {
         AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(context);
         dlgAlert.setMessage(message);
         dlgAlert.setPositiveButton("确定", null);
-        //dlgAlert.setCancelable(true);
         dlgAlert.create().show();
     }
 
@@ -26,7 +25,6 @@ public class Utils {
         dlgAlert.setMessage(message);
         dlgAlert.setPositiveButton("确定", listener);
         dlgAlert.setNegativeButton("取消", null);
-       // dlgAlert.setCancelable(true);
         dlgAlert.create().show();
     }
 

@@ -1,5 +1,6 @@
 package com.jinjunhang.contract.controller;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,11 +37,18 @@ public class MyInfoFragment extends android.support.v4.app.Fragment {
         logoutButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                PrefUtils.saveToPrefs(getActivity(), PrefUtils.PREFS_LOGIN_ISLOGIN_KEY, "0");
-                Intent i = new Intent(getActivity(), LoginActivity.class);
-                startActivity(i);
+                Utils.showConfirmMessage(getActivity(), "确定退出登录吗？", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        PrefUtils.saveToPrefs(getActivity(), PrefUtils.PREFS_LOGIN_ISLOGIN_KEY, "0");
+                        Intent i = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(i);
+                    }
+                });
+
             }
         });
+
 
         return  v;
     }
