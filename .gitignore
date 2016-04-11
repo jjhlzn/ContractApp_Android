@@ -13,3 +13,6 @@ tablet.png
 screenshot_tablet.png
 scrolling_demo.gif
 color_demo.gif
+zxing-android-embedded/build
+switchButton/build
+bottom-bar/build
