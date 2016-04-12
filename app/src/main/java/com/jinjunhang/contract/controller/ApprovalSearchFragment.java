@@ -79,7 +79,7 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
                 queryObject.setKeyword(mKeywordEditText.getText().toString());
                 queryObject.setStartDate(mStartDateButton.getText().toString());
                 queryObject.setEndDate(mEndDateButton.getText().toString());
-                queryObject.setIndex(0);
+                queryObject.setIndex(-1);
                 queryObject.setPageSize(Utils.PAGESIZE_APPROVAL);
                 i.putExtra(EXTRA_QUERYOBJECT, queryObject);
                 i.putExtra(ApprovalListFragment.EXTRA_FROMSEARCH, true);
