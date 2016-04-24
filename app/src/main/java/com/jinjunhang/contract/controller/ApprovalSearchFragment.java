@@ -49,8 +49,8 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
     public final static String DIALOG_DATE = "date";
 
     private EditText mKeywordEditText;
-    private Button mStartDateButton;
-    private Button mEndDateButton;
+    private EditText mStartDateButton;
+    private EditText mEndDateButton;
     private SwitchButton mContainApproved;
     private SwitchButton mContainUnapproved;
 
@@ -115,7 +115,10 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
             oneMonthAgo = cal.getTime();
         }
 
-        mStartDateButton = (Button)v.findViewById(R.id.search_approval_startDate);
+        mStartDateButton = (EditText)v.findViewById(R.id.search_approval_startDate);
+        mStartDateButton.setFocusable(false);
+        mStartDateButton.setClickable(true);
+
         mStartDateButton.setText(dt.format(oneMonthAgo));
         mStartDateButton.setGravity(Gravity.CENTER);
         mStartDateButton.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +136,7 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
             }
         });
 
-        mEndDateButton = (Button)v.findViewById(R.id.search_approval_endDate);
+        mEndDateButton = (EditText)v.findViewById(R.id.search_approval_endDate);
         mEndDateButton.setText(dt.format(today));
         mEndDateButton.setGravity(Gravity.CENTER);
         mEndDateButton.setOnClickListener(new View.OnClickListener() {

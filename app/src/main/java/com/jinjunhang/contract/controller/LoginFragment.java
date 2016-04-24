@@ -26,6 +26,7 @@ public class LoginFragment extends android.support.v4.app.Fragment {
     private EditText mPasswordEditText;
     private LoadingAnimation mLoading;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +63,8 @@ public class LoginFragment extends android.support.v4.app.Fragment {
 
         return v;
     }
+
+
 
     class LoginTask extends AsyncTask<String, Void, LoginResponse> {
         @Override

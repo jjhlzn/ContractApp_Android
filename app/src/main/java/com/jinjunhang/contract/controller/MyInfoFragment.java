@@ -24,7 +24,7 @@ public class MyInfoFragment extends android.support.v4.app.Fragment {
 
         View v = inflater.inflate(R.layout.fragment_myinfo, container, false);
 
-        final TextView userNameTV = (TextView)v.findViewById(R.id.myinfo_username);
+        final TextView userNameTV = (TextView)v.findViewById(R.id.myinfo_userName);
         userNameTV.setText(PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_LOGIN_USERNAME_KEY, ""));
 
         TextView nameTV = (TextView)v.findViewById(R.id.myinfo_name);
@@ -32,6 +32,9 @@ public class MyInfoFragment extends android.support.v4.app.Fragment {
 
         TextView departmentTV = (TextView)v.findViewById(R.id.myinfo_department);
         departmentTV.setText(PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_LOGIN_DEPARTMENT_KEY, ""));
+
+        TextView versionTV = (TextView)v.findViewById(R.id.myinfo_version);
+        versionTV.setText("1.0");
 
         Button logoutButton = (Button)v.findViewById(R.id.myinfo_logoutButton);
         logoutButton.setOnClickListener(new View.OnClickListener(){

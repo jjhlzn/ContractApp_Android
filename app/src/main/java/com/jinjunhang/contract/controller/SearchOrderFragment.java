@@ -41,8 +41,8 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
     public final static String DIALOG_DATE = "date";
 
     private EditText mKeywordEditText;
-    private Button mStartDateButton;
-    private Button mEndDateButton;
+    private EditText mStartDateButton;
+    private EditText mEndDateButton;
     private LoadingAnimation mLoading;
 
     private OrderQueryObject mQueryObject;
@@ -91,7 +91,7 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
             oneMonthAgo = cal.getTime();
         }
 
-        mStartDateButton = (Button)v.findViewById(R.id.search_order_startDate);
+        mStartDateButton = (EditText)v.findViewById(R.id.search_order_startDate);
         mStartDateButton.setText(dt.format(oneMonthAgo));
         mStartDateButton.setGravity(Gravity.CENTER);
         mStartDateButton.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +111,7 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
             }
         });
 
-        mEndDateButton = (Button)v.findViewById(R.id.search_order_endDate);
+        mEndDateButton = (EditText)v.findViewById(R.id.search_order_endDate);
         mEndDateButton.setText(dt.format(today));
         mEndDateButton.setGravity(Gravity.CENTER);
         mEndDateButton.setOnClickListener(new View.OnClickListener(){

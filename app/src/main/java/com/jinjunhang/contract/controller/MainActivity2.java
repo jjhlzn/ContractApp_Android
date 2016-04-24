@@ -1,6 +1,7 @@
 package com.jinjunhang.contract.controller;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -46,6 +47,7 @@ public class MainActivity2 extends AppCompatActivity {
         mBottomBar.hideShadow();
 
         mBottomBar.setMinimumHeight(20);
+        mBottomBar.setBackgroundColor(Color.GRAY);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         View customView = getLayoutInflater().inflate(R.layout.actionbar_main, null);
@@ -75,6 +77,7 @@ public class MainActivity2 extends AppCompatActivity {
                     case 0:
                         title = "订单";
                         searchApprovalButton.setVisibility(View.INVISIBLE);
+                        //mBottomBar.
                         break;
                     case 1:
                         title = "审批";

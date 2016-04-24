@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- SearchOrderFragment  -->
-    <string name="search_order_keyword">关键字:</string>
-    <string name="search_order_startDate">开始日期:</string>
-    <string name="search_order_endDate">结束日期:</string>
+    <string name="search_order_keyword">关键字</string>
+    <string name="search_order_startDate">开始日期</string>
+    <string name="search_order_endDate">结束日期</string>
     <string name="search_order_searchButton">查询</string>
 
     <!-- SearchApprovalFragment  -->
-    <string name="search_approval_keyword">关键字:</string>
-    <string name="search_approval_startDate">开始日期:</string>
-    <string name="search_approval_endDate">结束日期:</string>
-    <string name="search_approval_approved">已审批:</string>
-    <string name="search_approval_unapproved">未审批:</string>
+    <string name="search_approval_keyword">关键字</string>
+    <string name="search_approval_startDate">开始日期</string>
+    <string name="search_approval_endDate">结束日期</string>
+    <string name="search_approval_approved">已审批</string>
+    <string name="search_approval_unapproved">未审批</string>
     <string name="search_approval_searchButton">查询</string>
 
     <!-- OrderBasicInfoFragment -->
@@ -33,9 +33,10 @@
 
 
     <!-- MyInfoFragment -->
-    <string  name="myinfo_username">用户名:</string>
-    <string  name="myinfo_name">姓名:</string>
-    <string  name="myinfo_department">部门:</string>
+    <string  name="myinfo_username">帐号</string>
+    <string  name="myinfo_name">姓名</string>
+    <string  name="myinfo_department">部门</string>
+    <string  name="myinfo_version">版本号</string>
     <string  name="myinfo_logoutbutton">退出登录</string>
 
 
@@ -52,8 +53,8 @@
 
 
     <!-- LoginFragment -->
-    <string name="login_loginButton">登    录</string>
-    <string name="login_userName">用户名</string>
+    <string name="login_loginButton">登录</string>
+    <string name="login_userName">  用户名</string>
     <string name="login_password">密码</string>
 
     <!-- StartFragment -->

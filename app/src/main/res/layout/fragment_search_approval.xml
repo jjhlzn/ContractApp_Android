@@ -4,118 +4,150 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-        <LinearLayout
-            style="@style/searchFormRow">
-            <TextView
-                style="@style/searchFormRow.name"
-                android:text="@string/search_approval_keyword"/>
-
-            <EditText
-                android:id="@+id/search_approval_keyword"
-                style="@style/searchFormRow.value"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="8dp"
-                android:padding="5dip"
-                android:background="@drawable/rounded_edittext"
-                android:textCursorDrawable="@null"
-                android:lines="1"
-                android:inputType="text"/>
-        </LinearLayout>
-
 
     <LinearLayout
-        style="@style/searchFormRow">
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp">
 
-        <TextView
-            style="@style/searchFormRow.name"
-            android:text="@string/search_approval_startDate"/>
+        <EditText
+            android:id="@+id/search_approval_keyword"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.8"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:drawableRight="@drawable/searchicon"
+            android:hint="@string/search_approval_keyword"
+            android:background="@drawable/edit_text_border"
+            android:padding="5dip"
+            android:lines="1"
+            android:textSize="14dp"
+            android:inputType="text"/>
 
-        <RelativeLayout
-            style="@style/searchFormRow.value"
-            android:layout_height="match_parent">
-            <Button
-                android:id="@+id/search_approval_startDate"
-                style="@style/searchFormRow.value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical|center"/>
-        </RelativeLayout>
     </LinearLayout>
 
 
-
     <LinearLayout
-        style="@style/searchFormRow">
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal">
 
         <TextView
-            style="@style/searchFormRow.name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/search_approval_startDate"
+
+            android:layout_weight="0.5"
+            android:layout_marginLeft="15dp"
+            android:textSize="14dp"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:text="@string/search_approval_endDate"
-            />
 
-        <RelativeLayout
-            style="@style/searchFormRow.value"
-            android:layout_height="match_parent">
-            <Button
-                android:id="@+id/search_approval_endDate"
-                style="@style/searchFormRow.value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical|center"/>
-        </RelativeLayout>
+            android:layout_weight="0.5"
+            android:textSize="14dp"/>
     </LinearLayout>
 
     <LinearLayout
-        style="@style/searchFormRow">
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/search_approval_startDate"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/edit_text_border"
+            android:padding="5dip"
+            android:lines="1"
+            android:inputType="none"
+            android:layout_weight="0.5"
+            android:textSize="14dp"
+            android:drawableRight="@drawable/dateicon"
+            android:focusable="false"
+
+            />
+
+        <EditText
+            android:id="@+id/search_approval_endDate"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/edit_text_border"
+            android:padding="5dip"
+            android:lines="1"
+            android:inputType="none"
+            android:layout_weight="0.5"
+            android:textSize="14dp"
+            android:drawableRight="@drawable/dateicon"
+            android:focusable="false"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal">
+
         <TextView
-            style="@style/searchFormRow.name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:text="@string/search_approval_unapproved"
+
+            android:layout_weight="0.5"
+            android:layout_marginLeft="15dp"
+            android:textSize="14dp"
             />
-
-
-        <RelativeLayout
-            style="@style/searchFormRow.value"
-            android:layout_height="match_parent">
-            <com.kyleduo.switchbutton.SwitchButton
-                android:id="@+id/search_approval_unapproved"
-                style="@style/searchFormRow.value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"/>
-        </RelativeLayout>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        style="@style/searchFormRow">
         <TextView
-            style="@style/searchFormRow.name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:text="@string/search_approval_approved"
-            />
 
-        <RelativeLayout
-            style="@style/searchFormRow.value"
-            android:layout_height="match_parent">
-            <com.kyleduo.switchbutton.SwitchButton
-                android:id="@+id/search_approval_approved"
-                style="@style/searchFormRow.value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </RelativeLayout>
+            android:layout_weight="0.5"
+            android:textSize="14dp"/>
     </LinearLayout>
 
     <LinearLayout
-        style="@style/searchFormRowButton">
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/search_approval_searchButton"
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/search_approval_unapproved"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="0.5"
+            android:checked="true"/>
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/search_approval_approved"
+            android:layout_marginTop="5dp"
+            android:layout_weight="0.5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="20dp">
+        <Button
+            android:id="@+id/search_approval_searchButton"
+
             android:text="@string/search_approval_searchButton"
-            android:background="#5164f1"
-            android:textColor="#ffffff"
-            android:textSize="20sp"/>
+            style="@style/buttonStyle"
+            android:layout_weight="0.9"/>
     </LinearLayout>
 
 
