@@ -11,6 +11,7 @@ public class Order implements Serializable {
     private String mOrderNo;
     private double mAmount = 0.0;
     private String mGuestName;
+    private String mMoneyType;
 
     public String getBusinessPerson() {
         return mBusinessPerson;
@@ -50,5 +51,13 @@ public class Order implements Serializable {
 
     public void setGuestName(String guestName) {
         mGuestName = guestName;
+    }
+
+    public String getMoneyType() {
+        return mMoneyType;
+    }
+
+    public void setMoneyType(String moneyType) {
+        mMoneyType = moneyType;
     }
 }

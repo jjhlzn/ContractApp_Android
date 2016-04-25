@@ -41,6 +41,7 @@ public class OrderService extends BasicService {
                     order.setContractNo(item.getString("contractNo"));
                     order.setGuestName(item.getString("guestName"));
                     order.setOrderNo(item.getString("orderNo"));
+                    order.setMoneyType(item.getString("moneyType"));
                     resp.addOrder(order);
                 }
 

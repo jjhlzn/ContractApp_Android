@@ -41,7 +41,7 @@ public class LoginService extends BasicService {
     }
 
     private String makeLoginUrl(String userName, String password) {
-        return String.format(ServiceConfiguration.LoginUrl + "?username=%s&password=%s", userName, password);
+        return String.format(ServiceConfiguration.LoginUrl + "?a=%s&b=%s", userName, password);
     }
 
 }

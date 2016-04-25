@@ -180,7 +180,7 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
             orderNoTextView.setText(order.getOrderNo());
 
             TextView amountTextView = (TextView) convertView.findViewById(R.id.order_list_item_amountTextView);
-            amountTextView.setText("¥" + String.format("%.2f", order.getAmount()));
+            amountTextView.setText(order.getMoneyType() + String.format("%.2f", order.getAmount()));
 
             TextView guestNameTextView = (TextView) convertView.findViewById(R.id.order_list_item_guestNameTextView);
             guestNameTextView.setText(order.getGuestName());
