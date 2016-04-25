@@ -13,6 +13,7 @@ public class PrefUtils {
     public static final String PREFS_LOGIN_NAME_KEY = "__NAME__";
     public static final String PREFS_LOGIN_DEPARTMENT_KEY = "__DEPORTMENT__";
     public static final String PREFS_LOGIN_ISLOGIN_KEY = "__ISLOGIN__";
+    public static final String PREFS_APPROVAL_UPDATE_TIME = "__APPROVAL_UPDATE_TIME";
 
     /**
      * Called to save supplied value in shared preferences against given key.
@@ -39,6 +40,23 @@ public class PrefUtils {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         try {
             return sharedPrefs.getString(key, defaultValue);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return defaultValue;
+        }
+    }
+
+    public static void saveToPrefs(Context context, String key, long value) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong(key,value);
+        editor.commit();
+    }
+
+    public static long getFromPrefs(Context context, String key, long defaultValue) {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        try {
+            return sharedPrefs.getLong(key, defaultValue);
         } catch (Exception e) {
             e.printStackTrace();
             return defaultValue;

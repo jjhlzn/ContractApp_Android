@@ -17,6 +17,8 @@ public class Utils {
     public final static int PAGESIZE_APPROVAL = 25;
     public final static int PAGESIZE_ORDER = 25;
 
+    public final static long UPDATE_TIME_DELTA = 1000 * 60 * 5;
+
     public static void showMessage(Context context, String message) {
         AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(context);
         dlgAlert.setMessage(message);

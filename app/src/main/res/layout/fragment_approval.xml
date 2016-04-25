@@ -101,12 +101,14 @@
             android:text="@string/approval_pass_button"
                 android:layout_marginLeft="15dp"
                 android:layout_alignParentLeft="true"
+                android:background="@color/colorPrimary"
                 android:id="@+id/approval_detail_passButton"/>
 
         <Button style="@style/button"
                 android:text="@string/approval_unpass_button"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="15dp"
+                android:background="@color/colorPrimary"
                 android:id="@+id/approval_detail_unpassButton"
             />
         </RelativeLayout>

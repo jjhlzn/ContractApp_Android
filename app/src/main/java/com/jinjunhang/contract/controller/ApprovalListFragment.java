@@ -20,6 +20,7 @@ import com.jinjunhang.contract.service.ApprovalQueryObject;
 import com.jinjunhang.contract.service.ApprovalService;
 import com.jinjunhang.contract.service.SearchApprovalResponse;
 import com.jinjunhang.contract.service.ServerResponse;
+import com.journeyapps.barcodescanner.Util;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -74,6 +75,19 @@ public class ApprovalListFragment extends android.support.v4.app.Fragment
     public void onResume() {
         super.onResume();
         Log.d(TAG, "resume");
+
+        long time = PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_APPROVAL_UPDATE_TIME, -1);
+        if (time == -1)
+            return;
+
+        long nowTime = Calendar.getInstance().getTimeInMillis();
+        long delta = nowTime - time;
+        if (delta > Utils.UPDATE_TIME_DELTA) {
+            Log.d(TAG, "time is out, need to refresh");
+            if (!mIsLoading) {
+                new SearchApprovalTask(true).execute();
+            }
+        }
     }
 
     @Override
@@ -130,8 +144,8 @@ public class ApprovalListFragment extends android.support.v4.app.Fragment
         mApprovalAdapter = new ApprovalAdapter(mApprovals);
         mListView.setAdapter(mApprovalAdapter);
 
-
         setFootView();
+
 
     }
 
@@ -177,6 +191,7 @@ public class ApprovalListFragment extends android.support.v4.app.Fragment
         if (!mIsLoading) {
             new SearchApprovalTask(true).execute();
         }
+
     }
 
     private class SearchApprovalTask extends AsyncTask<Void, Void, SearchApprovalResponse> {
@@ -208,6 +223,11 @@ public class ApprovalListFragment extends android.support.v4.app.Fragment
                 mQueryObject.setIndex(-1);
             }
 
+            //纪录刷新的时间
+            if (mQueryObject.getIndex() == -1) {
+               long time = Calendar.getInstance().getTimeInMillis();
+                PrefUtils.saveToPrefs(getActivity(), PrefUtils.PREFS_APPROVAL_UPDATE_TIME, time);
+            }
         }
 
         @Override
@@ -227,6 +247,7 @@ public class ApprovalListFragment extends android.support.v4.app.Fragment
             List<Approval> approvals = resp.getApprovals();
 
             if (mIsRefresh) {
+                mApprovalAdapter.clear();
                 mApprovalAdapter.mApprovals = approvals;
             } else {
                 mApprovalAdapter.mApprovals.addAll(approvals);
@@ -345,7 +366,6 @@ public class ApprovalListFragment extends android.support.v4.app.Fragment
                         TextView statusTextView = (TextView) v.findViewById(R.id.approval_list_item_status);
                         statusTextView.setText(item.getApprovalResult());
                     }
-
                 }
             }
         }

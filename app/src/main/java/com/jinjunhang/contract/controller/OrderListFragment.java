@@ -175,6 +175,7 @@ public class OrderListFragment extends android.support.v4.app.Fragment implement
 
             List<Order> orders = resp.getOrders();
             if (mIsRefresh) {
+                mOrderAdapter.mOrders.clear();
                 mOrderAdapter.mOrders = orders;
             } else {
                 mOrderAdapter.mOrders.addAll(orders);
