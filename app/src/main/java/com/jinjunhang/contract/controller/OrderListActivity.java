@@ -14,6 +14,11 @@ public class OrderListActivity extends SingleFragmentActivity {
 
 
     @Override
+    protected boolean isNeedPushDownFresh() {
+        return true;
+    }
+
+    @Override
     protected String getActivityTitle() {
         return "订单列表";
     }

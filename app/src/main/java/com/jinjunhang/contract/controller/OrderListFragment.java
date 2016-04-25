@@ -1,18 +1,17 @@
 package com.jinjunhang.contract.controller;
 
+import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,7 +28,9 @@ import java.util.List;
 /**
  * Created by lzn on 16/3/23.
  */
-public class OrderListFragment extends ListFragment implements SingleFragmentActivity.OnBackPressedListener, AbsListView.OnScrollListener {
+public class OrderListFragment extends android.support.v4.app.Fragment implements SingleFragmentActivity.OnBackPressedListener,
+        AbsListView.OnScrollListener, SwipeRefreshLayout.OnRefreshListener
+{
     private static final String TAG = "OrderListFragment";
     private List<Order> mOrders;
     private OrderQueryObject mQueryObject;
@@ -40,6 +41,31 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
     private View mFooterView;
     private boolean mIsLoading = false;
     private boolean mMoreDataAvailable = true;
+
+    private ListView mListView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.activity_fragement_pushdownrefresh, container, false);
+
+        mListView = (ListView) v.findViewById(R.id.listView);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Order order = mOrderAdapter.getItem(position);
+
+                Intent i = new Intent(getActivity(), OrderMenuActivity.class);
+                i.putExtra(OrderMenuFragment.EXTRA_ORDER_NO, order.getContractNo());
+                startActivity(i);
+            }
+        });
+        mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_refresh_layout);
+
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        return v;
+    }
 
 
     @Override
@@ -54,7 +80,7 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
 
 
         mOrderAdapter = new OrderAdapter(mOrders);
-        setListAdapter(mOrderAdapter);
+        mListView.setAdapter(mOrderAdapter);
         if (mOrders.size() == 0) {
             mMoreDataAvailable = false;
         }
@@ -71,8 +97,8 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
             textView.offsetTopAndBottom(30);
         }
-        getListView().addFooterView(mFooterView, null, false);
-        getListView().setOnScrollListener(this);
+        mListView.addFooterView(mFooterView, null, false);
+        mListView.setOnScrollListener(this);
     }
 
 
@@ -99,7 +125,22 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
         }
     }
 
+    @Override
+    public void onRefresh() {
+        if (!mIsLoading) {
+            new SearchOrderTask(true).execute();
+        }
+    }
+
     private class SearchOrderTask extends AsyncTask<Void, Void, SearchOrderResponse> {
+        private boolean mIsRefresh = false;
+        public SearchOrderTask() {
+        }
+
+        public SearchOrderTask(boolean isRefresh) {
+            this.mIsRefresh = isRefresh;
+        }
+
         @Override
         protected SearchOrderResponse doInBackground(Void... params) {
             mQueryObject.setIndex( mQueryObject.getIndex() + 1);
@@ -112,12 +153,19 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
         protected void onPreExecute() {
             super.onPreExecute();
             mIsLoading = true;
-
+            if (mIsRefresh) {
+                mSwipeRefreshLayout.setRefreshing(true);
+                Log.d(TAG, "start refresh");
+                mQueryObject.setIndex(-1);
+            }
         }
 
         @Override
         protected void onPostExecute(SearchOrderResponse resp) {
             super.onPostExecute(resp);
+            if (mIsRefresh) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
 
             if (resp.getStatus() == ServerResponse.FAIL) {
                 mIsLoading = false;
@@ -126,10 +174,16 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
             }
 
             List<Order> orders = resp.getOrders();
-            mOrderAdapter.mOrders.addAll(orders);
+            if (mIsRefresh) {
+                mOrderAdapter.mOrders = orders;
+            } else {
+                mOrderAdapter.mOrders.addAll(orders);
+            }
 
             if (resp.getTotalNumber() <= mOrderAdapter.getCount()) {
                 mMoreDataAvailable = false;
+            } else {
+                mMoreDataAvailable = true;
             }
 
             mIsLoading = false;
@@ -138,6 +192,8 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
             mOrderAdapter.addMoreOrders();
         }
     }
+
+
 
     private class OrderAdapter extends ArrayAdapter<Order> {
         private List<Order> mOrders;
@@ -195,16 +251,6 @@ public class OrderListFragment extends ListFragment implements SingleFragmentAct
     public void onScrollStateChanged(AbsListView view, int scrollState) {
 
     }
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        Order order = ((OrderAdapter) getListAdapter()).getItem(position);
-
-        Intent i = new Intent(getActivity(), OrderMenuActivity.class);
-        i.putExtra(OrderMenuFragment.EXTRA_ORDER_NO, order.getContractNo());
-        startActivity(i);
-    }
-
 
     @Override
     public void doBack() {

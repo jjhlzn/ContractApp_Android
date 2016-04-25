@@ -4,10 +4,10 @@ package com.jinjunhang.contract.service;
  * Created by lzn on 16/3/23.
  */
 public class ServiceConfiguration {
-        //public final static String serverName = "localhost"
-        public final static String serverName = "jjhtest.hengdianworld.com";
+        public final static String serverName = "192.168.1.50";
+        //public final static String serverName = "jjhtest.hengdianworld.com";
 
-        public final static int port = 80;
+        public final static int port = 3000;
         public final static String serverName2 = "www.jinjunhang.com";
         public final static int port2 = 3000;
         public final static String SeachOrderUrl = "http://"+ serverName + ":" + port +"/order/search.json";

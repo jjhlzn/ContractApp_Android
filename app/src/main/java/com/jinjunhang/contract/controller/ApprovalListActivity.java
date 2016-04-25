@@ -13,6 +13,11 @@ public class ApprovalListActivity extends SingleFragmentActivity {
     }
 
     @Override
+    protected boolean isNeedPushDownFresh() {
+        return true;
+    }
+
+    @Override
     protected Fragment createFragment() {
         return new ApprovalListFragment();
     }

@@ -3,30 +3,24 @@ package com.jinjunhang.contract.controller;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jinjunhang.contract.R;
 import com.jinjunhang.contract.model.Approval;
-import com.jinjunhang.contract.model.Order;
 import com.jinjunhang.contract.service.ApprovalQueryObject;
 import com.jinjunhang.contract.service.ApprovalService;
-import com.jinjunhang.contract.service.OrderQueryObject;
-import com.jinjunhang.contract.service.OrderService;
 import com.jinjunhang.contract.service.SearchApprovalResponse;
-import com.jinjunhang.contract.service.SearchOrderResponse;
 import com.jinjunhang.contract.service.ServerResponse;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,7 +30,8 @@ import java.util.List;
 /**
  * Created by lzn on 16/4/6.
  */
-public class ApprovalListFragment extends android.support.v4.app.ListFragment implements SingleFragmentActivity.OnBackPressedListener, AbsListView.OnScrollListener {
+public class ApprovalListFragment extends android.support.v4.app.Fragment
+        implements SingleFragmentActivity.OnBackPressedListener, AbsListView.OnScrollListener, SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "ApprovalListFragment";
 
     public static final String EXTRA_FROMSEARCH = "extra_fromsearch";
@@ -50,6 +45,36 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
     private boolean mIsLoading;
     private boolean mMoreDataAvailable;
 
+    private ListView mListView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.activity_fragement_pushdownrefresh, container, false);
+
+        mListView = (ListView) v.findViewById(R.id.listView);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Approval approval = (Approval)mListView.getItemAtPosition(position);
+
+                Intent i = new Intent(getActivity(), ApprovalDetailActivity.class);
+                i.putExtra(ApprovalDetailFragment.EXTRA_APPROVAL, approval);
+                i.putExtra(ApprovalDetailFragment.EXTRA_POSITON, position);
+                startActivityForResult(i, 1);
+            }
+        });
+        mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_refresh_layout);
+
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "resume");
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -63,8 +88,6 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
                     mMoreDataAvailable = true;
             }
         }
-
-        //Log.d(TAG, "mApprovals = " + mApprovals);
 
         if (mQueryObject == null) {
             createQueryObject();
@@ -105,7 +128,7 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
             mApprovals = new ArrayList<>();
 
         mApprovalAdapter = new ApprovalAdapter(mApprovals);
-        setListAdapter(mApprovalAdapter);
+        mListView.setAdapter(mApprovalAdapter);
 
 
         setFootView();
@@ -116,8 +139,8 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
         mFooterView = LayoutInflater.from(getActivity()).inflate(R.layout.loading_view, null);
 
         resetFootView();
-        getListView().addFooterView(mFooterView, null, false);
-        getListView().setOnScrollListener(this);
+        mListView.addFooterView(mFooterView, null, false);
+        mListView.setOnScrollListener(this);
     }
 
     private void resetFootView() {
@@ -131,8 +154,6 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
             }
         }
     }
-
-
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
@@ -149,11 +170,25 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
                 new SearchApprovalTask().execute();
             }
         }
+    }
 
-
+    @Override
+    public void onRefresh() {
+        if (!mIsLoading) {
+            new SearchApprovalTask(true).execute();
+        }
     }
 
     private class SearchApprovalTask extends AsyncTask<Void, Void, SearchApprovalResponse> {
+
+        private boolean mIsRefresh = false;
+        public SearchApprovalTask() {
+        }
+
+        public SearchApprovalTask(boolean isRefresh) {
+            this.mIsRefresh = isRefresh;
+        }
+
         @Override
         protected SearchApprovalResponse doInBackground(Void... params) {
             mQueryObject.setIndex(mQueryObject.getIndex() + 1);
@@ -167,12 +202,21 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
         protected void onPreExecute() {
             super.onPreExecute();
             mIsLoading = true;
+            if (mIsRefresh) {
+                mSwipeRefreshLayout.setRefreshing(true);
+                Log.d(TAG, "start refresh");
+                mQueryObject.setIndex(-1);
+            }
 
         }
 
         @Override
         protected void onPostExecute(SearchApprovalResponse resp) {
             super.onPostExecute(resp);
+
+            if (mIsRefresh) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
 
             if (resp.getStatus() == ServerResponse.FAIL) {
                 mIsLoading = false;
@@ -181,10 +225,17 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
             }
 
             List<Approval> approvals = resp.getApprovals();
-            mApprovalAdapter.mApprovals.addAll(approvals);
+
+            if (mIsRefresh) {
+                mApprovalAdapter.mApprovals = approvals;
+            } else {
+                mApprovalAdapter.mApprovals.addAll(approvals);
+            }
 
             if (resp.getTotalNumber() <= mApprovalAdapter.getCount()) {
                 mMoreDataAvailable = false;
+            } else {
+                mMoreDataAvailable = true;
             }
 
             mIsLoading = false;
@@ -195,6 +246,7 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
             resetFootView();
         }
     }
+
 
     private class ApprovalAdapter extends ArrayAdapter<Approval> {
         private List<Approval> mApprovals;
@@ -261,18 +313,11 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
 
     }
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        Approval approval = ((ApprovalAdapter) getListAdapter()).getItem(position);
 
-        Intent i = new Intent(getActivity(), ApprovalDetailActivity.class);
-        i.putExtra(ApprovalDetailFragment.EXTRA_APPROVAL, approval);
-        i.putExtra(ApprovalDetailFragment.EXTRA_POSITON, position);
-        startActivityForResult(i, 1);
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult");
         if (requestCode == 1) {
@@ -289,7 +334,7 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
                         item.setApprovalResult(approval.getApprovalResult());
                         item.setStatus(approval.getStatus());
 
-                        View v = getListView().getChildAt(position - getListView().getFirstVisiblePosition());
+                        View v = mListView.getChildAt(position - mListView.getFirstVisiblePosition());
 
                         if(v == null) {
                             Log.d(TAG, "v is null");

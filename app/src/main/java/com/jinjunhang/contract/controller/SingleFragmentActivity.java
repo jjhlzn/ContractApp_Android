@@ -31,11 +31,17 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
         return "ERP系统";
     }
 
+    protected boolean isNeedPushDownFresh() {return false;}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_fragment);
+        if (isNeedPushDownFresh()) {
+            setContentView(R.layout.activity_fragement_pushdownrefresh);
+        } else{
+            setContentView(R.layout.activity_fragment);
+        }
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
