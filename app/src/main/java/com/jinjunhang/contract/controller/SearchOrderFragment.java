@@ -87,7 +87,7 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
         } else {
 
             today = cal.getTime();
-            cal.add(Calendar.MONTH, -80);
+            cal.add(Calendar.DAY_OF_MONTH, -31);
             oneMonthAgo = cal.getTime();
         }
 

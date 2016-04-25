@@ -83,8 +83,7 @@ public class ApprovalListFragment extends android.support.v4.app.ListFragment im
         final Date oneMonthAgo;
         SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
         today = cal.getTime();
-        //TODO: 修改一个月之前的时间
-        cal.add(Calendar.MONTH, -80);
+        cal.add(Calendar.DAY_OF_MONTH, -31);
         oneMonthAgo = cal.getTime();
 
         mQueryObject.setKeyword("");
