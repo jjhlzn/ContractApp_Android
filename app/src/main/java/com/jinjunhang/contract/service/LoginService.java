@@ -5,6 +5,9 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * Created by lzn on 16/4/7.
  */
@@ -41,7 +44,14 @@ public class LoginService extends BasicService {
     }
 
     private String makeLoginUrl(String userName, String password) {
-        return String.format(ServiceConfiguration.LoginUrl + "?a=%s&b=%s", userName, password);
+        String queryStr = "";
+        try {
+            queryStr = String.format("x=%s&y=%s", URLEncoder.encode(userName, "UTF-8"), URLEncoder.encode(password, "UTF-8"));
+
+        }catch (UnsupportedEncodingException ex) {
+
+        }
+        return String.format(ServiceConfiguration.LoginUrl + "?%s", queryStr);
     }
 
 }

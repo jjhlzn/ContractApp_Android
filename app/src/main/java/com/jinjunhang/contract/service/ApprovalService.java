@@ -7,6 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * Created by lzn on 16/4/6.
  */
@@ -45,9 +48,15 @@ public class ApprovalService extends BasicService {
 
     private String makeSearchApprovalUrl(String userId, String keyword, boolean containApproved,
                                          boolean containUnapproved, String startDate, String endDate, int pageNo, int pageSize) {
-        return ServiceConfiguration.SearchApprovalUrl
-                + String.format("?userid=%s&keyword=%s&containapproved=%s&containunapproved=%s&startdate=%s&enddate=%s&index=%d&pagesize=%d",
-                userId, keyword, containApproved, containUnapproved, startDate, endDate, pageNo, pageSize);
+        String queryStr = "";
+        try {
+            queryStr = String.format("userid=%s&keyword=%s&containapproved=%s&containunapproved=%s&startdate=%s&enddate=%s&index=%d&pagesize=%d",
+                    userId, URLEncoder.encode(keyword, "UTF-8"), containApproved, containUnapproved, startDate, endDate, pageNo, pageSize);
+        }
+        catch (UnsupportedEncodingException ex){
+
+        }
+        return ServiceConfiguration.SearchApprovalUrl + String.format("?%s", queryStr);
     }
 
     public AuditApprovalResponse audit(String userId, String approvalId, String result) {

@@ -11,6 +11,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,9 +53,15 @@ public class OrderService extends BasicService {
     }
 
     private String makeSearchOrderUrl(String keyword, String startDate, String endDate, int pageNo, int pageSize) {
-        return ServiceConfiguration.SeachOrderUrl +
-                String.format("?keyword=%s&startdate=%s&enddate=%s&index=%d&pagesize=%d",
-                        keyword, startDate, endDate, pageNo, pageSize);
+        String queryStr = "";
+        try {
+            queryStr = String.format("keyword=%s&startdate=%s&enddate=%s&index=%d&pagesize=%d",
+                    URLEncoder.encode(keyword, "UTF-8"), startDate, endDate, pageNo, pageSize);
+        }
+        catch (UnsupportedEncodingException ex){
+
+        }
+        return ServiceConfiguration.SeachOrderUrl + String.format("?%s", queryStr);
     }
 
     public GetOrderBasicInfoResponse getBasicInfo(String orderNo) {
