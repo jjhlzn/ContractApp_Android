@@ -149,6 +149,11 @@ public class OrderMenuFragment extends android.support.v4.app.ListFragment {
         protected void onPostExecute(GetOrderChuyunInfoResponse resp) {
             super.onPostExecute(resp);
             mLoading.dismiss();
+            if (resp.getStatus() != ServerResponse.SUCCESS) {
+                Utils.showServerErrorDialog(getActivity());
+                return;
+            }
+
             Intent i = new Intent(getActivity(), OrderChuyunActivity.class);
             i.putExtra(OrderChuyunFragment.EXTRA_ORDER_CHUYUN, resp.getChuyunInfo());
             startActivity(i);
@@ -171,6 +176,11 @@ public class OrderMenuFragment extends android.support.v4.app.ListFragment {
         protected void onPostExecute(GetOrderFukuangInfoResponse resp) {
             super.onPostExecute(resp);
             mLoading.dismiss();
+            if (resp.getStatus() != ServerResponse.SUCCESS) {
+                Utils.showServerErrorDialog(getActivity());
+                return;
+            }
+
             Intent i = new Intent(getActivity(), OrderFukuangActivity.class);
             i.putExtra(OrderFukuangFragment.EXTRA_ORDER_FUKUANG, resp.getFukuangInfo());
             startActivity(i);
@@ -193,6 +203,12 @@ public class OrderMenuFragment extends android.support.v4.app.ListFragment {
         protected void onPostExecute(GetOrderShouhuiInfoResponse resp) {
             super.onPostExecute(resp);
             mLoading.dismiss();
+
+            if (resp.getStatus() != ServerResponse.SUCCESS) {
+                Utils.showServerErrorDialog(getActivity());
+                return;
+            }
+
             Intent i = new Intent(getActivity(), OrderShouhuiActivity.class);
             i.putExtra(OrderShouhuiFragment.EXTRA_ORDER_SHOUHUI, resp.getShouhuiInfo());
             startActivity(i);

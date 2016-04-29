@@ -5,14 +5,18 @@ import com.jinjunhang.contract.model.Product;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * Created by lzn on 16/4/8.
  */
 public class ProductService extends BasicService {
 
     public GetProductResponse  GetProductById(String id) {
-        String url = makeGetProductByIdUrl(id);
-        return sendRequest(url, GetProductResponse.class, new ResponseHandler() {
+        Map<String, String> params = new LinkedHashMap();
+        params.put("id", id);
+        return sendRequest(ServiceConfiguration.GetProductUrl, params, GetProductResponse.class, new ResponseHandler() {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 GetProductResponse resp = (GetProductResponse)response;
@@ -37,10 +41,6 @@ public class ProductService extends BasicService {
                 return resp;
             }
         });
-    }
-
-    private String makeGetProductByIdUrl(String id) {
-        return String.format(ServiceConfiguration.GetProductUrl + "?id=%s", id);
     }
 
 }

@@ -159,7 +159,8 @@ public class SearchOrderFragment extends android.support.v4.app.Fragment {
             mKeyword = params[0];
             mStartDate = params[1];
             mEndDate = params[2];
-            SearchOrderResponse resp = new OrderService().search(mKeyword, mStartDate, mEndDate, 0, Utils.PAGESIZE_ORDER);
+            SearchOrderResponse resp = new OrderService().search(PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_LOGIN_USERNAME_KEY, ""),
+                    mKeyword, mStartDate, mEndDate, 0, Utils.PAGESIZE_ORDER);
 
 
             return resp;

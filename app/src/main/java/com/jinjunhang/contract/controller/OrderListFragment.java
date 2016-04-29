@@ -145,7 +145,8 @@ public class OrderListFragment extends android.support.v4.app.Fragment implement
         protected SearchOrderResponse doInBackground(Void... params) {
             mQueryObject.setIndex( mQueryObject.getIndex() + 1);
 
-            return new OrderService().search(mQueryObject.getKeyword(), mQueryObject.getStartDate(),
+            return new OrderService().search(PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_LOGIN_USERNAME_KEY, ""),
+                    mQueryObject.getKeyword(), mQueryObject.getStartDate(),
                     mQueryObject.getEndDate(), mQueryObject.getIndex(), mQueryObject.getPageSize());
         }
 

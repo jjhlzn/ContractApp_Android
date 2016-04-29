@@ -7,6 +7,8 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by lzn on 16/4/7.
@@ -18,9 +20,10 @@ public class LoginService extends BasicService {
 
     public LoginResponse login(String userName, String password) {
 
-        String url = makeLoginUrl(userName, password);
-
-        return sendRequest(url, LoginResponse.class, new ResponseHandler() {
+        Map<String, String> params = new LinkedHashMap();
+        params.put("x", userName);
+        params.put("y", password);
+        return sendRequest(ServiceConfiguration.LoginUrl, params, LoginResponse.class, new ResponseHandler() {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 LoginResponse resp = (LoginResponse)response;
@@ -41,17 +44,6 @@ public class LoginService extends BasicService {
             }
         });
 
-    }
-
-    private String makeLoginUrl(String userName, String password) {
-        String queryStr = "";
-        try {
-            queryStr = String.format("x=%s&y=%s", URLEncoder.encode(userName, "UTF-8"), URLEncoder.encode(password, "UTF-8"));
-
-        }catch (UnsupportedEncodingException ex) {
-
-        }
-        return String.format(ServiceConfiguration.LoginUrl + "?%s", queryStr);
     }
 
 }

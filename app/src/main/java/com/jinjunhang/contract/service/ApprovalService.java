@@ -9,6 +9,8 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by lzn on 16/4/6.
@@ -18,8 +20,17 @@ public class ApprovalService extends BasicService {
 
     public SearchApprovalResponse search(String userId, String keyword, boolean containApproved,
                                          boolean containUnapproved, String startDate, String endDate, int pageNo, int pageSize) {
-        String url = makeSearchApprovalUrl(userId, keyword, containApproved, containUnapproved, startDate, endDate, pageNo, pageSize);
-        return sendRequest(url, SearchApprovalResponse.class, new ResponseHandler() {
+
+        Map<String, String> params = new LinkedHashMap();
+        params.put("userid", userId);
+        params.put("keyword", keyword);
+        params.put("containapproved", containApproved + "");
+        params.put("containunapproved", containUnapproved + "");
+        params.put("startdate", startDate);
+        params.put("enddate", endDate);
+        params.put("index", pageNo + "");
+        params.put("pagesize", pageSize + "");
+        return sendRequest(ServiceConfiguration.SearchApprovalUrl, params, SearchApprovalResponse.class, new ResponseHandler() {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 SearchApprovalResponse resp = (SearchApprovalResponse)response;
@@ -46,22 +57,12 @@ public class ApprovalService extends BasicService {
         });
     }
 
-    private String makeSearchApprovalUrl(String userId, String keyword, boolean containApproved,
-                                         boolean containUnapproved, String startDate, String endDate, int pageNo, int pageSize) {
-        String queryStr = "";
-        try {
-            queryStr = String.format("userid=%s&keyword=%s&containapproved=%s&containunapproved=%s&startdate=%s&enddate=%s&index=%d&pagesize=%d",
-                    userId, URLEncoder.encode(keyword, "UTF-8"), containApproved, containUnapproved, startDate, endDate, pageNo, pageSize);
-        }
-        catch (UnsupportedEncodingException ex){
-
-        }
-        return ServiceConfiguration.SearchApprovalUrl + String.format("?%s", queryStr);
-    }
-
     public AuditApprovalResponse audit(String userId, String approvalId, String result) {
-        String url = makeAuditApprovalUrl(userId, approvalId, result);
-        return sendRequest(url, AuditApprovalResponse.class, new ResponseHandler() {
+        Map<String, String> params = new LinkedHashMap();
+        params.put("userid", userId);
+        params.put("approvalid", approvalId);
+        params.put("result", result);
+        return sendRequest(ServiceConfiguration.AuditApprovalUrl, params, AuditApprovalResponse.class, new ResponseHandler() {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 AuditApprovalResponse resp = (AuditApprovalResponse)response;
@@ -73,8 +74,4 @@ public class ApprovalService extends BasicService {
         });
     }
 
-    private String makeAuditApprovalUrl(String userId, String approvalId, String result) {
-        return String.format(ServiceConfiguration.AuditApprovalUrl + "?userid=%s&approvalid=%s&result=%s",
-                userId, approvalId, result);
-    }
 }

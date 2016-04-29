@@ -1,5 +1,7 @@
 package com.jinjunhang.contract.service;
 
+import android.app.Service;
+
 import com.jinjunhang.contract.model.Order;
 import com.jinjunhang.contract.model.OrderBasicInfo;
 import com.jinjunhang.contract.model.OrderChuyunInfo;
@@ -16,23 +18,33 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ServiceConfigurationError;
 
 /**
  * Created by lzn on 16/3/23.
  */
 public class OrderService extends BasicService {
+    public SearchOrderResponse search(String userId, String keyword, String startDate, String endDate, int pageNo, int pageSize) {
+
+        Map<String, String> parameters = new LinkedHashMap<String, String>();
+        parameters.put("userid", userId);
+        parameters.put("keyword", keyword);
+        parameters.put("startdate", startDate);
+        parameters.put("enddate", endDate);
+        parameters.put("index", pageNo+"");
+        parameters.put("pagesize", pageSize+"");
 
 
-
-    public SearchOrderResponse search(String keyword, String startDate, String endDate, int pageNo, int pageSize) {
-        String url = makeSearchOrderUrl(keyword, startDate, endDate, pageNo, pageSize);
-        return sendRequest(url, SearchOrderResponse.class, new ResponseHandler(){
+        return sendRequest(ServiceConfiguration.SeachOrderUrl, parameters, SearchOrderResponse.class, new ResponseHandler(){
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 SearchOrderResponse resp = (SearchOrderResponse)response;
-
                 resp.setTotalNumber(json.getInt("totalNumber"));
                 JSONArray array = json.getJSONArray("orders");
                 for (int i = 0; i < array.length(); i++) {
@@ -46,27 +58,15 @@ public class OrderService extends BasicService {
                     order.setMoneyType(item.getString("moneyType"));
                     resp.addOrder(order);
                 }
-
                 return resp;
             }
         });
     }
 
-    private String makeSearchOrderUrl(String keyword, String startDate, String endDate, int pageNo, int pageSize) {
-        String queryStr = "";
-        try {
-            queryStr = String.format("keyword=%s&startdate=%s&enddate=%s&index=%d&pagesize=%d",
-                    URLEncoder.encode(keyword, "UTF-8"), startDate, endDate, pageNo, pageSize);
-        }
-        catch (UnsupportedEncodingException ex){
-
-        }
-        return ServiceConfiguration.SeachOrderUrl + String.format("?%s", queryStr);
-    }
-
     public GetOrderBasicInfoResponse getBasicInfo(String orderNo) {
-        String url = makeGetOrderBasicInfoUrl(orderNo);
-        return sendRequest(url, GetOrderBasicInfoResponse.class, new ResponseHandler()  {
+        Map<String, String> params = new LinkedHashMap();
+        params.put("orderid", orderNo);
+        return sendRequest(ServiceConfiguration.GetBasicInfoUrl, params, GetOrderBasicInfoResponse.class, new ResponseHandler()  {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 GetOrderBasicInfoResponse resp = (GetOrderBasicInfoResponse) response;
@@ -85,14 +85,11 @@ public class OrderService extends BasicService {
         });
     }
 
-    private String makeGetOrderBasicInfoUrl(String orderNo) {
-        return ServiceConfiguration.GetBasicInfoUrl + "?orderId=" + orderNo;
-    }
-
 
     public GetOrderShougouInfoResponse getShougouInfo(String orderNo) {
-        String url = makeGetOrderShougouInfoUrl(orderNo);
-        return sendRequest(url, GetOrderShougouInfoResponse.class, new ResponseHandler() {
+        Map<String, String> params = new LinkedHashMap();
+        params.put("orderid", orderNo);
+        return sendRequest(ServiceConfiguration.GetOrderPurcaseInfoUrl, params, GetOrderShougouInfoResponse.class, new ResponseHandler() {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 GetOrderShougouInfoResponse resp = (GetOrderShougouInfoResponse)response;
@@ -115,13 +112,10 @@ public class OrderService extends BasicService {
         });
     }
 
-    private String makeGetOrderShougouInfoUrl(String orderNo) {
-        return ServiceConfiguration.GetOrderPurcaseInfoUrl + "?orderId=" + orderNo;
-    }
-
     public GetOrderChuyunInfoResponse getChuyunInfo(String orderNo) {
-        String url = makeGetOrderChuyunInfoUrl(orderNo);
-        return sendRequest(url, GetOrderChuyunInfoResponse.class, new ResponseHandler() {
+        Map<String, String> params = new LinkedHashMap();
+        params.put("orderid", orderNo);
+        return sendRequest(ServiceConfiguration.GetOrderChuyunInfoUrl, params, GetOrderChuyunInfoResponse.class, new ResponseHandler() {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 GetOrderChuyunInfoResponse resp = (GetOrderChuyunInfoResponse)response;
@@ -136,13 +130,11 @@ public class OrderService extends BasicService {
         });
     }
 
-    private String makeGetOrderChuyunInfoUrl(String orderNo) {
-        return ServiceConfiguration.GetOrderChuyunInfoUrl + "?orderId=" + orderNo;
-    }
 
     public GetOrderFukuangInfoResponse getFukuangInfo(String orderNo) {
-        String url = makeGetOrderFukuagnInfoUrl(orderNo);
-        return sendRequest(url, GetOrderFukuangInfoResponse.class, new ResponseHandler() {
+        Map<String, String> params = new LinkedHashMap();
+        params.put("orderid", orderNo);
+        return sendRequest(ServiceConfiguration.GetOrderFukuangInfoUrl, params, GetOrderFukuangInfoResponse.class, new ResponseHandler() {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 GetOrderFukuangInfoResponse resp = (GetOrderFukuangInfoResponse)response;
@@ -165,13 +157,10 @@ public class OrderService extends BasicService {
         });
     }
 
-    private String makeGetOrderFukuagnInfoUrl(String orderNo) {
-        return ServiceConfiguration.GetOrderFukuangInfoUrl + "?orderId=" + orderNo;
-    }
-
     public GetOrderShouhuiInfoResponse getShouhuiInfo(String orderNo) {
-        String url = makeGetOrderShouhuiInfoUrl(orderNo);
-        return sendRequest(url, GetOrderShouhuiInfoResponse.class, new ResponseHandler() {
+        Map<String, String> params = new LinkedHashMap();
+        params.put("orderid", orderNo);
+        return sendRequest(ServiceConfiguration.GetOrderShouhuiInfoUrl, params, GetOrderShouhuiInfoResponse.class, new ResponseHandler() {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 GetOrderShouhuiInfoResponse resp = (GetOrderShouhuiInfoResponse)response;
@@ -185,9 +174,6 @@ public class OrderService extends BasicService {
         });
     }
 
-    private String makeGetOrderShouhuiInfoUrl(String orderNo) {
-        return ServiceConfiguration.GetOrderShouhuiInfoUrl + "?orderId=" + orderNo;
-    }
 }
 
 
