@@ -105,7 +105,7 @@ public class ProductDetailFragment extends android.support.v4.app.Fragment imple
          protected Bitmap doInBackground(Void... params) {
 
             String productId = "2502001089";
-            String urldisplay = ServiceConfiguration.GetProductImageUrl + "?productid=" + productId;
+            String urldisplay = ServiceConfiguration.GetProductImageUrl() + "?productid=" + productId;
             Bitmap mIcon11 = null;
             try {
                 InputStream in = new java.net.URL(urldisplay).openStream();

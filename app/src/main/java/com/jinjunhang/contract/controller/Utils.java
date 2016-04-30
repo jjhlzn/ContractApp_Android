@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
 
+import com.jinjunhang.contract.BuildConfig;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -52,5 +54,7 @@ public class Utils {
         }
         return 0;
     }
+
+
 
 }

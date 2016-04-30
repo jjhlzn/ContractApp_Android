@@ -41,7 +41,7 @@ public class OrderService extends BasicService {
         parameters.put("pagesize", pageSize+"");
 
 
-        return sendRequest(ServiceConfiguration.SeachOrderUrl, parameters, SearchOrderResponse.class, new ResponseHandler(){
+        return sendRequest(ServiceConfiguration.SeachOrderUrl(), parameters, SearchOrderResponse.class, new ResponseHandler(){
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 SearchOrderResponse resp = (SearchOrderResponse)response;
@@ -66,7 +66,7 @@ public class OrderService extends BasicService {
     public GetOrderBasicInfoResponse getBasicInfo(String orderNo) {
         Map<String, String> params = new LinkedHashMap();
         params.put("orderid", orderNo);
-        return sendRequest(ServiceConfiguration.GetBasicInfoUrl, params, GetOrderBasicInfoResponse.class, new ResponseHandler()  {
+        return sendRequest(ServiceConfiguration.GetBasicInfoUrl(), params, GetOrderBasicInfoResponse.class, new ResponseHandler()  {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 GetOrderBasicInfoResponse resp = (GetOrderBasicInfoResponse) response;
@@ -89,7 +89,7 @@ public class OrderService extends BasicService {
     public GetOrderShougouInfoResponse getShougouInfo(String orderNo) {
         Map<String, String> params = new LinkedHashMap();
         params.put("orderid", orderNo);
-        return sendRequest(ServiceConfiguration.GetOrderPurcaseInfoUrl, params, GetOrderShougouInfoResponse.class, new ResponseHandler() {
+        return sendRequest(ServiceConfiguration.GetOrderPurcaseInfoUrl(), params, GetOrderShougouInfoResponse.class, new ResponseHandler() {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 GetOrderShougouInfoResponse resp = (GetOrderShougouInfoResponse)response;
@@ -115,7 +115,7 @@ public class OrderService extends BasicService {
     public GetOrderChuyunInfoResponse getChuyunInfo(String orderNo) {
         Map<String, String> params = new LinkedHashMap();
         params.put("orderid", orderNo);
-        return sendRequest(ServiceConfiguration.GetOrderChuyunInfoUrl, params, GetOrderChuyunInfoResponse.class, new ResponseHandler() {
+        return sendRequest(ServiceConfiguration.GetOrderChuyunInfoUrl(), params, GetOrderChuyunInfoResponse.class, new ResponseHandler() {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 GetOrderChuyunInfoResponse resp = (GetOrderChuyunInfoResponse)response;
@@ -134,7 +134,7 @@ public class OrderService extends BasicService {
     public GetOrderFukuangInfoResponse getFukuangInfo(String orderNo) {
         Map<String, String> params = new LinkedHashMap();
         params.put("orderid", orderNo);
-        return sendRequest(ServiceConfiguration.GetOrderFukuangInfoUrl, params, GetOrderFukuangInfoResponse.class, new ResponseHandler() {
+        return sendRequest(ServiceConfiguration.GetOrderFukuangInfoUrl(), params, GetOrderFukuangInfoResponse.class, new ResponseHandler() {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 GetOrderFukuangInfoResponse resp = (GetOrderFukuangInfoResponse)response;
@@ -160,7 +160,7 @@ public class OrderService extends BasicService {
     public GetOrderShouhuiInfoResponse getShouhuiInfo(String orderNo) {
         Map<String, String> params = new LinkedHashMap();
         params.put("orderid", orderNo);
-        return sendRequest(ServiceConfiguration.GetOrderShouhuiInfoUrl, params, GetOrderShouhuiInfoResponse.class, new ResponseHandler() {
+        return sendRequest(ServiceConfiguration.GetOrderShouhuiInfoUrl(), params, GetOrderShouhuiInfoResponse.class, new ResponseHandler() {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 GetOrderShouhuiInfoResponse resp = (GetOrderShouhuiInfoResponse)response;

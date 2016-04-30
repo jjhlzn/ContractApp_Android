@@ -30,7 +30,7 @@ public class ApprovalService extends BasicService {
         params.put("enddate", endDate);
         params.put("index", pageNo + "");
         params.put("pagesize", pageSize + "");
-        return sendRequest(ServiceConfiguration.SearchApprovalUrl, params, SearchApprovalResponse.class, new ResponseHandler() {
+        return sendRequest(ServiceConfiguration.SearchApprovalUrl(), params, SearchApprovalResponse.class, new ResponseHandler() {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 SearchApprovalResponse resp = (SearchApprovalResponse)response;
@@ -62,7 +62,7 @@ public class ApprovalService extends BasicService {
         params.put("userid", userId);
         params.put("approvalid", approvalId);
         params.put("result", result);
-        return sendRequest(ServiceConfiguration.AuditApprovalUrl, params, AuditApprovalResponse.class, new ResponseHandler() {
+        return sendRequest(ServiceConfiguration.AuditApprovalUrl(), params, AuditApprovalResponse.class, new ResponseHandler() {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 AuditApprovalResponse resp = (AuditApprovalResponse)response;

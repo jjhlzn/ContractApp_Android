@@ -23,7 +23,7 @@ public class LoginService extends BasicService {
         Map<String, String> params = new LinkedHashMap();
         params.put("x", userName);
         params.put("y", password);
-        return sendRequest(ServiceConfiguration.LoginUrl, params, LoginResponse.class, new ResponseHandler() {
+        return sendRequest(ServiceConfiguration.LoginUrl(), params, LoginResponse.class, new ResponseHandler() {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 LoginResponse resp = (LoginResponse)response;

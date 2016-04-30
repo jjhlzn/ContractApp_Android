@@ -16,7 +16,7 @@ public class ProductService extends BasicService {
     public GetProductResponse  GetProductById(String id) {
         Map<String, String> params = new LinkedHashMap();
         params.put("id", id);
-        return sendRequest(ServiceConfiguration.GetProductUrl, params, GetProductResponse.class, new ResponseHandler() {
+        return sendRequest(ServiceConfiguration.GetProductUrl(), params, GetProductResponse.class, new ResponseHandler() {
             @Override
             public ServerResponse handle(ServerResponse response, JSONObject json) throws JSONException {
                 GetProductResponse resp = (GetProductResponse)response;

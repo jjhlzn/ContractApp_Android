@@ -15,6 +15,10 @@ public class PrefUtils {
     public static final String PREFS_LOGIN_ISLOGIN_KEY = "__ISLOGIN__";
     public static final String PREFS_APPROVAL_UPDATE_TIME = "__APPROVAL_UPDATE_TIME";
 
+    public static final String PREFS_LOCATOR_HTTP = "__LOCATOR_HTTP__";
+    public static final String PREFS_LOCATOR_SERVERNAME = "__LOCATOR_SERVERNAME__";
+    public static final String PREFS_LOCATOR_PORT = "__LOCATOR_PORT__";
+
     /**
      * Called to save supplied value in shared preferences against given key.
      * @param context Context of caller activity
@@ -49,7 +53,7 @@ public class PrefUtils {
     public static void saveToPrefs(Context context, String key, long value) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final SharedPreferences.Editor editor = prefs.edit();
-        editor.putLong(key,value);
+        editor.putLong(key, value);
         editor.commit();
     }
 
@@ -57,6 +61,23 @@ public class PrefUtils {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         try {
             return sharedPrefs.getLong(key, defaultValue);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return defaultValue;
+        }
+    }
+
+    public static void saveToPrefs(Context context, String key, int value) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(key,value);
+        editor.commit();
+    }
+
+    public static int getFromPrefs(Context context, String key, int defaultValue) {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        try {
+            return sharedPrefs.getInt(key, defaultValue);
         } catch (Exception e) {
             e.printStackTrace();
             return defaultValue;
