@@ -19,7 +19,7 @@ public class LocatorService extends BasicService {
     public GetServiceLocatorResponse getServiceLocator() {
 
         Map<String, String> params = new LinkedHashMap();
-        params.put("app", "huayuan_contract");
+        params.put("app", "huayuan_contract_android");
         params.put("platform", "android");
         params.put("version", BuildConfig.VERSION_NAME);
 
