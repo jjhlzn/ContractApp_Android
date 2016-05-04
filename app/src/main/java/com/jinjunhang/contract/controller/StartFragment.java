@@ -67,10 +67,28 @@ public class StartFragment extends android.support.v4.app.Fragment {
                 return;
             }
 
+            String oldHttp = PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_LOCATOR_HTTP, "");
+            String oldServerName = PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_LOCATOR_SERVERNAME, "");
+            int oldPort = PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_LOCATOR_PORT, 0);
+
+            if (!oldHttp.equals(resp.getServiceLocator().getHttp()) ||
+                    !oldServerName.equals(resp.getServiceLocator().getServerName()) ||
+                    oldPort != resp.getServiceLocator().getPort() ) {
+                Log.d(TAG, "oldHttp = " + oldHttp);
+                Log.d(TAG, "oldServerName = " + oldServerName);
+                Log.d(TAG, "oldPort = " + oldPort);
+                Log.d(TAG, "Http = " + resp.getServiceLocator().getHttp());
+                Log.d(TAG, "ServerName = " + resp.getServiceLocator().getServerName());
+                Log.d(TAG, "Port = " + resp.getServiceLocator().getPort());
+                Log.d(TAG, "servicelocator has changed, make login invalid");
+                PrefUtils.saveToPrefs(getActivity(), PrefUtils.PREFS_LOGIN_ISLOGIN_KEY, "0");
+            }
+
             //更新ServiceLocator
             PrefUtils.saveToPrefs(getActivity(), PrefUtils.PREFS_LOCATOR_HTTP, resp.getServiceLocator().getHttp());
             PrefUtils.saveToPrefs(getActivity(), PrefUtils.PREFS_LOCATOR_SERVERNAME, resp.getServiceLocator().getServerName());
             PrefUtils.saveToPrefs(getActivity(), PrefUtils.PREFS_LOCATOR_PORT, resp.getServiceLocator().getPort());
+
             ServiceConfiguration.LOCATOR_HTTP = resp.getServiceLocator().getHttp();
             ServiceConfiguration.LOCATOR_PORT = resp.getServiceLocator().getPort();
             ServiceConfiguration.LOCATOR_SERVERNAME = resp.getServiceLocator().getServerName();

@@ -21,7 +21,7 @@ public class LocatorService extends BasicService {
         Map<String, String> params = new LinkedHashMap();
         params.put("app", "huayuan_contract_android");
         params.put("platform", "android");
-        params.put("version", BuildConfig.VERSION_NAME);
+        params.put("version", BuildConfig.VERSION_NAME + "." + BuildConfig.VERSION_CODE);
 
         return sendRequest("http://serviceLocator.hengdianworld.com:9000/servicelocator", params, GetServiceLocatorResponse.class,new ResponseHandler() {
             @Override
