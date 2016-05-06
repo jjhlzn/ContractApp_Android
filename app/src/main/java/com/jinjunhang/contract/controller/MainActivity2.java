@@ -78,6 +78,7 @@ public class MainActivity2 extends AppCompatActivity {
                 switch (menuItemId) {
                     case R.id.bottomBarOrder:
                         title = "订单";
+
                         searchApprovalButton.setVisibility(View.INVISIBLE);
                         fragment = getFragment(SearchOrderFragment.class);
                         //mBottomBar.
@@ -86,6 +87,7 @@ public class MainActivity2 extends AppCompatActivity {
                         title = "审批";
                         searchApprovalButton.setVisibility(View.VISIBLE);
                         fragment = getFragment(ApprovalListFragment.class);
+
                         break;
                     case R.id.bottomBarMe:
                         title = "我";
@@ -111,6 +113,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         mBottomBar.noTopOffset();
         mBottomBar.hideShadow();
+
 
 
         //mBottomBar.useDarkTheme();
@@ -164,8 +167,11 @@ public class MainActivity2 extends AppCompatActivity {
                 //Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
                 Log.d("MainActivity", "Scanned");
+                String scanCode = result.getContents();
+                Log.d(TAG, "scan code = " + scanCode);
                 //Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                 Intent i = new Intent(this, ProductDetailActivity.class);
+                i.putExtra(ProductDetailFragment.EXTRA_PRODUCTID, scanCode);
                 startActivity(i);
             }
         } else {

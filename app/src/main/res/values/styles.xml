@@ -182,7 +182,7 @@
 <!-- ################################################################################### -->
 
     <style name="BB_BottomBarItem_Fixed">
-        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:orientation">vertical</item>
         <item name="android:gravity">bottom|center_horizontal</item>
         <item name="android:layout_width">wrap_content</item>

@@ -91,7 +91,7 @@ public class ProductDetailFragment extends android.support.v4.app.Fragment imple
 
         @Override
         protected GetProductResponse doInBackground(Void... params) {
-            return new ProductService().GetProductById("");
+            return new ProductService().GetProductById(mProductId);
         }
     }
 
@@ -104,8 +104,8 @@ public class ProductDetailFragment extends android.support.v4.app.Fragment imple
 
          protected Bitmap doInBackground(Void... params) {
 
-            String productId = "2502001089";
-            String urldisplay = ServiceConfiguration.GetProductImageUrl() + "?productid=" + productId;
+            //String productId = "2502001089";
+            String urldisplay = ServiceConfiguration.GetProductImageUrl() + "?productid=" + mProductId;
             Bitmap mIcon11 = null;
             try {
                 InputStream in = new java.net.URL(urldisplay).openStream();
