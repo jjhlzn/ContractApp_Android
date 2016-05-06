@@ -93,9 +93,6 @@ public class MainActivity2 extends AppCompatActivity {
                         fragment = getFragment(MyInfoFragment.class);
                         break;
                 }
-               // fm.beginTransaction()
-                // .add(R.id.fragmentContainer, fragment)
-                 //       .commit();
 
                 android.support.v4.app.FragmentTransaction transaction = fm.beginTransaction();
                 transaction.replace(R.id.fragmentContainer, fragment);
@@ -115,8 +112,9 @@ public class MainActivity2 extends AppCompatActivity {
         mBottomBar.noTopOffset();
         mBottomBar.hideShadow();
 
-        mBottomBar.setMinimumHeight(20);
-        mBottomBar.setBackgroundColor(Color.GRAY);
+
+        //mBottomBar.useDarkTheme();
+        //mBottomBar.setScaleX(0.8f);
 
 
 

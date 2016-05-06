@@ -3,7 +3,9 @@
     <item
         android:id="@+id/bottomBarOrder"
         android:icon="@drawable/order"
+
         android:title="订单"
+
         />
 
     <item
