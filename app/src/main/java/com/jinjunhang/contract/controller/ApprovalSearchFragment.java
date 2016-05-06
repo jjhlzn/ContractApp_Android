@@ -91,14 +91,14 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
         mContainUnapproved = (SwitchButton)v.findViewById(R.id.search_approval_unapproved);
 
         Calendar cal = Calendar.getInstance();
-        final Date today;
+        final Date tomorrow;
         final Date oneMonthAgo;
         final SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
 
         if (mQueryObject != null) {
             mKeywordEditText.setText(mQueryObject.getKeyword());
             try {
-                today = dt.parse(mQueryObject.getEndDate());
+                tomorrow = dt.parse(mQueryObject.getEndDate());
                 oneMonthAgo = dt.parse(mQueryObject.getStartDate());
             }
             catch (Exception ex){
@@ -110,9 +110,10 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
             mContainUnapproved.setChecked(mQueryObject.isContainUnapproved());
         } else {
 
-            today = cal.getTime();
             cal.add(Calendar.DAY_OF_MONTH, -31);
             oneMonthAgo = cal.getTime();
+            cal.add(Calendar.DAY_OF_MONTH, 32);
+            tomorrow = cal.getTime();
         }
 
         mStartDateButton = (EditText)v.findViewById(R.id.search_approval_startDate);
@@ -137,7 +138,7 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
         });
 
         mEndDateButton = (EditText)v.findViewById(R.id.search_approval_endDate);
-        mEndDateButton.setText(dt.format(today));
+        mEndDateButton.setText(dt.format(tomorrow));
         mEndDateButton.setGravity(Gravity.CENTER);
         mEndDateButton.setOnClickListener(new View.OnClickListener() {
             @Override

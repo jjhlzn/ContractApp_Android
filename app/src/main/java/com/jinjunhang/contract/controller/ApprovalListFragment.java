@@ -76,7 +76,7 @@ public class ApprovalListFragment extends android.support.v4.app.Fragment
         super.onResume();
         Log.d(TAG, "resume");
 
-        long time = PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_APPROVAL_UPDATE_TIME, -1);
+        long time = PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_APPROVAL_UPDATE_TIME, (long) -1);
         if (time == -1)
             return;
 
@@ -116,16 +116,17 @@ public class ApprovalListFragment extends android.support.v4.app.Fragment
         mQueryObject = new ApprovalQueryObject();
 
         Calendar cal = Calendar.getInstance();
-        final Date today;
+        final Date tomorrow;
         final Date oneMonthAgo;
         SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
-        today = cal.getTime();
         cal.add(Calendar.DAY_OF_MONTH, -31);
         oneMonthAgo = cal.getTime();
+        cal.add(Calendar.DAY_OF_MONTH, 32);
+        tomorrow = cal.getTime();
 
         mQueryObject.setKeyword("");
         mQueryObject.setStartDate(dt.format(oneMonthAgo));
-        mQueryObject.setEndDate(dt.format(today));
+        mQueryObject.setEndDate(dt.format(tomorrow));
 
 
         mQueryObject.setPageSize(Utils.PAGESIZE_APPROVAL);
@@ -350,8 +351,13 @@ public class ApprovalListFragment extends android.support.v4.app.Fragment
                 if (approval != null) {
                     Approval item = mApprovalAdapter.getItem(position);
                     Log.d(TAG, "approval.status = " + approval.getStatus());
+                    //如果该审批已经审批过了，则将该审批删除
                     if (!approval.getStatus().equals("待批")) {
 
+                        mApprovalAdapter.remove(item);
+                        mApprovalAdapter.notifyDataSetChanged();
+
+                        /*
                         item.setApprovalResult(approval.getApprovalResult());
                         item.setStatus(approval.getStatus());
 
@@ -364,7 +370,7 @@ public class ApprovalListFragment extends android.support.v4.app.Fragment
 
                         Log.d(TAG, "update list view");
                         TextView statusTextView = (TextView) v.findViewById(R.id.approval_list_item_status);
-                        statusTextView.setText(item.getApprovalResult());
+                        statusTextView.setText(item.getApprovalResult()); */
                     }
                 }
             }

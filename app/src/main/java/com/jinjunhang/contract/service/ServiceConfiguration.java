@@ -7,14 +7,14 @@ import com.jinjunhang.contract.controller.PrefUtils;
  */
 public class ServiceConfiguration {
         //public final static String serverName = "192.168.1.50";
-        private final static boolean isUseServiceLoator = true;
+        private final static boolean isUseServiceLoator = false;
         public static String LOCATOR_HTTP = "";
         public static String LOCATOR_SERVERNAME = "";
         public static int LOCATOR_PORT = 0;
         public final static String serverName1 = "jjhtest.hengdianworld.com";
         public final static int port1 = 80;
 
-        public final static String serverName2 = "www.jinjunhang.com";
+        public final static String serverName2 = "192.168.1.50";
         public final static int port2 = 3000;
 
         public final static String serverName3 = "oa.lloydind.com";
@@ -30,14 +30,14 @@ public class ServiceConfiguration {
                 if (isUseServiceLoator) {
                         return LOCATOR_SERVERNAME;
                 }
-                return serverName1;
+                return serverName2;
         }
 
         public static int port() {
                 if (isUseServiceLoator) {
                         return LOCATOR_PORT;
                 }
-                return port1;
+                return port2;
         }
 
         public  static String SeachOrderUrl() {
