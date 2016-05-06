@@ -39,14 +39,14 @@
             android:text="@string/search_approval_startDate"
 
             android:layout_weight="0.5"
-            android:layout_marginLeft="15dp"
-            android:textSize="14dp"
-            />
+            android:layout_marginLeft="18dp"
+
+            android:textSize="14dp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/search_approval_endDate"
-
+            android:layout_marginLeft="10dp"
             android:layout_weight="0.5"
             android:textSize="14dp"/>
     </LinearLayout>
@@ -71,7 +71,7 @@
             android:drawableRight="@drawable/dateicon"
             android:focusable="false"
 
-            />
+            android:textAlignment="textStart"/>
 
         <EditText
             android:id="@+id/search_approval_endDate"
@@ -86,7 +86,7 @@
             android:textSize="14dp"
             android:drawableRight="@drawable/dateicon"
             android:focusable="false"
-            />
+            android:textAlignment="textStart"/>
     </LinearLayout>
 
     <LinearLayout
@@ -100,14 +100,14 @@
             android:text="@string/search_approval_unapproved"
 
             android:layout_weight="0.5"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="18dp"
             android:textSize="14dp"
             />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/search_approval_approved"
-
+            android:layout_marginLeft="10dp"
             android:layout_weight="0.5"
             android:textSize="14dp"/>
     </LinearLayout>
@@ -121,13 +121,14 @@
             android:id="@+id/search_approval_unapproved"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="18dp"
             android:layout_marginTop="5dp"
             android:layout_weight="0.5"
             android:checked="true"/>
         <com.kyleduo.switchbutton.SwitchButton
             android:id="@+id/search_approval_approved"
             android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="0.5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

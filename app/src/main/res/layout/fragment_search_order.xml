@@ -38,14 +38,14 @@
             android:text="@string/search_order_startDate"
 
             android:layout_weight="0.5"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="18dp"
             android:textSize="14dp"
             />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/search_order_endDate"
-
+            android:layout_marginLeft="9dp"
             android:layout_weight="0.5"
             android:textSize="14dp"/>
     </LinearLayout>
@@ -69,7 +69,7 @@
             android:textSize="14dp"
             android:drawableRight="@drawable/dateicon"
             android:focusable="false"
-            />
+            android:textAlignment="viewStart"/>
 
         <EditText
             android:id="@+id/search_order_endDate"
@@ -84,7 +84,7 @@
             android:textSize="14dp"
             android:drawableRight="@drawable/dateicon"
             android:focusable="false"
-            />
+            android:textAlignment="textStart"/>
     </LinearLayout>
 
 

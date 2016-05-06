@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">华元ERP</string>
+
     <!-- SearchOrderFragment  -->
     <string name="search_order_keyword">关键字</string>
     <string name="search_order_startDate">开始日期</string>

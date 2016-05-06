@@ -1,9 +1,13 @@
 package com.jinjunhang.contract.controller;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +23,11 @@ import com.google.zxing.integration.android.IntentResult;
 import com.jinjunhang.contract.R;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarFragment;
+import com.roughike.bottombar.OnMenuTabClickListener;
 import com.roughike.bottombar.OnTabSelectedListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by lzn on 16/4/3.
@@ -36,18 +44,8 @@ public class MainActivity2 extends AppCompatActivity {
         Log.d(TAG, "onCreate called");
         setContentView(R.layout.activity_main);
 
-        mBottomBar = BottomBar.attach(this, savedInstanceState);
-        mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
-                new BottomBarFragment(new SearchOrderFragment(), R.drawable.order, "订单"),
-                new BottomBarFragment(new ApprovalListFragment(), R.drawable.shenpi, "审批"),
-                new BottomBarFragment(new MyInfoFragment(), R.drawable.me, "我")
-        );
+        fragmentMap = new HashMap();
 
-        mBottomBar.noTopOffset();
-        mBottomBar.hideShadow();
-
-        mBottomBar.setMinimumHeight(20);
-        mBottomBar.setBackgroundColor(Color.GRAY);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         View customView = getLayoutInflater().inflate(R.layout.actionbar_main, null);
@@ -69,41 +67,84 @@ public class MainActivity2 extends AppCompatActivity {
 
 
         searchApprovalButton.setVisibility(View.INVISIBLE);
-        mBottomBar.setOnItemSelectedListener(new OnTabSelectedListener() {
+
+        mBottomBar = BottomBar.attach(this, savedInstanceState);
+        mBottomBar.setItemsFromMenu(R.menu.bottommenu, new OnMenuTabClickListener() {
             @Override
-            public void onItemSelected(int position) {
+            public void onMenuTabSelected(@IdRes int menuItemId) {
                 String title = "";
-                switch (position) {
-                    case 0:
+                FragmentManager fm = getSupportFragmentManager();
+                Fragment fragment = null;
+                switch (menuItemId) {
+                    case R.id.bottomBarOrder:
                         title = "订单";
                         searchApprovalButton.setVisibility(View.INVISIBLE);
+                        fragment = getFragment(SearchOrderFragment.class);
                         //mBottomBar.
                         break;
-                    case 1:
+                    case R.id.bottomBarShenpi:
                         title = "审批";
                         searchApprovalButton.setVisibility(View.VISIBLE);
+                        fragment = getFragment(ApprovalListFragment.class);
                         break;
-                    case 2:
+                    case R.id.bottomBarMe:
                         title = "我";
                         searchApprovalButton.setVisibility(View.INVISIBLE);
+                        fragment = getFragment(MyInfoFragment.class);
                         break;
                 }
-                ((TextView) getSupportActionBar().getCustomView().findViewById(R.id.actionbar_text)).setText(title);
+               // fm.beginTransaction()
+                // .add(R.id.fragmentContainer, fragment)
+                 //       .commit();
 
+                android.support.v4.app.FragmentTransaction transaction = fm.beginTransaction();
+                transaction.replace(R.id.fragmentContainer, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                ((TextView) getSupportActionBar().getCustomView().findViewById(R.id.actionbar_text)).setText(title);
+            }
+
+            @Override
+            public void onMenuTabReSelected(@IdRes int menuItemId) {
+                if (menuItemId == R.id.bottomBarOrder) {
+                    // The user reselected item number one, scroll your content to top.
+                }
             }
         });
+
+        mBottomBar.noTopOffset();
+        mBottomBar.hideShadow();
+
+        mBottomBar.setMinimumHeight(20);
+        mBottomBar.setBackgroundColor(Color.GRAY);
+
 
 
         int selectTab = getIntent().getIntExtra(EXTRA_TAB, 0);
         Log.d(TAG, "selectTab = " + selectTab);
         mBottomBar.selectTabAtPosition(selectTab, true);
 
-        ((ImageButton)getSupportActionBar().getCustomView().findViewById(R.id.actionbar_searchButton)).setOnClickListener(new View.OnClickListener(){
+        (getSupportActionBar().getCustomView().findViewById(R.id.actionbar_searchButton)).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 new IntentIntegrator(that).setCaptureActivity(ProductSearchActivity.class).initiateScan();
             }
         });
+    }
+
+
+    private Map<Class, Fragment> fragmentMap;
+    private <T extends Fragment> Fragment getFragment( Class<T> fragmentClass) {
+        Fragment fragment = fragmentMap.get(fragmentClass);
+        if (fragment == null) {
+            try {
+                fragment = fragmentClass.newInstance();
+            } catch (Exception ex) {
+
+            }
+            fragmentMap.put(fragmentClass, fragment);
+        }
+        return fragment;
     }
 
     @Override
