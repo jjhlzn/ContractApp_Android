@@ -28,6 +28,13 @@ public class Utils {
         dlgAlert.create().show();
     }
 
+    public static void showMessage(Context context, String message, DialogInterface.OnClickListener listener) {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(context);
+        dlgAlert.setMessage(message);
+        dlgAlert.setPositiveButton("确定", listener);
+        dlgAlert.create().show();
+    }
+
 
     public static void showConfirmMessage(Context context, String message, DialogInterface.OnClickListener listener) {
         AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(context);

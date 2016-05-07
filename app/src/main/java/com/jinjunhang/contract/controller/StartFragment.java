@@ -1,5 +1,6 @@
 package com.jinjunhang.contract.controller;
 
+import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jinjunhang.contract.R;
+import com.jinjunhang.contract.model.ServiceLocator;
 import com.jinjunhang.contract.service.GetServiceLocatorResponse;
 import com.jinjunhang.contract.service.LocatorService;
 import com.jinjunhang.contract.service.SearchApprovalResponse;
@@ -23,7 +25,7 @@ import com.jinjunhang.contract.service.ServiceConfiguration;
 public class StartFragment extends android.support.v4.app.Fragment {
     private final static String TAG = "StartFragment";
 
-    private final int SPLASH_DELAY_MILLIS = 0;
+    private final int SPLASH_DELAY_MILLIS = 1500;
     private LocatorService mLocatorService = new LocatorService();
     @Nullable
     @Override
@@ -33,11 +35,22 @@ public class StartFragment extends android.support.v4.app.Fragment {
         Intent i = new Intent(getActivity(), MainActivity2.class);
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                getServiceLocator();
+                //getServiceLocator();
+                setServiceLocator();
+                goHome();
             }
         }, SPLASH_DELAY_MILLIS);
 
         return v;
+    }
+
+    private void setServiceLocator() {
+        String http = PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_LOCATOR_HTTP, ServiceLocator.DEFAULT_HTTP);
+        String serverName = PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_LOCATOR_SERVERNAME, ServiceLocator.DEFAULT_SERVERNAME);
+        int port = PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_LOCATOR_PORT, ServiceLocator.DEFAULT_PORT);
+        ServiceConfiguration.LOCATOR_HTTP = http;
+        ServiceConfiguration.LOCATOR_SERVERNAME = serverName;
+        ServiceConfiguration.LOCATOR_PORT = port;
     }
 
     private void goHome() {
@@ -54,6 +67,7 @@ public class StartFragment extends android.support.v4.app.Fragment {
         startActivity(intent);
     }
 
+    /*
     private void getServiceLocator() {
         new GetServiceLocatorTask().execute();
     }
@@ -104,4 +118,5 @@ public class StartFragment extends android.support.v4.app.Fragment {
 
         }
     }
+    */
 }

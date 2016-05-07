@@ -37,10 +37,7 @@ public class LoginFragment extends android.support.v4.app.Fragment {
         mUserNameEditText = (EditText)v.findViewById(R.id.login_userName);
         mPasswordEditText = (EditText)v.findViewById(R.id.login_password);
 
-        //mUserNameEditText.setRawInputType(Configuration.KEYBOARD_QWERTY);
 
-        //mUserNameEditText.setHintTextColor(0x7d7c7c);
-        //mPasswordEditText.setHintTextColor(0x7d7c7c);
 
         Button loginButton = (Button)v.findViewById(R.id.loign_loginButton);
         loginButton.setOnClickListener(new View.OnClickListener(){
@@ -58,6 +55,15 @@ public class LoginFragment extends android.support.v4.app.Fragment {
                     return;
                 }
                 new LoginTask().execute(userName, password);
+            }
+        });
+
+        Button configButton = (Button)v.findViewById(R.id.login_configButton);
+        configButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), ConfigurationActivity.class);
+                startActivity(i);
             }
         });
 

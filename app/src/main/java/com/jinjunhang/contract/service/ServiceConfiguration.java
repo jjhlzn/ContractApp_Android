@@ -1,13 +1,11 @@
 package com.jinjunhang.contract.service;
 
-import com.jinjunhang.contract.controller.PrefUtils;
-
 /**
  * Created by lzn on 16/3/23.
  */
 public class ServiceConfiguration {
         //public final static String serverName = "192.168.1.50";
-        private final static boolean isUseServiceLoator = true;
+        private final static boolean isUseConfig = true;
         public static String LOCATOR_HTTP = "";
         public static String LOCATOR_SERVERNAME = "";
         public static int LOCATOR_PORT = 0;
@@ -20,21 +18,21 @@ public class ServiceConfiguration {
         public final static String serverName3 = "oa.lloydind.com";
         public final static int port3 = 10080;
         public static String httpMethod() {
-                if (isUseServiceLoator) {
+                if (isUseConfig) {
                         return LOCATOR_HTTP;
                 }
                 return "http";
         }
 
         public static String serverName() {
-                if (isUseServiceLoator) {
+                if (isUseConfig) {
                         return LOCATOR_SERVERNAME;
                 }
                 return serverName1;
         }
 
         public static int port() {
-                if (isUseServiceLoator) {
+                if (isUseConfig) {
                         return LOCATOR_PORT;
                 }
                 return port1;

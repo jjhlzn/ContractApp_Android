@@ -5,6 +5,10 @@ package com.jinjunhang.contract.model;
  */
 public class ServiceLocator {
 
+    public static final String DEFAULT_HTTP = "http";
+    public static final String DEFAULT_SERVERNAME = "jjhtest.hengdianworld.com";
+    public static final int DEFAULT_PORT = 80;
+
     private String mHttp;
     private String mServerName;
     private int    mPort;

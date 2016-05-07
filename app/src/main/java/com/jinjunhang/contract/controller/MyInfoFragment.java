@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.jinjunhang.contract.BuildConfig;
 import com.jinjunhang.contract.R;
 
 /**
@@ -34,7 +35,7 @@ public class MyInfoFragment extends android.support.v4.app.Fragment {
         departmentTV.setText(PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_LOGIN_DEPARTMENT_KEY, ""));
 
         TextView versionTV = (TextView)v.findViewById(R.id.myinfo_version);
-        versionTV.setText("1.0");
+        versionTV.setText(BuildConfig.VERSION_NAME + "." + BuildConfig.VERSION_CODE);
 
         Button logoutButton = (Button)v.findViewById(R.id.myinfo_logoutButton);
         logoutButton.setOnClickListener(new View.OnClickListener(){

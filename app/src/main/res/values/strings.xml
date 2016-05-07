@@ -58,6 +58,13 @@
     <string name="login_loginButton">登录</string>
     <string name="login_userName">  用户名</string>
     <string name="login_password">密码</string>
+    <string name="login_configButton">配置</string>
+
+    <!-- configFragment -->
+    <string name="config_http">协议</string>
+    <string name="config_serverName">  服务器名 </string>
+    <string name="config_port">端口号</string>
+    <string name="config_saveButton">保存</string>
 
     <!-- StartFragment -->
     <string name="start_appName">华元ERP</string>
