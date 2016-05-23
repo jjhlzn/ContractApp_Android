@@ -5,6 +5,7 @@ package com.jinjunhang.contract.service;
  */
 public class ServiceConfiguration {
         //public final static String serverName = "192.168.1.50";
+
         private final static boolean isUseConfig = true;
         public static String LOCATOR_HTTP = "";
         public static String LOCATOR_SERVERNAME = "";
@@ -66,6 +67,14 @@ public class ServiceConfiguration {
 
         public  static String LoginUrl() {
                 return httpMethod() + "://"+serverName()+":"+port() +"/login/login.json";
+        }
+
+        public static String RegsiterDevieUrl() {
+                return httpMethod() + "://" + serverName() + ":" + port() + "/login/registerdevice.json";
+        }
+
+        public static String ResetBadgeUrl() {
+                return httpMethod() + "://" + serverName() + ":" + port() + "/login/resetbadge.json";
         }
 
         public  static String GetProductUrl() {

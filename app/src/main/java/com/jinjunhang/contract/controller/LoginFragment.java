@@ -1,11 +1,13 @@
 package com.jinjunhang.contract.controller;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +17,18 @@ import android.widget.EditText;
 import com.jinjunhang.contract.R;
 import com.jinjunhang.contract.service.LoginResponse;
 import com.jinjunhang.contract.service.LoginService;
+import com.jinjunhang.contract.service.RegisterDeviceResponse;
 import com.jinjunhang.contract.service.ServerResponse;
+import com.jinjunhang.contract.service.ServiceConfiguration;
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushManager;
 
 /**
  * Created by lzn on 16/4/7.
  */
 public class LoginFragment extends android.support.v4.app.Fragment {
 
+    private static final String TAG = "LoginFragment";
     private EditText mUserNameEditText;
     private EditText mPasswordEditText;
     private LoadingAnimation mLoading;
@@ -82,22 +89,38 @@ public class LoginFragment extends android.support.v4.app.Fragment {
         @Override
         protected void onPostExecute(LoginResponse loginResponse) {
             super.onPostExecute(loginResponse);
-            mLoading.dismiss();
+
             if (loginResponse.getStatus() == ServerResponse.FAIL) {
+                mLoading.dismiss();
                 Utils.showServerErrorDialog(getActivity());
                 return;
             }
 
+
+
             if (loginResponse.isSuccess()) {
-                PrefUtils.saveToPrefs(getActivity(), PrefUtils.PREFS_LOGIN_ISLOGIN_KEY, "1");
+
                 PrefUtils.saveToPrefs(getActivity(), PrefUtils.PREFS_LOGIN_USERNAME_KEY, mUserNameEditText.getText().toString());
                 PrefUtils.saveToPrefs(getActivity(), PrefUtils.PREFS_LOGIN_NAME_KEY, loginResponse.getName());
                 PrefUtils.saveToPrefs(getActivity(), PrefUtils.PREFS_LOGIN_DEPARTMENT_KEY, loginResponse.getDepartment());
 
-                Intent i = new Intent(getActivity(), MainActivity2.class);
-                startActivity(i);
+                XGPushManager.registerPush(getActivity(), new XGIOperateCallback() {
+                    @Override
+                    public void onSuccess(Object o, int i) {
+                        Log.d(TAG, "注册成功, 设备devicetoken为: " + o);
+                        //将Devicetoken注册到服务器
+                        new RegisterDeviceTask().execute(mUserNameEditText.getText().toString(), o.toString());
+                    }
+
+                    @Override
+                    public void onFail(Object o, int i, String s) {
+                        Log.d(TAG, "注册失败, 无法获得devicetoken, 错误码：" + i + ",  错误信息：" + s);
+                        Utils.showMessage(getActivity(), "消息注册失败，重新登录");
+                    }
+                });
 
             } else {
+                mLoading.dismiss();
                 String errorMessage = loginResponse.getErrMessage();
                 if (errorMessage == null || errorMessage.isEmpty()) {
                     errorMessage = "用户名或密码错误！";
@@ -111,6 +134,35 @@ public class LoginFragment extends android.support.v4.app.Fragment {
             String userName = params[0];
             String password = params[1];
             return new LoginService().login(userName, password);
+        }
+    }
+
+    class RegisterDeviceTask extends AsyncTask<String, Void, RegisterDeviceResponse> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected RegisterDeviceResponse doInBackground(String... params) {
+            String userName = params[0];
+            String deviceToken = params[1];
+            return new LoginService().registerDevice(userName, deviceToken);
+        }
+
+        @Override
+        protected void onPostExecute(RegisterDeviceResponse response) {
+            super.onPostExecute(response);
+            mLoading.dismiss();
+
+            if (response.getStatus() == ServerResponse.SUCCESS) {
+                PrefUtils.saveToPrefs(getActivity(), PrefUtils.PREFS_LOGIN_ISLOGIN_KEY, "1");
+                Intent intent = new Intent(getActivity(), MainActivity2.class);
+                startActivity(intent);
+            } else {
+                Utils.showMessage(getActivity(), "消息注册失败，重新登录");
+            }
+
         }
     }
 }

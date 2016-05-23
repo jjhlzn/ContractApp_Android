@@ -18,6 +18,8 @@ import com.jinjunhang.contract.service.LocatorService;
 import com.jinjunhang.contract.service.SearchApprovalResponse;
 import com.jinjunhang.contract.service.ServerResponse;
 import com.jinjunhang.contract.service.ServiceConfiguration;
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushManager;
 
 /**
  * Created by lzn on 16/4/7.
@@ -57,14 +59,28 @@ public class StartFragment extends android.support.v4.app.Fragment {
         String isLoginValue = PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_LOGIN_ISLOGIN_KEY, "0");
         Log.d(TAG, "isLoginValue = " + isLoginValue);
         boolean isLogin =  isLoginValue.equals("1");
-        Intent intent = null;
+
         if (isLogin) {
-            intent = new Intent(getActivity(), MainActivity2.class);
+            XGPushManager.registerPush(getActivity(), new XGIOperateCallback() {
+                @Override
+                public void onSuccess(Object o, int i) {
+                    Log.d(TAG, "devicetoken = " + o.toString());
+                    Intent intent = new Intent(getActivity(), MainActivity2.class);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onFail(Object o, int i, String s) {
+                    Log.d(TAG, "register push failed");
+                }
+            });
+
         } else {
-            intent = new Intent(getActivity(), LoginActivity.class);
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
         }
 
-        startActivity(intent);
+
     }
 
     /*

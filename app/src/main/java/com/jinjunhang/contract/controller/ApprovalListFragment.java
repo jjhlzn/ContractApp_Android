@@ -48,6 +48,7 @@ public class ApprovalListFragment extends android.support.v4.app.Fragment
 
     private ListView mListView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    public boolean isInited = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,6 +69,8 @@ public class ApprovalListFragment extends android.support.v4.app.Fragment
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_refresh_layout);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
+
+        isInited = true;
         return v;
     }
 
@@ -85,9 +88,13 @@ public class ApprovalListFragment extends android.support.v4.app.Fragment
         if (delta > Utils.UPDATE_TIME_DELTA) {
             Log.d(TAG, "time is out, need to refresh");
             if (!mIsLoading) {
-                new SearchApprovalTask(true).execute();
+                reloadApprovalList();
             }
         }
+    }
+
+    public void reloadApprovalList() {
+        new SearchApprovalTask(true).execute();
     }
 
     @Override

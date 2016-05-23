@@ -2,6 +2,8 @@ package com.jinjunhang.contract.service;
 
 import android.util.Log;
 
+import com.jinjunhang.contract.model.ServiceLocator;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,5 +47,33 @@ public class LoginService extends BasicService {
         });
 
     }
+
+    public RegisterDeviceResponse registerDevice(String userName, String deviceToken) {
+        Map<String, String> params = new LinkedHashMap();
+        params.put("username", userName);
+        params.put("platform", "android");
+        params.put("devicetoken", deviceToken);
+        return sendRequest(ServiceConfiguration.RegsiterDevieUrl(), params, RegisterDeviceResponse.class, new ResponseHandler() {
+            @Override
+            public ServerResponse handle(ServerResponse resp, JSONObject json) throws JSONException {
+                return resp;
+            }
+        });
+    }
+
+    public ResetBadgeReponse resetBadge(String userName) {
+
+        Map<String, String> params = new LinkedHashMap<>();
+        params.put("username", userName);
+        params.put("platform", "android");
+        return sendRequest(ServiceConfiguration.ResetBadgeUrl(), params, ResetBadgeReponse.class, new ResponseHandler() {
+            @Override
+            public ServerResponse handle(ServerResponse resp, JSONObject json) throws JSONException {
+                return resp;
+            }
+        });
+
+    }
+
 
 }
