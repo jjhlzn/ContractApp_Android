@@ -1,8 +1,13 @@
 package com.jinjunhang.contract.service;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 import com.jinjunhang.contract.db.ApprovalNotificationStore;
 import com.jinjunhang.contract.model.Approval;
@@ -78,6 +83,9 @@ public class MyPushReceiver extends XGPushBaseReceiver {
         }
 
 
+        Log.d(TAG, "customContent = " + xgPushShowedResult.getCustomContent());
+
+
         Log.d(TAG, "titel = " + xgPushShowedResult.getTitle());
         Log.d(TAG, "content = " + xgPushShowedResult.getContent());
         Log.d(TAG, "customContent = " + xgPushShowedResult.getCustomContent());
@@ -92,12 +100,24 @@ public class MyPushReceiver extends XGPushBaseReceiver {
         intent.putExtra(EXTRA_APPROVAL, approval);
 
         //将信息保存到数据库，然后Activity从数据库中进行读取
-        ApprovalNotificationStore.getInstance(context).save(approval, 2);
-        int badgeCount = 1;
+        int badgeCount = getBadge(xgPushShowedResult.getCustomContent());
+        ApprovalNotificationStore.getInstance(context).save(approval, badgeCount);
+
         ShortcutBadger.applyCount(context, badgeCount); //for 1.1.4
        // ShortcutBadger.with(context).count(badgeCount); //for 1.1.3
         context.sendBroadcast(intent);
 
 
+    }
+
+    public int getBadge(String customContent) {
+        try {
+            final JSONObject obj = new JSONObject(customContent);
+            return obj.getInt("badge");
+
+        } catch (JSONException ex) {
+            Log.e(TAG, ex.toString());
+            return 0;
+        }
     }
 }
