@@ -1,11 +1,9 @@
-package com.jinjunhang.contract.controller;
+package com.jinjunhang.framework.lib;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
-
-import com.jinjunhang.contract.BuildConfig;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,7 +16,6 @@ public class Utils {
 
     public final static int PAGESIZE_APPROVAL = 25;
     public final static int PAGESIZE_ORDER = 25;
-    public final static int PAGESIZE_PRICEREPORT = 25;
 
     public final static long UPDATE_TIME_DELTA = 1000 * 60 * 5;
 

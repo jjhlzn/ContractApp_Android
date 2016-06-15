@@ -13,19 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ToggleButton;
 
 import com.jinjunhang.contract.R;
-import com.jinjunhang.contract.model.Approval;
 import com.jinjunhang.contract.model.Order;
 import com.jinjunhang.contract.service.ApprovalQueryObject;
-import com.jinjunhang.contract.service.ApprovalService;
 import com.jinjunhang.contract.service.OrderQueryObject;
 import com.jinjunhang.contract.service.OrderService;
-import com.jinjunhang.contract.service.SearchApprovalResponse;
+import com.jinjunhang.contract.service.PriceReportQueryObject;
 import com.jinjunhang.contract.service.SearchOrderResponse;
 import com.jinjunhang.contract.service.ServerResponse;
-import com.kyleduo.switchbutton.SwitchButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,15 +30,14 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by lzn on 16/4/3.
+ * Created by lzn on 16/6/15.
  */
-public class ApprovalSearchFragment extends android.support.v4.app.Fragment implements SingleFragmentActivity.OnBackPressedListener {
+public class PriceReportSearchFragment extends android.support.v4.app.Fragment {
 
-    private final static String TAG = "ApprovalSearchFragment";
+    private final static String TAG = "ReportSearchFragment";
 
-    public final static String EXTRA_APPROVALS = "approvals";
-    public final static String EXTRA_QUERYOBJECT = "approvalqueryobject";
 
+    public final static String EXTRA_QUERYOBJECT = "priceReportqueryobject";
 
     private static final int REQUEST_START_DATE = 0;
     private static final int REQUEST_END_DATE = 1;
@@ -51,18 +46,17 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
     private EditText mKeywordEditText;
     private EditText mStartDateButton;
     private EditText mEndDateButton;
-    private SwitchButton mContainApproved;
-    private SwitchButton mContainUnapproved;
+    private LoadingAnimation mLoading;
 
-    private ApprovalQueryObject mQueryObject;
+    private PriceReportQueryObject mQueryObject;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = getActivity().getLayoutInflater().inflate(R.layout.fragment_search_approval, container, false);
-        mKeywordEditText = (EditText)v.findViewById(R.id.search_approval_keyword);
+        View v = inflater.inflate(R.layout.fragment_search_order, container, false);
+        mKeywordEditText = (EditText)v.findViewById(R.id.search_order_keyword);
 
-        Button searchButton = (Button)v.findViewById(R.id.search_approval_searchButton);
+        Button searchButton = (Button)v.findViewById(R.id.search_order_searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,25 +65,19 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
                     return;
                 }
 
-
                 Intent i = new Intent(getActivity(), MainActivity2.class)
-                        .putExtra(MainActivity2.EXTRA_TAB, 1);
-                ApprovalQueryObject queryObject = new ApprovalQueryObject();
-                queryObject.setContainApproved(mContainApproved.isChecked());
-                queryObject.setContainUnapproved(mContainUnapproved.isChecked());
+                        .putExtra(MainActivity2.EXTRA_TAB, 2);
+                PriceReportQueryObject queryObject = new PriceReportQueryObject();
                 queryObject.setKeyword(mKeywordEditText.getText().toString());
                 queryObject.setStartDate(mStartDateButton.getText().toString());
                 queryObject.setEndDate(mEndDateButton.getText().toString());
-                queryObject.setIndex(-1);
+                queryObject.setIndex(0);
                 queryObject.setPageSize(Utils.PAGESIZE_APPROVAL);
                 i.putExtra(EXTRA_QUERYOBJECT, queryObject);
                 i.putExtra(ApprovalListFragment.EXTRA_FROMSEARCH, true);
                 startActivity(i);
             }
         });
-
-        mContainApproved = (SwitchButton)v.findViewById(R.id.search_approval_approved);
-        mContainUnapproved = (SwitchButton)v.findViewById(R.id.search_approval_unapproved);
 
         Calendar cal = Calendar.getInstance();
         final Date tomorrow;
@@ -107,8 +95,6 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
                 Log.e(TAG, "NOT RETURN HERE: ", ex);
                 return v;
             }
-            mContainApproved.setChecked(mQueryObject.isContainApproved());
-            mContainUnapproved.setChecked(mQueryObject.isContainUnapproved());
         } else {
 
             cal.add(Calendar.DAY_OF_MONTH, -31);
@@ -117,34 +103,33 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
             tomorrow = cal.getTime();
         }
 
-        mStartDateButton = (EditText)v.findViewById(R.id.search_approval_startDate);
-        mStartDateButton.setFocusable(false);
-        mStartDateButton.setClickable(true);
-
+        mStartDateButton = (EditText)v.findViewById(R.id.search_order_startDate);
         mStartDateButton.setText(dt.format(oneMonthAgo));
         mStartDateButton.setGravity(Gravity.CENTER);
         mStartDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "start date button clicked");
                 final FragmentManager fm = getActivity().getSupportFragmentManager();
+
                 DatePickerFragment datePickerFragment = null;
                 try {
                     datePickerFragment = DatePickerFragment.newInstance(dt.parse(mStartDateButton.getText().toString()));
                 }catch (Exception ex){
                     Log.e(TAG, ex.toString());
                 }
-                datePickerFragment.setTargetFragment(ApprovalSearchFragment.this, REQUEST_START_DATE);
+                datePickerFragment.setTargetFragment(PriceReportSearchFragment.this, REQUEST_START_DATE);
                 datePickerFragment.show(fm, DIALOG_DATE);
             }
         });
 
-        mEndDateButton = (EditText)v.findViewById(R.id.search_approval_endDate);
+        mEndDateButton = (EditText)v.findViewById(R.id.search_order_endDate);
         mEndDateButton.setText(dt.format(tomorrow));
         mEndDateButton.setGravity(Gravity.CENTER);
-        mEndDateButton.setOnClickListener(new View.OnClickListener() {
+        mEndDateButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "start date button clicked");
+
                 final FragmentManager fm = getActivity().getSupportFragmentManager();
                 DatePickerFragment datePickerFragment = null;
                 try {
@@ -152,7 +137,7 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
                 }catch (Exception ex){
                     Log.e(TAG, ex.toString());
                 }
-                datePickerFragment.setTargetFragment(ApprovalSearchFragment.this, REQUEST_END_DATE);
+                datePickerFragment.setTargetFragment(PriceReportSearchFragment.this, REQUEST_END_DATE);
                 datePickerFragment.show(fm, DIALOG_DATE);
             }
         });
@@ -164,9 +149,9 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mLoading = new LoadingAnimation(getActivity());
         Intent i = getActivity().getIntent();
-        mQueryObject = (ApprovalQueryObject)i.getSerializableExtra(EXTRA_QUERYOBJECT);
-        Log.d(TAG, String.format("mQueryObject == null --> %s",mQueryObject == null));
+        mQueryObject = (PriceReportQueryObject)i.getSerializableExtra(EXTRA_QUERYOBJECT);
     }
 
 
@@ -185,13 +170,4 @@ public class ApprovalSearchFragment extends android.support.v4.app.Fragment impl
             mEndDateButton.setText(dt.format(date));
         }
     }
-
-    @Override
-    public void doBack() {
-        Intent i = new Intent(getActivity(), MainActivity2.class);
-        i.putExtra(MainActivity2.EXTRA_TAB, 1);
-        startActivity(i);
-    }
-
-
 }

@@ -5,7 +5,9 @@ import java.io.Serializable;
 /**
  * Created by lzn on 16/4/8.
  */
-public class Product implements Serializable {
+public class Product extends BaseModelObject {
+
+    private String mId;
     private String mChineseName;
     private String mEnglishName;
     private String mHuohao;
@@ -14,6 +16,8 @@ public class Product implements Serializable {
     private double mSellPrice;
     private String mChineseDesc;
     private String mEnglishDesc;
+    private String mMoneyType;
+    private String mGuige;
 
     public String getChineseName() {
         return mChineseName;
@@ -77,5 +81,29 @@ public class Product implements Serializable {
 
     public void setEnglishDesc(String englishDesc) {
         mEnglishDesc = englishDesc;
+    }
+
+    public String getId() {
+        return mId;
+    }
+
+    public String getMoneyType() {
+        return mMoneyType;
+    }
+
+    public void setId(String id) {
+        mId = id;
+    }
+
+    public void setMoneyType(String moneyType) {
+        mMoneyType = moneyType;
+    }
+
+    public String getGuige() {
+        return mGuige;
+    }
+
+    public void setGuige(String guige) {
+        mGuige = guige;
     }
 }

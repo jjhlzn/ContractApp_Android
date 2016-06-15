@@ -13,11 +13,10 @@ public class ServiceConfiguration {
         public final static String serverName1 = "jjhtest.hengdianworld.com";
         public final static int port1 = 80;
 
-        public final static String serverName2 = "192.168.1.50";
+        public final static String serverName2 = "192.168.1.57";
         public final static int port2 = 3000;
 
-        public final static String serverName3 = "oa.lloydind.com";
-        public final static int port3 = 10080;
+
         public static String httpMethod() {
                 if (isUseConfig) {
                         return LOCATOR_HTTP;
@@ -83,6 +82,23 @@ public class ServiceConfiguration {
         public  static String GetProductImageUrl() {
                 return httpMethod() + "://" + serverName() + ":" + port() + "/product/getImage.json";
         }
+
+        public static String searchPriceReportUrl() {
+                return httpMethod() + "://" + serverName() + ":" + port() + "/price_report/search.json";
+        }
+
+        public static String getPriceReportUrl() {
+                return httpMethod() + "://" + serverName() + ":" + port() + "/price_report/getPriceReport.json";
+        }
+
+        public static String searchProducstUrl() {
+                return httpMethod() + "://" + serverName() + ":" + port() + "/price_report/searchProducts.json";
+        }
+
+        public static String submitReportUrl() {
+                return httpMethod() + "://" + serverName() + ":" + port() + "/price_report/submit.json";
+        }
+
 
 }
 

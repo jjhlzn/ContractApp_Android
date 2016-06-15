@@ -13,6 +13,11 @@
         android:icon="@drawable/shenpi"
         android:title="审批" />
 
+    <item
+        android:id="@+id/bottomBarPriceReport"
+        android:icon="@drawable/priceicon"
+        android:title="报价" />
+
 
     <item
         android:id="@+id/bottomBarMe"

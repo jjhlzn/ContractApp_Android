@@ -33,6 +33,31 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
 
     protected boolean isNeedPushDownFresh() {return false;}
 
+
+    protected void setActionBar() {
+        Log.d(TAG, "has action bar");
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        View customView = getLayoutInflater().inflate(R.layout.actionbar, null);
+        getSupportActionBar().setCustomView(customView);
+        Toolbar parent = (Toolbar) customView.getParent();
+        parent.setContentInsetsAbsolute(0, 0);
+
+        ((TextView) getSupportActionBar().getCustomView().findViewById(R.id.actionbar_text)).setText(getActivityTitle());
+        ((ImageButton) getSupportActionBar().getCustomView().findViewById(R.id.actionbar_searchButton)).setVisibility(View.INVISIBLE);
+
+        if (NavUtils.getParentActivityName(this) == null) {
+            getSupportActionBar().getCustomView().findViewById(R.id.actionbar_back_button).setVisibility(View.INVISIBLE);
+        } else {
+            ImageButton backButton = (ImageButton) getSupportActionBar().getCustomView().findViewById(R.id.actionbar_back_button);
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,27 +83,7 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
 
         if (hasActionBar()) {
 
-            Log.d(TAG, "has action bar");
-            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            View customView = getLayoutInflater().inflate(R.layout.actionbar, null);
-            getSupportActionBar().setCustomView(customView);
-            Toolbar parent = (Toolbar) customView.getParent();
-            parent.setContentInsetsAbsolute(0, 0);
-
-            ((TextView) getSupportActionBar().getCustomView().findViewById(R.id.actionbar_text)).setText(getActivityTitle());
-            ((ImageButton) getSupportActionBar().getCustomView().findViewById(R.id.actionbar_searchButton)).setVisibility(View.INVISIBLE);
-
-            if (NavUtils.getParentActivityName(this) == null) {
-                getSupportActionBar().getCustomView().findViewById(R.id.actionbar_back_button).setVisibility(View.INVISIBLE);
-            } else {
-                ImageButton backButton = (ImageButton) getSupportActionBar().getCustomView().findViewById(R.id.actionbar_back_button);
-                backButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onBackPressed();
-                    }
-                });
-            }
+            setActionBar();
         }
     }
 

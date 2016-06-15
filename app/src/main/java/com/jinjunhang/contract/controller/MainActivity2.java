@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -33,7 +34,9 @@ import com.roughike.bottombar.OnMenuTabClickListener;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
@@ -48,6 +51,7 @@ public class MainActivity2 extends AppCompatActivity {
     private BottomBar mBottomBar;
     BottomBarBadge unreadApprovals;
     private MsgReceiver mMsgReceiver;
+    private List<String> mAllCodes;
 
 
     @Override
@@ -74,13 +78,17 @@ public class MainActivity2 extends AppCompatActivity {
 
         ((TextView)getSupportActionBar().getCustomView().findViewById(R.id.actionbar_text)).setText("订单");
         final ImageButton searchApprovalButton = (ImageButton)getSupportActionBar().getCustomView().findViewById(R.id.actionbar_searchApprovalButton);
-        searchApprovalButton.setOnClickListener(new View.OnClickListener() {
+
+
+
+        final ImageButton scanButton = (ImageButton) getSupportActionBar().getCustomView().findViewById(R.id.actionbar_searchButton);
+        scanButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(that, ApprovalSearchActivity.class);
-                that.startActivity(i);
+                new IntentIntegrator(that).addExtra(ProductSearchActivity.EXTRA_FIRSTIN, true).setCaptureActivity(ProductSearchActivity.class).initiateScan();
             }
         });
+
 
 
         searchApprovalButton.setVisibility(View.INVISIBLE);
@@ -95,14 +103,15 @@ public class MainActivity2 extends AppCompatActivity {
                 switch (menuItemId) {
                     case R.id.bottomBarOrder:
                         title = "订单";
-
                         searchApprovalButton.setVisibility(View.INVISIBLE);
+                        scanButton.setVisibility(View.INVISIBLE);
                         fragment = getFragment(SearchOrderFragment.class);
                         //mBottomBar.
                         break;
                     case R.id.bottomBarShenpi:
                         title = "审批";
                         searchApprovalButton.setVisibility(View.VISIBLE);
+                        scanButton.setVisibility(View.INVISIBLE);
                         fragment = getFragment(ApprovalListFragment.class);
                         int badge = ApprovalNotificationStore.getInstance(getApplicationContext()).getBadge();
                         if (badge > 0 && ((ApprovalListFragment)fragment).isInited) {
@@ -110,19 +119,29 @@ public class MainActivity2 extends AppCompatActivity {
                         }
                         resetBadge();
 
+
+                        break;
+                    case R.id.bottomBarPriceReport:
+                        title = "报价";
+                        searchApprovalButton.setVisibility(View.VISIBLE);
+                        scanButton.setVisibility(View.VISIBLE);
+                        fragment = getFragment(PriceReportListFragment.class);
                         break;
                     case R.id.bottomBarMe:
                         title = "我";
+                        scanButton.setVisibility(View.INVISIBLE);
                         searchApprovalButton.setVisibility(View.INVISIBLE);
                         fragment = getFragment(MyInfoFragment.class);
 
                         break;
                 }
-
-                android.support.v4.app.FragmentTransaction transaction = fm.beginTransaction();
-                transaction.replace(R.id.fragmentContainer, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                Log.d(TAG, "framement = " + fragment);
+                if (fragment != null) {
+                    android.support.v4.app.FragmentTransaction transaction = fm.beginTransaction();
+                    transaction.replace(R.id.fragmentContainer, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
                 ((TextView) getSupportActionBar().getCustomView().findViewById(R.id.actionbar_text)).setText(title);
             }
 
@@ -142,12 +161,10 @@ public class MainActivity2 extends AppCompatActivity {
         Log.d(TAG, "selectTab = " + selectTab);
         mBottomBar.selectTabAtPosition(selectTab, true);
 
-        (getSupportActionBar().getCustomView().findViewById(R.id.actionbar_searchButton)).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                new IntentIntegrator(that).setCaptureActivity(ProductSearchActivity.class).initiateScan();
-            }
-        });
+
+        if (mAllCodes == null) {
+            mAllCodes = new ArrayList<>();
+        }
     }
 
     private void setupBarge() {
@@ -233,20 +250,45 @@ public class MainActivity2 extends AppCompatActivity {
         if(result != null) {
             if(result.getContents() == null) {
                 Log.d("MainActivity", "Cancelled scan");
-                //Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                mAllCodes = new ArrayList<>();
             } else {
                 Log.d("MainActivity", "Scanned");
                 String scanCode = result.getContents();
                 Log.d(TAG, "scan code = " + scanCode);
-                //Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-                Intent i = new Intent(this, ProductDetailActivity.class);
-                i.putExtra(ProductDetailFragment.EXTRA_PRODUCTID, scanCode);
-                startActivity(i);
+                mAllCodes.add(scanCode);
+                new IntentIntegrator(this)
+                        .addExtra(ProductSearchActivity.EXTRA_FIRSTIN, false)
+                        .addExtra(ProductSearchActivity.EXTRA_DATA, scanCode)
+                        .addExtra(ProductSearchActivity.EXTRA_ALL_CODES, convert(mAllCodes))
+                        .setCaptureActivity(ProductSearchActivity.class).initiateScan();
             }
         } else {
             // This is important, otherwise the result will not be passed to the fragment
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private String convert(List<String> codes) {
+        String result = "";
+        for (String code :codes) {
+            result += code + "====";
+        }
+        return result;
+    }
+
+    public static List<String> parseCodes(String codes) {
+        List<String> result = new ArrayList<>();
+        if (codes == null) {
+            return result;
+        }
+        String[] strings = codes.split("====");
+        for(int i = 0; i < strings.length; i++) {
+            if (strings[i] != null && strings[i] != "") {
+
+                result.add(strings[i]);
+            }
+        }
+        return result;
     }
 
     @Override
