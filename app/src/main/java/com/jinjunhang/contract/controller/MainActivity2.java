@@ -94,6 +94,7 @@ public class MainActivity2 extends AppCompatActivity {
         searchApprovalButton.setVisibility(View.INVISIBLE);
 
         mBottomBar = BottomBar.attach(this, savedInstanceState);
+        mBottomBar.setMaxFixedTabs(5);
         mBottomBar.setItemsFromMenu(R.menu.bottommenu, new OnMenuTabClickListener() {
             @Override
             public void onMenuTabSelected(@IdRes int menuItemId) {
@@ -156,6 +157,7 @@ public class MainActivity2 extends AppCompatActivity {
         mBottomBar.noTopOffset();
         mBottomBar.hideShadow();
         setupBarge();
+
 
         int selectTab = getIntent().getIntExtra(EXTRA_TAB, 0);
         Log.d(TAG, "selectTab = " + selectTab);

@@ -36,6 +36,7 @@ public class SearchProductResponse extends com.jinjunhang.framework.service.Serv
             Product product = new Product();
             product.setId(json.getString("id"));
             product.setChineseName(json.getString("name"));
+            product.setHuohao(json.getString("huohuo"));
             product.setGuige(json.getString("specification"));
             product.setSellPrice(json.getDouble("price"));
             product.setMoneyType(json.getString("moneyType"));
