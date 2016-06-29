@@ -14,6 +14,7 @@ public class PriceReport extends BaseModelObject {
     private String mReporter;
     private String mStatus;
     private String mDetailInfo;
+    private String validDays;
 
     private List<Product> products = new ArrayList<Product>();
 
@@ -63,5 +64,13 @@ public class PriceReport extends BaseModelObject {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public String getValidDays() {
+        return validDays;
+    }
+
+    public void setValidDays(String validDays) {
+        this.validDays = validDays;
     }
 }

@@ -11,6 +11,9 @@ public class SubmitReportRequest extends ServerRequest {
 
     private String mUserId;
     private String mCodesString;
+    private String mCompanyName;
+    private String mContactPerson;
+    private String mContactPhone;
 
     public void setUserId(String userId) {
         mUserId = userId;
@@ -28,6 +31,30 @@ public class SubmitReportRequest extends ServerRequest {
         return mCodesString;
     }
 
+    public String getCompanyName() {
+        return mCompanyName;
+    }
+
+    public String getContactPerson() {
+        return mContactPerson;
+    }
+
+    public String getContactPhone() {
+        return mContactPhone;
+    }
+
+    public void setCompanyName(String companyName) {
+        mCompanyName = companyName;
+    }
+
+    public void setContactPerson(String contactPerson) {
+        mContactPerson = contactPerson;
+    }
+
+    public void setContactPhone(String contactPhone) {
+        mContactPhone = contactPhone;
+    }
+
     @Override
     public String getServiceUrl() {
         return ServiceConfiguration.submitReportUrl();
@@ -43,6 +70,9 @@ public class SubmitReportRequest extends ServerRequest {
         Map<String, Object> parameters = super.getParams();
         parameters.put("userid", mUserId);
         parameters.put("codes", mCodesString);
+        parameters.put("companyname", mCompanyName);
+        parameters.put("contactperson", mContactPerson);
+        parameters.put("contactphone", mContactPhone);
         return parameters;
     }
 }

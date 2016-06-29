@@ -81,7 +81,7 @@ public class PagableController implements SwipeRefreshLayout.OnRefreshListener, 
     }
 
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        Log.d(TAG, "mMoreDataAvailable = " + mMoreDataAvailable);
+        //Log.d(TAG, "mMoreDataAvailable = " + mMoreDataAvailable);
         if (!mMoreDataAvailable)
             return;
 
@@ -99,7 +99,7 @@ public class PagableController implements SwipeRefreshLayout.OnRefreshListener, 
 
     @Override
     public void onRefresh() {
-        Log.d(TAG, "onRefresh");
+        //Log.d(TAG, "onRefresh");
         if (!mIsLoading) {
             mIsRefreshing = true;
             mMoreDataAvailable = true;

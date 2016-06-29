@@ -94,6 +94,9 @@ public class PriceReportDetailFragment extends android.support.v4.app.Fragment i
             TextView huohaoTextView = (TextView) convertView.findViewById(R.id.product_list_item_huohao);
             huohaoTextView.setText(product.getHuohao());
 
+            TextView unitTextView = (TextView) convertView.findViewById(R.id.product_list_item_unit);
+            unitTextView.setText(product.getUnit());
+
             TextView priceTextView = (TextView) convertView.findViewById(R.id.product_list_item_price);
             priceTextView.setText(product.getMoneyType() + String.format("%.2f", product.getSellPrice()));
 

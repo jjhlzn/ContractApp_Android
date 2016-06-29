@@ -33,7 +33,7 @@ public class SearchPriceReportsResponse extends PagedServerResponse<PriceReport>
             priceReport.setDate(json.getString("date"));
             priceReport.setStatus(json.getString("status"));
             priceReport.setDetailInfo(json.getString("detailInfo"));
-
+            priceReport.setValidDays(json.getString("validDays"));
             mResultSet.add(priceReport);
         }
     }

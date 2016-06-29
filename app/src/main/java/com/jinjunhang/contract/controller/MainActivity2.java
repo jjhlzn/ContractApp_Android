@@ -208,9 +208,10 @@ public class MainActivity2 extends AppCompatActivity {
 
     private void resetBadge() {
 
-
-        unreadApprovals.setCount(0);
-        unreadApprovals.hide();
+        if (unreadApprovals != null) {
+            unreadApprovals.setCount(0);
+            unreadApprovals.hide();
+        }
         ShortcutBadger.removeCount(getApplicationContext());
         ApprovalNotificationStore.getInstance(getApplication()).deleteAll();
         new ResetBadgeTask().execute(PrefUtils.getFromPrefs(getApplicationContext(), PrefUtils.PREFS_LOGIN_NAME_KEY, ""));

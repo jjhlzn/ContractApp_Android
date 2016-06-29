@@ -41,7 +41,7 @@ public class SearchProductResponse extends com.jinjunhang.framework.service.Serv
             product.setSellPrice(json.getDouble("price"));
             product.setMoneyType(json.getString("moneyType"));
             product.setEnglishName(json.getString("englishName"));
-
+            product.setUnit(json.getString("unit"));
             mProducts.add(product);
         }
 

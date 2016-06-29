@@ -18,6 +18,7 @@ public class Product extends BaseModelObject {
     private String mEnglishDesc;
     private String mMoneyType;
     private String mGuige;
+    private String mUnit;
 
     public String getChineseName() {
         return mChineseName;
@@ -105,5 +106,13 @@ public class Product extends BaseModelObject {
 
     public void setGuige(String guige) {
         mGuige = guige;
+    }
+
+    public String getUnit() {
+        return mUnit;
+    }
+
+    public void setUnit(String unit) {
+        mUnit = unit;
     }
 }

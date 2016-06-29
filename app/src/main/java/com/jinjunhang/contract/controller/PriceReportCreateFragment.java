@@ -103,7 +103,13 @@ public class PriceReportCreateFragment extends android.support.v4.app.Fragment {
                 }
 
                 mDialog.dismiss();
-                new SubmitReportTask().execute();
+                SubmitReportRequest req = new SubmitReportRequest();
+                req.setUserId(PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_LOGIN_USERNAME_KEY, ""));
+                req.setCodesString(getCodeString());
+                req.setCompanyName(companyName);
+                req.setContactPhone(phone);
+                req.setContactPerson(contactName);
+                new SubmitReportTask().execute(req);
             }
         });
 
@@ -112,9 +118,6 @@ public class PriceReportCreateFragment extends android.support.v4.app.Fragment {
                 .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // custom dialog
-
-
                 mDialog.show();
                 //new SubmitReportTask().execute();
             }
@@ -161,12 +164,10 @@ public class PriceReportCreateFragment extends android.support.v4.app.Fragment {
         }
     }
 
-    private class SubmitReportTask extends AsyncTask<Void, Void, SubmitReportResponse> {
+    private class SubmitReportTask extends AsyncTask<SubmitReportRequest, Void, SubmitReportResponse> {
         @Override
-        protected SubmitReportResponse doInBackground(Void... params) {
-            SubmitReportRequest req = new SubmitReportRequest();
-            req.setUserId(PrefUtils.getFromPrefs(getActivity(), PrefUtils.PREFS_LOGIN_USERNAME_KEY, ""));
-            req.setCodesString(getCodeString());
+        protected SubmitReportResponse doInBackground(SubmitReportRequest... params) {
+            SubmitReportRequest req = params[0];
             return new BasicService().sendRequest(req);
         }
 
@@ -233,6 +234,9 @@ public class PriceReportCreateFragment extends android.support.v4.app.Fragment {
 
             TextView huohaoTextView = (TextView) convertView.findViewById(R.id.product_list_item_huohao);
             huohaoTextView.setText(product.getHuohao());
+
+            TextView unitTextView = (TextView) convertView.findViewById(R.id.product_list_item_unit);
+            unitTextView.setText(product.getUnit());
 
 
             TextView englishNameTextView = (TextView) convertView.findViewById(R.id.product_list_item_englishName);

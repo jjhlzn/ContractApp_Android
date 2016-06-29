@@ -36,7 +36,8 @@ public class GetPriceReportResponse extends PagedServerResponse<Product> {
             product.setSellPrice(json.getDouble("price"));
             product.setMoneyType(json.getString("moneyType"));
             product.setEnglishName(json.getString("englishName"));
-
+            product.setUnit(json.getString("unit"));
+            product.setHuohao(json.getString("huohuo"));
             mResultSet.add(product);
         }
 

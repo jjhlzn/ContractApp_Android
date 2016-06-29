@@ -175,6 +175,9 @@ public class PriceReportListFragment extends android.support.v4.app.Fragment imp
             TextView idTextView = (TextView) convertView.findViewById(R.id.pricereport_list_item_id);
             idTextView.setText(report.getId());
 
+            TextView validDaysTextView = (TextView) convertView.findViewById(R.id.pricereport_list_item_validDays);
+            validDaysTextView.setText(report.getValidDays()+"天");
+
             TextView statusTextView = (TextView) convertView.findViewById(R.id.pricereport_list_item_status);
             statusTextView.setText(report.getStatus());
 
